@@ -115,7 +115,9 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Meta'
+      ]
     },
 
     // animations: 'all', // --- includes all animations
@@ -142,16 +144,75 @@ module.exports = configure(function (/* ctx */) {
       // extendSSRWebserverConf (esbuildConf) {},
       // extendPackageJson (json) {},
 
+      // 可选; 添加/删除/更改
+      // 生产生成的 package.json 的属性 /
+      // extendPackageJson ( pkg )  {
+      //   // 直接改变 pkg 的 props;
+      //   // 不需要返回任何内容
+      // } ,
+
+      // 可选;
+      // 仅处理 Web 服务器 webpack 配置
+      // 其中包括 SSR 中间件
+      // extendsWebpackWebserver  ( cfg )  {
+      //   // 直接更改 cfg 的 props;
+      //   // 不需要返回任何内容
+      // } ,
+
+      // 可选; 与extendWebpack()等效，但使用webpack-chain；
+      // 仅处理 Webserver webpack 配置
+      // 其中包括 SSR 中间件
+      // chainWebpackWebserver  ( chain )  {
+      //   // chain 是一个 webpack-chain 实例
+      //   // Webpack 配置
+      // },
+
+
+      // 应该由 PWA 接管（默认值： false），还是仅仅由 SPA 接管？
       pwa: false,
+
+      /**
+       * 手动序列化store状态并自己提供
+       * 作为 window.__INITIAL_STATE__ 到客户端（通过 <script> 标签）
+       *（需要@quasar/app-webpack v3.5+）
+       */
+     // manualStoreSerialization: false，
+
+    /**
+     * 手动将存储状态注入到ssrContext.state中
+     *（需要@quasar/app-webpack v3.5+）
+     */
+    // manualStoreSsrContextInjection : false，
+
+    /**
+    * 手动处理存储水合作用，而不是让 Quasar CLI 来处理。
+    * 对于 Pinia：store.state.value = window.__INITIAL_STATE__
+    * 对于 Vuex：store.replaceState(window.__INITIAL_STATE__)
+    */
+    //manualStoreHydration : false ,
+
+     /**
+       * 手动调用 $q.onSSRHydrated() 而不是让 Quasar CLI 执行此操作。
+       * 这宣布客户端代码应该接管。
+     */
+      // manualPostHydrationTrigger : false ,
 
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
-
+      // 生产服务器应使用的默认端口
+      // （如果在运行时指定了 process∙env∙PORT，则被取代）
       prodPort: 3000, // The default port that the production server should use
                       // (gets superseded if process.env.PORT is specified at runtime)
 
+      //maxAge :  1000  *  60  *  60  *  24  *  30 ,
+      // 告诉浏览器来自服务器的文件何时应从缓存中过期
+      // （默认值，以毫秒为单位）
+      // 仅当使用 server.static() 时才有效
+
+     // SSR 中间件文件列表 (src-ssr/middlewares/*)。顺序很重要。
       middlewares: [
-        'render' // keep this as last one
+        'render' // keep this as last one 不应丢失，并且应位于列表的最后。
+
       ]
     },
 
