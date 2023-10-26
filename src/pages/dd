@@ -1,0 +1,71 @@
+<template>
+  <q-page>
+    <div class="q-pa-md">
+      <!-- ... -->
+      <q-infinite-scroll @load="onLoad" :offset="250">
+        <div v-for="(item, index) in items" :key="index" class="caption">
+          <q-img
+            :src="item.imageUrl"
+            class="responsive-image"
+            @load="imageLoaded(index)"
+          />
+        </div>
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
+      </q-infinite-scroll>
+    </div>
+  </q-page>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import axios from 'axios'
+
+const items = ref([{}, {}, {}])
+const isRefreshing = ref(false)
+
+const customHeader = {
+  headers: {
+    'custom-header': 'my-custom-value'
+  }
+
+  const loadImages = async () => {
+    for (let i = 0; i < items.value.length; i++) {
+      try {
+        const response = await axios.get(items.value[i].imageUrl, customHeader)
+        // 处理图片数据
+        items.value[i].imageData = response.data
+      } catch (error) {
+        console.error('Error loading image', error)
+      }
+    }
+  }
+
+  const onLoad = async (index: number, done: () => void) => {
+    isRefreshing.value = true
+    await loadImages()
+    isRefreshing.value = false
+    done()
+  }
+
+  const imageLoaded = (index: number) => {
+    // 处理图像加载完成
+    console.log(`Image ${index} loaded.`)
+  }
+
+</script>
+
+<style lang="sass" scoped>
+.responsive-image
+  max-width: 100%
+  height: auto
+  margin: 0 auto
+
+.caption
+  display: flex
+  justify-content: center
+  align-items: center
+</style>
