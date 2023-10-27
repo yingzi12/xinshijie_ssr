@@ -2,15 +2,32 @@
   <q-layout view="hhh LpR fff" style="height: 100vh;">
 
     <q-header class="bg-primary text-black" height-hint="98" >
-      <q-toolbar>
+<!--      <q-toolbar>-->
+<!--        <q-toolbar-title>-->
+<!--          <q-avatar>-->
+<!--            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
+<!--          </q-avatar>-->
+<!--          图集网-->
+<!--        </q-toolbar-title>-->
+<!--      </q-toolbar>-->
+      <q-toolbar class="bg-purple text-white shadow-2 rounded-borders">
         <q-toolbar-title>
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
           图集网
         </q-toolbar-title>
-      </q-toolbar>
 
+        <q-space />
+
+        <!--
+          notice shrink property since we are placing it
+          as child of QToolbar
+        -->
+        <q-tabs v-model="tab" shrink stretch>
+          <q-input name="tab1" label="Tab 1" />
+        </q-tabs>
+      </q-toolbar>
       <q-tabs align="left">
         <q-route-tab to="/" label="首页" />
         <q-route-tab to="/findImage" label="寻找图片" />
