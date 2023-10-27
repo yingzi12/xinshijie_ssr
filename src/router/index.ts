@@ -34,17 +34,3 @@ export default route(function (/* { store, ssrContext } */) {
 
   return Router;
 });
-// console.log("process.env.VUE_ROUTER_BASE:"+process.env.VUE_ROUTER_BASE);
-// console.log("createHistory:"+(process.env.SERVER
-//   ? 1
-//   : (process.env.VUE_ROUTER_MODE === 'history' ? 2 : 3)));
-// const createHistory = process.env.SERVER
-//     ? createMemoryHistory()
-//     : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory() : createWebHashHistory());
-//  const router = createRouter({
-//    scrollBehavior: () => ({ left: 0, top: 0 }),
-//    history: createWebHashHistory(),
-//    routes: routes,
-//  });
-
- // export default router;
