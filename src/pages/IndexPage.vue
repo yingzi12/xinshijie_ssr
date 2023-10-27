@@ -11,19 +11,19 @@
         <q-carousel-slide name="first" img-src="https://file2.aazz263.info/images/2021/07/29272649.jpg">
           <div class="absolute-bottom custom-caption">
             <div class="text-h2">First stop</div>
-            <div class="text-subtitle1">Mountains</div>
+<!--            <div class="text-subtitle1">Mountains</div>-->
           </div>
         </q-carousel-slide>
         <q-carousel-slide name="second" img-src="https://usa.img111.top/uploads/1178/T/UGirls-APP/2687/2687_010_c6k_2766_4614.webp">
           <div class="absolute-bottom custom-caption">
             <div class="text-h2">Second stop</div>
-            <div class="text-subtitle1">Famous City</div>
+<!--            <div class="text-subtitle1">Famous City</div>-->
           </div>
         </q-carousel-slide>
         <q-carousel-slide name="third" img-src="https://usa.img111.top/uploads/1178/T/UGirls-APP/2642/2642_010_q9q_2766_4614.webp">
           <div class="absolute-bottom custom-caption">
             <div class="text-h2">Third stop</div>
-            <div class="text-subtitle1">Famous Bridge</div>
+<!--            <div class="text-subtitle1">Famous Bridge</div>-->
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -36,7 +36,7 @@
           class="example-item"
         >
           <q-card flat bordered class="q-ma-sm">
-            <img :src="image">
+            <img :src="album.sourceWeb+album.imgUrl">
             <q-card-section>
               <div class="text-h6"><a :href='"/#/detail?aid="+album.id'>{{album.title}}</a></div>
               <div class="text-subtitle2">{{album.createTime}}</div>
@@ -90,7 +90,7 @@ function getList(page: number) {
   api.get("album/list"+'?' + tansParams(queryParams.value)).then(response => {
     albumList.value = response.data.data;
     total.value = response.data.total;
-    image.value="https://usa.img111.top/uploads/1178/T/UGirls-APP/2642/2642_010_q9q_2766_4614.webp"
+    // image.value="https://usa.img111.top/uploads/1178/T/UGirls-APP/2642/2642_010_q9q_2766_4614.webp"
   }) .catch(() => {
     console.log("dddddddddd")
   });

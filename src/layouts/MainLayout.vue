@@ -7,14 +7,14 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-          Title
+          图集网
         </q-toolbar-title>
       </q-toolbar>
 
       <q-tabs align="left">
-        <q-route-tab to="/page1" label="Page One" />
-        <q-route-tab to="/page2" label="Page Two" />
-        <q-route-tab to="/page3" label="Page Three" />
+        <q-route-tab to="/" label="首页" />
+        <q-route-tab to="/findImage" label="寻找图片" />
+        <q-route-tab to="/page3" label="用户中心" />
       </q-tabs>
     </q-header>
 
