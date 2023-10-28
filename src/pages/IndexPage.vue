@@ -14,9 +14,11 @@
 <!--            <div class="text-subtitle1">Mountains</div>-->
           </div>
         </q-carousel-slide>
-        <q-carousel-slide name="second" img-src="https://usa.img111.top/uploads/1178/T/UGirls-APP/2687/2687_010_c6k_2766_4614.webp">
+        <q-carousel-slide name="second" img-src="https://hotgirl.asia/wp-content/uploads/2023/01/1674255622607_AyanaNishinaga_Minisuka_tv_2023_01_12RegularGallery5_2.jpg">
           <div class="absolute-bottom custom-caption">
-            <div class="text-h2">Second stop</div>
+            <div class="text-h2">
+              <a href="https://aiavr.uk/#/detail?aid=4">Second stop</a>
+            </div>
 <!--            <div class="text-subtitle1">Famous City</div>-->
           </div>
         </q-carousel-slide>

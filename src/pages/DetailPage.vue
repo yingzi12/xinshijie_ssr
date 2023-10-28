@@ -23,7 +23,7 @@
 <!--    内容页-->
     <q-infinite-scroll @load="onLoad" :disable="isDisable" :offset="250">
       <div v-for="(image, index) in imageList" :key="index" class="caption">
-        <q-img :src="image.sourceWeb+image.url" class="responsive-image"/>
+        <q-img :src="getValueWithDefault(image.sourceWeb) +image.url" class="responsive-image"/>
       </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-md">
@@ -45,6 +45,24 @@ const $q = useQuasar()
 // 接收url里的参数
 const route = useRoute();
 const aid = ref(route.query.aid);
+// const sourceUrl = "https://imageshotgirl.yappgcu.uk/"
+// key :old hostName value:new HostName
+const hostnameValues = new Map([
+  ['video.', 'video'],
+  ['hotfirl', 'hotfirl'],
+  ['https://images.hotgirl.asia', 'https://worker-daili.xun335610.workers.dev/imageshotgirl'],
+  ['everia.com', 'everia'],
+  ['jkforum', 'jkforum.com'],
+  ['x60', 'x60.com']
+]);
+
+function getValueWithDefault(key:string) {
+  if (hostnameValues.has(key)) {
+    return hostnameValues.get(key); // 如果键存在，返回其对应的值
+  } else {
+    return key;
+  }
+}
 
 const imageList = ref([])
 const isDisable = ref(false)
@@ -53,6 +71,7 @@ const loadData = (index: number) => {
   return api.get(`image/list?aid=${aid.value}&pageNum=${index}`)
 }
 const isRefreshing = ref(false)
+
 
 const onLoad = (index: number, done: () => void) => {
   try {
@@ -76,39 +95,6 @@ const onLoad = (index: number, done: () => void) => {
     isDisable.value = true
   }
 }
-
-// const items = ref([{}, {}, {}])
-// const imageList = ref([]);
-
-// const isRefreshing = ref(false)
-// const total = ref(0);
-// const isDisable = ref(false)
-
-
-// const onLoad = (index: number, done: () => void) => {
-//   isRefreshing.value = true
-//   setTimeout(() => {
-//     api.get("image/list"+'?aid=' +aid.value +"&pageNum"+index).then(response => {
-//       if(response.data.data != null && response.data.data.length >0 ){
-//         console.log("data:"+response.data.data.length.toString())
-//         response.data.data.forEach((image: any) => {
-//            imageList.value.push(image);
-//           console.log("imageList:"+imageList.value.length.toString())
-//           isRefreshing.value = false
-//           done()
-//         });
-//       }else{
-//         isDisable.value=true;
-//       }
-//       // total.value = response.data.total;
-//
-//     }) .catch(() => {
-//       isDisable.value=true;
-//     });
-//
-//   }, 2000)
-// }
-
 const album = ref({});
 
 function getInfo(id:number) {
