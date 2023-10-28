@@ -50,11 +50,13 @@
       </div>
       <q-pagination class="caption"
         v-model="current"
-        max="5"
+        max="100"
+        max-pages="5"
         direction-links
         flat
         color="grey"
         active-color="primary"
+        @update:model-value="getList"
       />
     </div>
     <div>
@@ -68,7 +70,7 @@ import {reactive, ref, toRefs} from 'vue'
 // import { listAlbum } from "../api/album";
 import { api,tansParams } from 'boot/axios'
 
-const current = ref(3)
+const current = ref(1)
 const slide = ref('first')
 
 const albumList = ref([]);
@@ -86,13 +88,14 @@ const image=ref("")
 const { queryParams, form, rules } = toRefs(data);
 function getList(page: number) {
   window.scrollTo(0, 0); // 滚动到顶部
+  current.value=page
   queryParams.value.pageNum=page;
   api.get("album/list"+'?' + tansParams(queryParams.value)).then(response => {
     albumList.value = response.data.data;
     total.value = response.data.total;
     // image.value="https://usa.img111.top/uploads/1178/T/UGirls-APP/2642/2642_010_q9q_2766_4614.webp"
   }) .catch(() => {
-    console.log("dddddddddd")
+    // console.log("dddddddddd")
   });
 }
 getList(1)

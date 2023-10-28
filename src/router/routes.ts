@@ -7,6 +7,11 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/DetailPage.vue') }],
   },
   {
+    path: '/play',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/VideoJSPlayer.vue') }],
+  },
+  {
     path: '/findImage',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/FindImagePage.vue') }],
