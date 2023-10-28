@@ -24,12 +24,11 @@
           notice shrink property since we are placing it
           as child of QToolbar
         -->
-        <q-tabs v-model="tab" shrink stretch>
-          <q-input name="tab1" label="Tab 1" />
-        </q-tabs>
+
       </q-toolbar>
       <q-tabs align="left">
         <q-route-tab to="/" label="首页" />
+        <q-route-tab to="/see" label="最热" />
         <q-route-tab to="/findImage" label="寻找图片" />
         <q-route-tab to="/page3" label="用户中心" />
       </q-tabs>

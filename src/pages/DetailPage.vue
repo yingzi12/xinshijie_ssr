@@ -51,7 +51,7 @@ const hostnameValues = new Map([
   ['video.', 'video'],
   ['hotfirl', 'hotfirl'],
   ['https://images.hotgirl.asia', 'https://worker-daili.xun335610.workers.dev/imageshotgirl'],
-  ['everia.com', 'everia'],
+  ['https://mogura.my.id', 'https://worker-daili.xun335610.workers.dev/mogura'],
   ['jkforum', 'jkforum.com'],
   ['x60', 'x60.com']
 ]);
