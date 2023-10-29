@@ -50,7 +50,7 @@ const aid = ref(route.query.aid);
 const hostnameValues = new Map([
   ['video.', 'video'],
   ['hotfirl', 'hotfirl'],
-  ['https://images.hotgirl.asia', 'https://hotgirl.yappgcu.uk'],
+  ['https://images.hotgirl.asia', 'https://imageshotgirl.yappgcu.uk'],
   ['https://mogura.my.id', 'https://mogura.yappgcu.uk'],
   ['jkforum', 'jkforum.com'],
   ['x60', 'x60.com']
