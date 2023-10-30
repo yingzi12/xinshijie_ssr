@@ -69,6 +69,19 @@ const data = reactive({
 });
 const { form, } = toRefs(data);
 function  onSubmit(){
+  if(form.value.title == undefined || form.value.title == null || form.value.title.trim() == '' || form.value.title.trim().length ==0 ){
+    $q.dialog({
+      title: '信息',
+      message: '必须填写图集名称.'
+    }).onOk(() => {
+      // console.log('OK')
+    }).onCancel(() => {
+      // console.log('Cancel')
+    }).onDismiss(() => {
+      // console.log('I am triggered on both OK and Cancel')
+    })
+    return;
+  }
   api.post("findImage/add",form.value).then(response => {
     $q.dialog({
       title: '信息',
