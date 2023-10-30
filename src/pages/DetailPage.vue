@@ -100,7 +100,7 @@ const onLoad = (index: number, done: () => void) => {
 const album = ref({});
 
 function getInfo(id:number) {
-  window.scrollTo(0, 0); // 滚动到顶部
+   // 滚动到顶部
   api.get("album/info"+'?id=' +id.toString() ).then(response => {
     album.value = response.data.data;
 

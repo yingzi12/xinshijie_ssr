@@ -20,7 +20,7 @@
         <q-carousel-slide name="second" img-src="https://hotgirl.asia/wp-content/uploads/2023/01/1674255622607_AyanaNishinaga_Minisuka_tv_2023_01_12RegularGallery5_2.jpg">
           <div class="absolute-bottom custom-caption">
             <div class="text-h2">
-              <a href="https://aiavr.uk/#/detail?aid=4">Second stop</a>
+              <a href="https://aiavr.uk/detail?aid=4">Second stop</a>
             </div>
             <!--            <div class="text-subtitle1">Famous City</div>-->
           </div>
@@ -43,7 +43,7 @@
           <q-card flat bordered class="q-ma-sm">
             <img :src="album.sourceWeb+album.imgUrl">
             <q-card-section>
-              <div class="text-h6"><a :href='"/#/detail?aid="+album.id'>{{album.title}}</a></div>
+              <div class="text-h6"><a :href='"/detail?aid="+album.id'>{{album.title}}</a></div>
               <div class="text-subtitle2">{{album.createTime}}</div>
             </q-card-section>
             <!--            <q-card-section class="q-pt-none">-->
@@ -119,7 +119,7 @@ const data = reactive({
 const image=ref("")
 const { queryParams, form, rules } = toRefs(data);
 function getList(page: number) {
-  window.scrollTo(0, 0); // 滚动到顶部
+   // 滚动到顶部
   current.value=page
   queryParams.value.title=title.value;
   queryParams.value.pageNum=page;

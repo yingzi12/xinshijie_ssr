@@ -86,7 +86,7 @@ function  onSubmit(){
 const findImageList = ref([]);
 const total = ref(0);
 function getList() {
-  window.scrollTo(0, 0); // 滚动到顶部
+   // 滚动到顶部
   api.get("findImage/list").then(response => {
     findImageList.value = response.data.data;
     total.value = response.data.total;
