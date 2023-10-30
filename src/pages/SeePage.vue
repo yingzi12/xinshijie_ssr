@@ -74,6 +74,32 @@
 import {reactive, ref, toRefs} from 'vue'
 // import { listAlbum } from "../api/album";
 import { api,tansParams } from 'boot/axios'
+import {useMeta} from "quasar";
+
+const metaData = {
+  // sets document title
+  title: '图集网',
+  // optional; sets final title as "Index Page - My Website", useful for multiple level meta
+  titleTemplate: (title: any) => `${title} - 最热门 Photo Gallery, Beauty, Photo, Photography, Showman.com`,
+
+  // meta tags
+  meta: {
+    description: { name: 'description', content: '图集网  最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
+    keywords: { name: 'keywords', content: '图集网 最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
+    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
+    ogTitle:  {
+      property: 'og:title',
+      // optional; similar to titleTemplate, but allows templating with other meta properties
+      template (ogTitle: any) {
+        return `${ogTitle} - 最热门 图集网 美女 写真 摄影 秀人网  Photo Gallery, Beauty, Photo, Photography, Showman.com`
+      }
+    }
+  },
+}
+
+// needs to be called in setup()
+useMeta(metaData)
 
 const current = ref(1)
 const slide = ref('first')

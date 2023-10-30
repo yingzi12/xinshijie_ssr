@@ -39,7 +39,9 @@
 import { ref,} from 'vue'
 import { api } from 'boot/axios'
 import {useRoute} from "vue-router";
-import { useQuasar } from 'quasar'
+import {useMeta, useQuasar} from 'quasar'
+
+
 const $q = useQuasar()
 
 // 接收url里的参数
@@ -101,10 +103,23 @@ function getInfo(id:number) {
   window.scrollTo(0, 0); // 滚动到顶部
   api.get("album/info"+'?id=' +id.toString() ).then(response => {
     album.value = response.data.data;
+
   }) .catch(() => {
     console.log("dddddddddd")
   });
 }
+useMeta(() => {
+  return {
+    // whenever "title" from above changes, your meta will automatically update
+    title: album.value.title,
+    meta: {
+      key1: { name: 'description', content: album.value.title },
+      key2: { name: 'intro', content: album.value.intro }
+    }
+  }
+})
+
+
 function handleImageError(){
   api.get("album/error"+'?id=' +aid.value ).then(response => {
     $q.dialog({
@@ -121,6 +136,8 @@ function handleImageError(){
     // console.log("dddddddddd")
   });
 }
+
+
 getInfo(aid.value)
 </script>
 <style  lang="sass"  scoped>
