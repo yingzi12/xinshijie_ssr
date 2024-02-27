@@ -1,4 +1,23 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
+const fabPos = ref([ 18, 18 ]);
+const draggingFab = ref(false);
+
+function onClick () {
+  // console.log('Clicked on a fab action')
+};
+
+function moveFab (ev) {
+  draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+
+  fabPos.value = [
+    fabPos.value[ 0 ] - ev.delta.x,
+    fabPos.value[ 1 ] - ev.delta.y
+  ]
+};
+const alert=ref(false);
+const expanded= ref(true);
 
 </script>
 
@@ -16,7 +35,86 @@
       <q-breadcrumbs-el label="Home" icon="home" />
       <q-breadcrumbs-el label="Components" icon="widgets" />
       <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
+      <q-breadcrumbs-el label="世界名称" icon="navigation" />
     </q-breadcrumbs>
+    <div class="q-ma-md">
+      <div class="text-h6 text-center">这是元素名称</div>
+      <div class="text-subtitle1 text-center">
+        <div class="q-pa-md q-gutter-sm">
+          <span class="text-overline">创建者:我是创建人</span>
+          <span class="text-overline">创建:2022-11-11 11:23:34</span>
+          <span class="text-overline">更新者:我是创建人</span>
+          <span class="text-overline">更新时间:2022-11-11 11:23:34</span>
+        </div>
+      </div>
+      <div>
+          <q-expansion-item
+            v-model="expanded"
+            icon="list"
+            label="分卷1"
+            caption="共11章"
+          >
+            <pre>
+        这里是小说内容
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+      </pre>
+          </q-expansion-item>
+          <q-expansion-item
+            v-model="expanded"
+            icon="list"
+            label="分卷2"
+            caption="共13章"
+          >
+            <pre>
+        这里是小说内容
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+
+        QDrawer是QLayout的侧边栏部分。
+      </pre>
+          </q-expansion-item>
+        </div>
+
+    </div>
+    <div class="q-pa-md">
+      <q-btn-group spread>
+        <q-btn color="purple" label="上一章" icon="timeline" />
+        <q-btn color="purple" label="元素列表" icon="visibility" @click="alert = true"/>
+        <q-btn color="purple" label="下一章" icon="visibility" />
+
+      </q-btn-group>
+    </div>
+    <q-page-sticky position="bottom-right" :offset="fabPos">
+      <q-fab
+        icon="add"
+        direction="up"
+        color="accent"
+        :disable="draggingFab"
+        v-touch-pan.prevent.mouse="moveFab"
+      >
+        <q-fab-action @click="onClick" color="primary" icon="person_add" :disable="draggingFab" />
+        <q-fab-action @click="onClick" color="primary" icon="mail" :disable="draggingFab" />
+      </q-fab>
+    </q-page-sticky>
   </q-page>
 </template>
 

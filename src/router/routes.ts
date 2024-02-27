@@ -70,6 +70,35 @@ const routes: RouteRecordRaw[] = [
       { path: 'commit', component: () => import('pages/world/commit.vue') }
     ],
   },
+  {
+    path: '/admin',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('layouts/UsersLayout.vue'),
+        children:[
+          { path: '', component: () => import('pages/admin/index.vue') },
+          { path: 'index', component: () => import('pages/admin/index.vue') },
+        ]
+      },
+
+    ],
+  },
+  {
+    path: '/users',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('layouts/UsersLayout.vue'),
+        children:[
+          { path: '', component: () => import('pages/users/index.vue') },
+          { path: 'index', component: () => import('pages/users/index.vue') },
+        ]
+      },
+    ],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

@@ -140,6 +140,7 @@ const simple=[
           <q-item-section>
             <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
             <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+            <q-item-label class="one-line-clamp text-weight-thin text-overline">更新时间：2024-11-11 23:23:32</q-item-label>
             <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
           </q-item-section>
           <q-item-section side top>

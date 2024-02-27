@@ -16,22 +16,25 @@ function moveFab (ev) {
     fabPos.value[ 1 ] - ev.delta.y
   ]
 };
+const alert=ref(false);
+const expanded= ref(true);
+
 </script>
 
 <template>
   <q-page>
-    <div class="q-pa-md">
-      <q-toolbar class="bg-primary text-white">
-        <q-btn flat round dense icon="menu" class="q-mr-sm" />
-        <q-avatar>
-          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-        </q-avatar>
+<!--    <div class="q-pa-md">-->
+<!--      <q-toolbar class="bg-primary text-white">-->
+<!--        <q-btn flat round dense icon="menu" class="q-mr-sm" />-->
+<!--        <q-avatar>-->
+<!--          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
+<!--        </q-avatar>-->
 
-        <q-toolbar-title>新世界</q-toolbar-title>
+<!--        <q-toolbar-title>新世界</q-toolbar-title>-->
 
-        <q-btn flat round dense icon="whatshot" />
-      </q-toolbar>
-    </div>
+<!--        <q-btn flat round dense icon="whatshot" />-->
+<!--      </q-toolbar>-->
+<!--    </div>-->
     <q-breadcrumbs class="text-brown q-ma-md">
       <template v-slot:separator>
         <q-icon
@@ -46,7 +49,16 @@ function moveFab (ev) {
       <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
       <q-breadcrumbs-el label="这是小说名称" icon="navigation" />
     </q-breadcrumbs>
-    <div>
+    <div class="q-ma-md">
+      <div class="text-h6 text-center">这是章节名称</div>
+      <div class="text-subtitle1 text-center">
+        <div class="q-pa-md q-gutter-sm">
+          <span class="text-overline">创建:2022-11-11 11:23:34</span>
+          <span class="text-overline">创建者:我是创建人</span>
+          <span class="text-overline">更新者:我是创建人</span>
+          <span class="text-overline">更新时间:2022-11-11 11:23:34</span>
+        </div>
+      </div>
       <pre>
         这里是小说内容
         QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
@@ -66,7 +78,7 @@ function moveFab (ev) {
     <div class="q-pa-md">
       <q-btn-group spread>
         <q-btn color="purple" label="上一章" icon="timeline" />
-        <q-btn color="purple" label="目录" icon="visibility" />
+        <q-btn color="purple" label="目录" icon="visibility" @click="alert = true"/>
         <q-btn color="purple" label="下一章" icon="visibility" />
 
       </q-btn-group>
@@ -84,6 +96,67 @@ function moveFab (ev) {
       </q-fab>
     </q-page-sticky>
   </q-page>
+  <q-dialog v-model="alert">
+    <q-card flat bordered style="width: 900px" >
+      <!--      <q-card-section>-->
+      <!--        <div class="text-h6">Terms of Agreement</div>-->
+      <!--      </q-card-section>-->
+
+
+      <q-card-section class="row items-center q-pb-none ">
+        <div class="text-h6">目录</div>
+        <div class="text-subtitle1">共119章</div>
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <q-separator inset />
+
+      <q-card-section style="max-height: 50vh" class="scroll">
+        <div>
+          <q-expansion-item
+            v-model="expanded"
+            icon="list"
+            label="分卷1"
+            caption="共11章"
+          >
+            <q-card>
+              <q-card-section>
+                <div class="row">
+                  <div class="col-6" v-for="index in 22" :key="index">
+                    <div class="q-ma-xs one-line-clamp">
+                      <a href="https://we" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+                    </div>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+          <q-expansion-item
+            v-model="expanded"
+            icon="list"
+            label="分卷2"
+            caption="共13章"
+          >
+            <q-card>
+              <q-card-section>
+                <div class="row">
+                  <div class="col-6" v-for="index in 22" :key="index">
+                    <div class="q-ma-xs one-line-clamp">
+                      <a href="https://we" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+                    </div>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </div>
+      </q-card-section>
+
+      <q-separator />
+
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <style scoped>
