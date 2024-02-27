@@ -13,7 +13,7 @@ if (!token) {
 const drawer = ref(false);
 const link = ref('detail')
 const users = ref(null)
-const previewImage = ref("/favicon.png")
+const previewImage = ref("/favicon.ico")
 
 const id = Cookies.get("id");
 const userInfo = Cookies.get("userInfo");
@@ -83,7 +83,7 @@ function getImageUrl(url) {
   if (url != null) {
     return `${$q.config.sourceWeb}${url}`;
   }
-  return "/favicon.png";
+  return "/favicon.ico";
 }
 </script>
 

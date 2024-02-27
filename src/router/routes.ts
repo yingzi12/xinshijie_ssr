@@ -12,6 +12,16 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/VideoJSPlayer.vue') }],
   },
   {
+    path: '/login',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/login.vue') }],
+  },
+  {
+    path: '/register',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/register.vue') }],
+  },
+  {
     path: '/order',
     component: () => import('layouts/OrderLayout.vue'),
     children: [
@@ -23,7 +33,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/findImage',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/FindImagePage.vue') }],
+    children: [{ path: '', component: () => import('pages/findImagePage.vue') }],
   },
   {
     path: '/',
@@ -54,9 +64,9 @@ const routes: RouteRecordRaw[] = [
       { path: 'index', component: () => import('pages/story/index.vue') },
       { path: 'detail', component: () => import('pages/story/detail.vue') },
       { path: 'order', component: () => import('pages/story/order.vue') },
-      { path: 'list', component: () => import('pages/world/story.vue') },
       { path: 'chapter', component: () => import('pages/story/chapter.vue') },
-      { path: 'commit', component: () => import('pages/world/commit.vue') }
+      { path: 'discuss', component: () => import('pages/story/discuss.vue') },
+      { path: 'commit', component: () => import('pages/story/commit.vue') }
 
     ],
   },
@@ -76,7 +86,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () => import('layouts/UsersLayout.vue'),
+        component: () => import('layouts/AdninLayout.vue'),
         children:[
           { path: '', component: () => import('pages/admin/index.vue') },
           { path: 'index', component: () => import('pages/admin/index.vue') },

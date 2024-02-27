@@ -9,9 +9,11 @@
         />
       </template>
 
-      <q-breadcrumbs-el label="Home" icon="home" />
-      <q-breadcrumbs-el label="Components" icon="widgets" />
-      <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
+      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
+      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
+      <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
+      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
+      <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
     </q-breadcrumbs>
     <q-splitter
       v-model="splitterModel"

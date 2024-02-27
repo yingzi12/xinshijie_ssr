@@ -32,13 +32,18 @@ const expanded= ref(true);
         />
       </template>
 
-      <q-breadcrumbs-el label="Home" icon="home" />
-      <q-breadcrumbs-el label="Components" icon="widgets" />
-      <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
-      <q-breadcrumbs-el label="世界名称" icon="navigation" />
+      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
+      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
+      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
+      <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
+      <q-breadcrumbs-el label="元素列表" icon="navigation"  to="/world/element"/>
+      <q-breadcrumbs-el label="这是元素名称" icon="navigation"  to="/element/detail"/>
+
     </q-breadcrumbs>
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是元素名称</div>
+      <div class="text-h6 text-center">这是元素名称<q-chip size="xs" icon="bookmark">
+        编辑
+      </q-chip></div>
       <div class="text-subtitle1 text-center">
         <div class="q-pa-md q-gutter-sm">
           <span class="text-overline">创建者:我是创建人</span>

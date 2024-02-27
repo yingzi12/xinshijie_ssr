@@ -31,10 +31,10 @@ const       tab= ref('images');
   <q-header elevated class="bg-purple">
     <q-toolbar>
       <q-avatar>
-        <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+        <img src="/logo.ico">
       </q-avatar>
 
-      <q-toolbar-title>Quasar Framework</q-toolbar-title>
+      <q-toolbar-title>心世界</q-toolbar-title>
 
       <q-btn flat round dense icon="whatshot" />
     </q-toolbar>

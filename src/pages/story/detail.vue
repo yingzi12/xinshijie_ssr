@@ -1,18 +1,23 @@
 <template>
   <q-page>
-  <q-breadcrumbs class="text-brown q-ma-md">
-    <template v-slot:separator>
-      <q-icon
-        size="1.5em"
-        name="chevron_right"
-        color="primary"
-      />
-    </template>
+    <q-breadcrumbs class="text-brown q-ma-md">
+      <template v-slot:separator>
+        <q-icon
+          size="1.5em"
+          name="chevron_right"
+          color="primary"
+        />
+      </template>
 
-    <q-breadcrumbs-el label="Home" icon="home" />
-    <q-breadcrumbs-el label="Components" icon="widgets" />
-    <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
-  </q-breadcrumbs>
+      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
+      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
+      <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
+      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
+      <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
+      <q-breadcrumbs-el label="这个是世界名称" icon="navigation"  to="/world/detail"/>
+      <q-breadcrumbs-el label="世界小说" icon="navigation"  to="/world/story"/>
+      <q-breadcrumbs-el label="这个是小说名称" icon="navigation"  to="/story/detail"/>
+    </q-breadcrumbs>
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
       <q-card-section class="col-5 flex flex-center" style="width: 200px">

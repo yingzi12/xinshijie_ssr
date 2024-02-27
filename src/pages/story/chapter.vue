@@ -18,7 +18,9 @@ function moveFab (ev) {
 };
 const alert=ref(false);
 const expanded= ref(true);
-
+function edit(){
+  console.log("编辑")
+}
 </script>
 
 <template>
@@ -44,13 +46,24 @@ const expanded= ref(true);
         />
       </template>
 
-      <q-breadcrumbs-el label="Home" icon="home" />
-      <q-breadcrumbs-el label="Components" icon="widgets" />
-      <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
-      <q-breadcrumbs-el label="这是小说名称" icon="navigation" />
+      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
+      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
+      <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
+      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
+      <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
+      <q-breadcrumbs-el label="这个是世界名称" icon="navigation"  to="/world/detail"/>
+      <q-breadcrumbs-el label="世界小说" icon="navigation"  to="/world/story"/>
+      <q-breadcrumbs-el label="这个是小说名称" icon="navigation"  to="/story/detail"/>
+      <q-breadcrumbs-el label="章节名称" icon="navigation"  to="/story/chapter"/>
     </q-breadcrumbs>
+
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是章节名称</div>
+      <div class="text-h6 text-center">这是章节名称
+        <q-badge transparent align="middle" color="orange" @click="edit">
+          编辑
+<!--          <q-btn flat color="white" label="编辑" size="xs"/>-->
+        </q-badge>
+      </div>
       <div class="text-subtitle1 text-center">
         <div class="q-pa-md q-gutter-sm">
           <span class="text-overline">创建:2022-11-11 11:23:34</span>

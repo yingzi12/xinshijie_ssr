@@ -9,11 +9,12 @@
         />
       </template>
 
-      <q-breadcrumbs-el label="Home" icon="home" />
-      <q-breadcrumbs-el label="Components" icon="widgets" />
-      <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
-      <q-breadcrumbs-el label="我的故事" icon="navigation" />
-      <q-breadcrumbs-el label="小说列表" icon="navigation" />
+      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
+      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
+      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
+      <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
+      <q-breadcrumbs-el label="小说列表" icon="navigation"  to="/world/story"/>
+
     </q-breadcrumbs>
     <q-splitter
       v-model="splitterModel"
@@ -72,7 +73,7 @@
         </div>
         <div class="q-pa-md q-gutter-md">
           <q-list bordered padding class="rounded-borders">
-            <q-item v-for="index in 10" :key="index">
+            <q-item v-for="index in 10" :key="index" to="/story/detail">
               <q-item-section avatar>
                 <img src="/150.webp" class="small-head-image">
               </q-item-section>

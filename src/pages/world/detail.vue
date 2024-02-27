@@ -8,9 +8,11 @@
       />
     </template>
 
-    <q-breadcrumbs-el label="Home" icon="home" />
-    <q-breadcrumbs-el label="Components" icon="widgets" />
-    <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
+    <q-breadcrumbs-el label="首页" icon="home" to="/"/>
+    <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
+    <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
+    <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
+
   </q-breadcrumbs>
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
@@ -57,12 +59,12 @@
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="secondary" icon="favorite" label="喜欢" />
           <q-btn color="red" icon="comment" label="讨论" />
-          <q-btn color="secondary" icon="favorite" to="/world/element" label="元素列表" />
-          <q-btn color="secondary" icon="favorite" to="/world/story" label="故事列表" />
-          <q-btn color="secondary" icon="favorite" to="/world/story" label="管理员列表" />
-          <q-btn color="secondary" icon="favorite" label="创建元素" />
-          <q-btn color="secondary" icon="favorite" label="创建故事" />
-          <q-btn color="secondary" icon="favorite" label="申请管理员" />
+          <q-btn color="secondary" icon="hotel_class" to="/world/element" label="元素列表" />
+          <q-btn color="secondary" icon="photo_album" to="/world/story" label="故事列表" />
+          <q-btn color="secondary" icon="manage_accounts" to="/world/story" label="管理员列表" />
+          <q-btn color="secondary" icon="add_circle" label="创建元素" />
+          <q-btn color="secondary" icon="add_circle" label="创建故事" />
+          <q-btn color="secondary" icon="add_circle" label="申请管理员" />
 
         </div>
 
@@ -135,12 +137,10 @@
 
             <q-item-section>
               <q-banner rounded class="bg-purple-8 text-white">
-
                 We can't find your saved recipes until you sign in.
-
                 <template v-slot:action>
-                  <q-btn flat color="white" label="Continue as a Guest" />
-                  <q-btn flat color="white" label="Sign in" />
+                  <q-btn flat color="white" label="Continue as a Guest"  icon="thumb_up"/>
+                  <q-btn flat color="white" label="Sign in"  icon="thumb_down"/>
                 </template>
               </q-banner>
             </q-item-section>

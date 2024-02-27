@@ -176,11 +176,12 @@
     <div class="q-pa-md">
       <div class="row">
         <div>
-          <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-          <q-item-label header>随机推荐</q-item-label>
-          <q-separator spaced />
+          <q-list bordered  class="rounded-borders" style="max-width: 300px">
+            <q-toolbar class="bg-primary text-white shadow-2">
+              <q-toolbar-title>优秀精品</q-toolbar-title>
+            </q-toolbar>
 
-          <q-item>
+          <q-item v-for="index in 4" :key="index" to="/story/detail">
             <q-item-section avatar>
               <img src="/150.webp" class="small-head-image">
             </q-item-section>
@@ -192,50 +193,13 @@
             </q-item-section>
           </q-item>
 
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
         </q-list>
         </div>
         <div style="width: 60%">
-          <q-list bordered padding class="rounded-borders" >
-            <q-item-label header>随机推荐</q-item-label>
-            <q-separator spaced />
+          <q-list bordered  class="rounded-borders" >
+            <q-toolbar class="bg-primary text-white shadow-2">
+              <q-toolbar-title>随机推荐</q-toolbar-title>
+            </q-toolbar>
             <q-item>
               <div class="row justify-center q-gutter-sm">
                 <q-intersection
@@ -244,10 +208,10 @@
                   class="example-item"
                 >
                   <q-card class="story-card">
-                    <q-card-section>
+                    <q-card-section @click="routerWorld">
                       <img src="/600.webp" class="small-head-image content-center">
-                      <span class="one-line-clamp">Our Changing Planet</span>
-                      <span class="text-subtitle2">by John Doe</span>
+                      <div class="one-line-clamp">Our Changing Planet</div>
+                      <div class="text-subtitle2">by John Doe</div>
                       <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
                     </q-card-section>
                   </q-card>
@@ -257,11 +221,11 @@
           </q-list>
         </div>
         <div>
-          <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-            <q-item-label header>随机推荐</q-item-label>
-            <q-separator spaced />
-
-            <q-item>
+          <q-list bordered  class="rounded-borders" style="max-width: 300px">
+            <q-toolbar class="bg-primary text-white shadow-2">
+              <q-toolbar-title>随机推荐</q-toolbar-title>
+            </q-toolbar>
+            <q-item v-for="index in 4" :key="index" to="/world/detail">
               <q-item-section avatar>
                 <img src="/150.webp" class="small-head-image">
               </q-item-section>
@@ -273,44 +237,6 @@
               </q-item-section>
             </q-item>
 
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
-
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
-
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
           </q-list>
         </div>
 
@@ -326,11 +252,12 @@
     <div class="q-pa-md">
       <div class="row">
         <div>
-          <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-            <q-item-label header>随机推荐</q-item-label>
-            <q-separator spaced />
+          <q-list bordered  class="rounded-borders" style="max-width: 300px">
+            <q-toolbar class="bg-primary text-white shadow-2">
+              <q-toolbar-title>随机推荐</q-toolbar-title>
+            </q-toolbar>
 
-            <q-item>
+            <q-item v-for="index in 4" :key="index" to="/story/detail">
               <q-item-section avatar>
                 <img src="/150.webp" class="small-head-image">
               </q-item-section>
@@ -342,50 +269,13 @@
               </q-item-section>
             </q-item>
 
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
-
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
-
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
           </q-list>
         </div>
         <div style="width: 60%">
-          <q-list bordered padding class="rounded-borders" >
-            <q-item-label header>随机推荐</q-item-label>
-            <q-separator spaced />
+          <q-list bordered  class="rounded-borders" >
+            <q-toolbar class="bg-primary text-white shadow-2">
+              <q-toolbar-title>随机推荐</q-toolbar-title>
+            </q-toolbar>
             <q-item>
               <div class="row justify-center q-gutter-sm">
                 <q-intersection
@@ -408,11 +298,12 @@
           </q-list>
         </div>
         <div>
-          <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-            <q-item-label header>随机推荐</q-item-label>
-            <q-separator spaced />
-
-            <q-item>
+          <q-list bordered  class="rounded-borders" style="max-width: 300px">
+            <q-toolbar class="bg-primary text-white shadow-2">
+              <q-toolbar-title>随机推荐</q-toolbar-title>
+            </q-toolbar>
+            <q-item   v-for="index in 4"
+                      :key="index">
               <q-item-section avatar>
                 <img src="/150.webp" class="small-head-image">
               </q-item-section>
@@ -424,44 +315,6 @@
               </q-item-section>
             </q-item>
 
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
-
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
-
-
-            <q-item>
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-            </q-item>
           </q-list>
         </div>
 
@@ -1032,6 +885,8 @@ import {reactive, ref, toRefs} from 'vue'
 // import { listAlbum } from "../api/album";
 import { api,tansParams } from 'boot/axios'
 import {useMeta} from "quasar";
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 const metaData = {
   // sets document title
@@ -1094,6 +949,9 @@ function getList(page: number) {
 }
 getList(1)
 
+function routerWorld(){
+  router.push("/world/detail");
+}
 
 </script>
 <style lang="sass" scoped>
