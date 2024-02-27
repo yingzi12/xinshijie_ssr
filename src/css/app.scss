@@ -37,7 +37,18 @@
   margin: 0 auto; /* 设置左右外边距为auto，使图像在水平方向上居中 */
 }
 .story-card{
-  height: 230px;
+  height: 200px;
   text-align: center; /* 将文本内容水平居中 */
 
+}
+
+/* 去掉下划线和设置颜色为继承 */
+.background {
+  text-decoration: none; /* 去掉下划线 */
+  color: inherit; /* 继承父元素的颜色 */
+}
+
+/* 鼠标悬停时显示灰色背景 */
+.background:hover   {
+  background-color: gray; /* 设置背景颜色为灰色 */
 }

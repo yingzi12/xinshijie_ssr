@@ -1,31 +1,8 @@
 <template>
   <q-layout view="hhh LpR fff" style="height: 100vh;">
 
-    <q-header elevated class="bg-purple">
-      <q-toolbar>
-        <q-avatar>
-          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-        </q-avatar>
 
-        <q-toolbar-title>Quasar Framework</q-toolbar-title>
-
-        <q-btn flat round dense icon="whatshot" />
-      </q-toolbar>
-      <q-tabs
-        v-model="tab"
-        inline-label
-        class="shadow-2"
-      >
-        <q-tab name="Home" icon="home" label="谁也" />
-        <q-tab name="alarms" icon="public" label="世界" />
-        <q-tab name="movies" icon="menu_book" label="故事" />
-        <q-tab name="order" icon="category" label="排行榜" />
-        <q-tab name="yard" icon="yard" label="家园" />
-        <q-tab name="service" icon="manage_accounts" label="客服端" />
-        <q-tab name="help" icon="help" label="帮助中心" />
-      </q-tabs>
-    </q-header>
-
+    <HeadComponent></HeadComponent>
     <q-page-container style="height: 100%;">
       <router-view />
       <q-separator color="orange" inset />
@@ -54,36 +31,10 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import {useMeta} from "quasar";
-const metaData = {
-  // sets document title
-  title: '图集网',
-  // optional; sets final title as "Index Page - My Website", useful for multiple level meta
-  titleTemplate: (title) => `${title} - 最热门 Photo Gallery, Beauty, Photo, Photography, Showman.com`,
+import { defineComponent } from 'vue';
+import HeadComponent from 'components/HeadComponent.vue';
 
-  // meta tags
-  meta: {
-    verification:{name:"baidu-site-verification", content:"codeva-y79QY7Z0Nm"},
-     description: { name: 'description', content: '图集网  最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
-    keywords: { name: 'keywords', content: '图集网 最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
-    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
-    // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
-    ogTitle:  {
-      property: 'og:title',
-      // optional; similar to titleTemplate, but allows templating with other meta properties
-      template (ogTitle) {
-        return `${ogTitle} - 最热门 图集网 美女 写真 摄影 秀人网  Photo Gallery, Beauty, Photo, Photography, Showman.com`
-      }
-    }
-  },
-}
-export default {
-  setup () {
-    useMeta(metaData)
-    return {
-      tab: ref('images')
-    }
-  }
-}
+export default defineComponent({
+  components: { HeadComponent }
+});
 </script>

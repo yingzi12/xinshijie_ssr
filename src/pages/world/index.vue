@@ -6,79 +6,79 @@
     <div class="row">
       <div>
         <div class="q-pa-md q-gutter-md">
-        <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-          <q-item-label header>编辑推荐</q-item-label>
+          <q-list bordered padding class="rounded-borders" style="max-width: 300px">
+            <q-item-label header>编辑推荐</q-item-label>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-green">【世界】</span>
-            </q-item-section>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-green">【世界】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
-              <q-item-label  lines="1" caption>这是作者名称</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
+                <q-item-label  lines="1" caption>这是作者名称</q-item-label>
+              </q-item-section>
 
-          </q-item>
+            </q-item>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-blue">【故事】</span>
-            </q-item-section>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-blue">【故事】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
-              <q-item-label  lines="1" caption>这是作者名称</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
+                <q-item-label  lines="1" caption>这是作者名称</q-item-label>
+              </q-item-section>
 
-          </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-weight-thin">【故事】</span>
-            </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-weight-thin">【故事】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
-              <q-item-label  lines="1" caption>这是作者名称</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
+                <q-item-label  lines="1" caption>这是作者名称</q-item-label>
+              </q-item-section>
 
-          </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-weight-thin">【故事】</span>
-            </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-weight-thin">【故事】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
-              <q-item-label  lines="1" caption>这是作者名称</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
+                <q-item-label  lines="1" caption>这是作者名称</q-item-label>
+              </q-item-section>
 
-          </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-weight-thin">【故事】</span>
-            </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-weight-thin">【故事】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
-              <q-item-label  lines="1" caption>这是作者名称</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
+                <q-item-label  lines="1" caption>这是作者名称</q-item-label>
+              </q-item-section>
 
-          </q-item>
+            </q-item>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-weight-thin">【故事】</span>
-            </q-item-section>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-weight-thin">【故事】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
-              <q-item-label  lines="1" caption>这是作者名称</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">这是非常长的故事名称，这是非常长的故事名称</q-item-label>
+                <q-item-label  lines="1" caption>这是作者名称</q-item-label>
+              </q-item-section>
 
-          </q-item>
-        </q-list>
-      </div>
+            </q-item>
+          </q-list>
+        </div>
       </div>
       <div style="width: 60%">
         <div class="q-pa-md">
@@ -98,73 +98,73 @@
       </div>
       <div>
         <div class="q-pa-md q-gutter-md">
-        <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-          <q-item-label header>公告</q-item-label>
+          <q-list bordered padding class="rounded-borders" style="max-width: 300px">
+            <q-item-label header>公告</q-item-label>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-orange">【公告】</span>
-            </q-item-section>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-orange">【公告】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
-              <q-item-label caption>February 22nd, 2019</q-item-label>
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
+                <q-item-label caption>February 22nd, 2019</q-item-label>
+              </q-item-section>
+            </q-item>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-orange">【公告】</span>
-            </q-item-section>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-orange">【公告】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
-              <q-item-label caption>February 22nd, 2019</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-orange">【公告】</span>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
+                <q-item-label caption>February 22nd, 2019</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-orange">【公告】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
-              <q-item-label caption>February 22nd, 2019</q-item-label>
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
+                <q-item-label caption>February 22nd, 2019</q-item-label>
+              </q-item-section>
+            </q-item>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-orange">【公告】</span>
-            </q-item-section>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-orange">【公告】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
-              <q-item-label caption>February 22nd, 2019</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-orange">【公告】</span>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
+                <q-item-label caption>February 22nd, 2019</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-orange">【公告】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
-              <q-item-label caption>February 22nd, 2019</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <span class="text-orange">【公告】</span>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
+                <q-item-label caption>February 22nd, 2019</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar top>
+                <span class="text-orange">【公告】</span>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
-              <q-item-label caption>February 22nd, 2019</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </div></div>
+              <q-item-section>
+                <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
+                <q-item-label caption>February 22nd, 2019</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div></div>
     </div>
     <q-toolbar >
       <q-btn flat round dense icon="menu" />
@@ -177,60 +177,60 @@
       <div class="row">
         <div>
           <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-          <q-item-label header>随机推荐</q-item-label>
-          <q-separator spaced />
+            <q-item-label header>随机推荐</q-item-label>
+            <q-separator spaced />
 
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
+            <q-item>
+              <q-item-section avatar>
+                <img src="/150.webp" class="small-head-image">
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
+                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+              </q-item-section>
+            </q-item>
 
 
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
+            <q-item>
+              <q-item-section avatar>
+                <img src="/150.webp" class="small-head-image">
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
+                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+              </q-item-section>
+            </q-item>
 
 
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
+            <q-item>
+              <q-item-section avatar>
+                <img src="/150.webp" class="small-head-image">
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
+              <q-item-section>
+                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
+                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+              </q-item-section>
+            </q-item>
+
+
+            <q-item>
+              <q-item-section avatar>
+                <img src="/150.webp" class="small-head-image">
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
+                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </div>
         <div style="width: 60%">
           <q-list bordered padding class="rounded-borders" >
@@ -557,29 +557,29 @@
       </div>
       <div style="width: 80%">
         <div class="row">
-        <div class="q-pa-md q-gutter-md">
-          <q-list bordered padding class="rounded-borders" style="width: 300px">
-            <q-item-label header color="black">点击</q-item-label>
-            <q-separator spaced />
+          <div class="q-pa-md q-gutter-md">
+            <q-list bordered padding class="rounded-borders" style="width: 300px">
+              <q-item-label header color="black">点击</q-item-label>
+              <q-separator spaced />
 
-            <q-item
-              v-for="index in 6" :key="index"
-              clickable v-ripple >
-              <q-item-section>
-                <q-item-label lines="1">
-                  <q-badge rounded  v-if="index==1" color="red" :label="index" />
-                  <q-badge rounded v-if="index==2" color="blue" :label="index" />
-                  <q-badge rounded v-if="index==3" color="green" :label="index" />
-                  <q-badge rounded v-if="index>3" color="grey" :label="index" />
-                  [魔法] 这是非常
-                </q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                11111
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </div>
+              <q-item
+                v-for="index in 6" :key="index"
+                clickable v-ripple >
+                <q-item-section>
+                  <q-item-label lines="1">
+                    <q-badge rounded  v-if="index==1" color="red" :label="index" />
+                    <q-badge rounded v-if="index==2" color="blue" :label="index" />
+                    <q-badge rounded v-if="index==3" color="green" :label="index" />
+                    <q-badge rounded v-if="index>3" color="grey" :label="index" />
+                    [魔法] 这是非常
+                  </q-item-label>
+                </q-item-section>
+                <q-item-section side>
+                  11111
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
           <div class="q-pa-md q-gutter-md">
             <q-list bordered padding class="rounded-borders" style="width: 300px">
               <q-item-label header color="black">点击</q-item-label>
@@ -756,7 +756,9 @@
       <div>
         <div class="q-pa-md q-gutter-md">
           <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-            <q-item-label header>随机推荐</q-item-label>
+            <q-toolbar class="bg-primary text-white shadow-2">
+              <q-toolbar-title>随机推荐</q-toolbar-title>
+            </q-toolbar>
             <q-separator spaced />
 
             <q-item>
@@ -1056,7 +1058,7 @@ const metaData = {
 }
 
 
-    // needs to be called in setup()
+// needs to be called in setup()
 useMeta(metaData)
 
 const seach=ref("")
@@ -1079,7 +1081,7 @@ const data = reactive({
 const image=ref("")
 const { queryParams, form, rules } = toRefs(data);
 function getList(page: number) {
-   // 滚动到顶部
+  // 滚动到顶部
   current.value=page
   queryParams.value.title=title.value;
   queryParams.value.pageNum=page;

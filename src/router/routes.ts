@@ -12,9 +12,13 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/VideoJSPlayer.vue') }],
   },
   {
-    path: '/see',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/SeePage.vue') }],
+    path: '/order',
+    component: () => import('layouts/OrderLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/order/index.vue') },
+      { path: 'like', component: () => import('pages/order/like.vue') }
+
+    ],
   },
   {
     path: '/findImage',
@@ -26,7 +30,46 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/index.vue') }],
   },
+  {
+    path: '/world',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/world/index.vue') },
+      { path: 'index', component: () => import('pages/world/index.vue') },
+      { path: 'detail', component: () => import('pages/world/detail.vue') },
+      { path: 'order', component: () => import('pages/world/order.vue') },
+      { path: 'story', component: () => import('pages/world/story.vue') },
+      { path: 'manage', component: () => import('pages/world/manage.vue') },
+      { path: 'discuss', component: () => import('pages/world/discuss.vue') },
+      { path: 'element', component: () => import('pages/world/element.vue') },
+      { path: 'commit', component: () => import('pages/world/commit.vue') }
 
+    ],
+  },
+  {
+    path: '/story',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/story/index.vue') },
+      { path: 'index', component: () => import('pages/story/index.vue') },
+      { path: 'detail', component: () => import('pages/story/detail.vue') },
+      { path: 'order', component: () => import('pages/story/order.vue') },
+      { path: 'list', component: () => import('pages/world/story.vue') },
+      { path: 'chapter', component: () => import('pages/story/chapter.vue') },
+      { path: 'commit', component: () => import('pages/world/commit.vue') }
+
+    ],
+  },
+  {
+    path: '/element',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/element/index.vue') },
+      { path: 'index', component: () => import('pages/element/index.vue') },
+      { path: 'detail', component: () => import('pages/element/detail.vue') },
+      { path: 'commit', component: () => import('pages/world/commit.vue') }
+    ],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
