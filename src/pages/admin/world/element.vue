@@ -109,7 +109,8 @@ const simple=[
 
     <div class="q-pa-md q-gutter-md">
       <q-list bordered padding class="rounded-borders">
-        <q-item v-for="index in 10" :key="index" to="/admin/world/info">
+        <div v-for="index in 10" :key="index">
+        <q-item  to="/admin/world/info">
           <q-item-section avatar>
             <img src="/150.webp" class="small-head-image">
           </q-item-section>
@@ -135,7 +136,7 @@ const simple=[
           </q-item-section>
         </q-item>
         <q-separator spaced />
-
+        </div>
       </q-list>
       <div class="q-pa-lg flex flex-center">
         <q-pagination

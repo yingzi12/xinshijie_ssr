@@ -36,74 +36,42 @@ const shape= ref('line');
       <q-item-label header>Google Inbox style</q-item-label>
 
       <div v-for="index in 10" :key="index">
-      <q-item>
-        <q-item-section avatar top>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-          </q-avatar>
-        </q-item-section>
+        <q-item  >
+          <q-item-section avatar>
+            <img src="/150.webp" class="small-head-image">
+          </q-item-section>
 
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">这是用户名<q-badge color="primary">v1.0.0+</q-badge></q-item-label>
-          <q-item-label class="q-mt-sm text-blue">待审核</q-item-label>
-          <q-item-label lines="1">这是一个签名，这是一个签名，这是一个签名，这是一个签名，这是一个签名</q-item-label>
-        </q-item-section>
+          <q-item-section side>
+            <q-item-label class="one-line-clamp  text-subtitle1">我是超级长的章节标题，我是超级长的章节标题，我是超级长的章节标题</q-item-label>
+            <q-item-label class="q-mb-xs"><span style="color: #C10015">待审核 · </span><span style="color: #C10015">新增</span></q-item-label>
+            <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+            <q-item-label class="one-line-clamp text-weight-thin text-overline">2022-11-11 11:11:23</q-item-label>
+          </q-item-section>
+          <!--          <q-item-section side top>-->
+          <!--            <q-item-label class="one-line-clamp text-weight-thin text-overline">创建人：我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>-->
+          <!--            <q-item-label class="one-line-clamp text-weight-thin text-overline">创建时间：2022-11-11 11:11:23</q-item-label>-->
+          <!--          </q-item-section>-->
+          <q-item-section side top>
+            <q-item-label >
+              <span class="text-weight-medium">编辑理由：</span>
+              <span class="text-grey-8"> - GitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repository</span>
+              <q-separator spaced />
+              <span class="text-weight-medium">拒绝理由：</span>
+              <span class="text-grey-8"> - GitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repository</span>
+              <div>
+                <div class="text-grey-8">审核人：这是名称，这是名称，这是名称，这是名称</div>
+                <div class="text-grey-8">审核时间：2025-11-11 11:34:54</div>
+              </div>
+            </q-item-label>
 
-        <q-item-section top class="col-1 gt-sm">
-          <q-item-label lines="1">
-            <span class="text-weight-medium">经验：</span>
-            <span class="text-grey-8">1000</span>
-          </q-item-label>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">元素：</span>
-            <span class="text-grey-8">100</span>
-          </q-item-label>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">故事：</span>
-            <span class="text-grey-8">1</span>
-          </q-item-label>
-        </q-item-section>
-        <q-item-section top class="col-1 gt-sm">
-          <q-item-label lines="1">
-            <span class="text-weight-medium">编辑数：</span>
-            <span class="text-grey-8">1000</span>
-          </q-item-label>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">审核数：</span>
-            <span class="text-grey-8">100</span>
-          </q-item-label>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">评论数：</span>
-            <span class="text-grey-8">1</span>
-          </q-item-label>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">讨论数：</span>
-            <span class="text-grey-8">1</span>
-          </q-item-label>
-        </q-item-section>
-        <q-item-section top side>
-          <q-item-label >
-            <span class="text-weight-medium">申请理由：</span>
-            <span class="text-grey-8"> - GitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repository</span>
-            <q-separator spaced />
-            <span class="text-weight-medium">拒绝理由：</span>
-            <span class="text-grey-8"> - GitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repository</span>
-            <div>
-            <div class="text-grey-8">审核人：这是名称，这是名称，这是名称，这是名称</div>
-            <div class="text-grey-8">审核时间：2025-11-11 11:34:54</div>
+          </q-item-section>
+          <q-item-section top side>
+            <div class="text-grey-8 q-gutter-xs">
+              <q-btn class="gt-xs" size="12px" flat dense round icon="delete" label="审核" @click="prompt=true"/>
             </div>
-          </q-item-label>
-
-        </q-item-section>
-
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" label="审核" @click="prompt=true"/>
-          </div>
-        </q-item-section>
-      </q-item>
-
-      <q-separator spaced />
+          </q-item-section>
+        </q-item>
+        <q-separator spaced />
       </div>
     </q-list>
   </q-page>

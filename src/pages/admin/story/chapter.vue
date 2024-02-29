@@ -31,7 +31,13 @@ const seach=ref("");
         <q-btn flat round dense icon="group_add" />
       </q-toolbar>
       <q-toolbar inset>
-        <q-toolbar-title>这是分卷名称</q-toolbar-title>
+
+        <q-toolbar-title>
+          <q-btn flat round label="这是分卷名称" to="/admin/story/reel"/>
+        </q-toolbar-title>
+        <q-space />
+        <q-btn flat round dense icon="add" label="新增章节" />
+
       </q-toolbar>
     </div>
     <q-list bordered class="rounded-borders" >

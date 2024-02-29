@@ -16,7 +16,7 @@ const xh=ref("");
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
         <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-        <q-btn flat round dense icon="more_vert" />
+        <q-btn flat round dense icon="more_vert" label="新增分卷"/>
       </q-toolbar>
     </div>
     <q-list bordered class="rounded-borders" >
