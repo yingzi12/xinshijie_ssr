@@ -7,9 +7,9 @@ const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
 const $q = useQuasar();
 const token = Cookies.get("token");
 // 如果没有 token，重定向到登录页面
-if (!token) {
-  router.push('/login');
-}
+// if (!token) {
+//   router.push('/login');
+// }
 const drawer = ref(false);
 const link = ref('detail')
 const users = ref(null)
@@ -70,12 +70,12 @@ const logout = async () => {
     Cookies.remove("token");
     Cookies.remove("id");
     Cookies.remove("userInfo");
-    router.push('/login'); // 假设登录页面的路由为 '/login'
+    // router.push('/login'); // 假设登录页面的路由为 '/login'
   }catch (error){
     Cookies.remove("token");
     Cookies.remove("id");
     Cookies.remove("userInfo");
-    router.push('/login'); // 假设登录页面的路由为 '/login'
+    // router.push('/login'); // 假设登录页面的路由为 '/login'
   }
 };
 

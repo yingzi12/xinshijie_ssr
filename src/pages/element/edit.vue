@@ -7,6 +7,7 @@ import { Cookies } from 'quasar'
 import {useRouter} from "vue-router";
 import {ref} from "vue";
 import {compressIfNeeded} from "boot/tools";
+import { addObject, insertObjectAfterId, MyObject, myObjectArray, removeObjectById } from 'boot/ArrayUtils';
 const token = Cookies.get('token');
 const $q = useQuasar();
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
@@ -24,20 +25,6 @@ const charge = ref(1);
 const previewImage = ref("/favicon.ico");
 const selectedImage = ref<File | null>(null);
 
-interface MyObject {
-  id: number;
-  title: string;
-  info: string;
-  bh: number;
-}
-
-// 创建一个 MyObject 类型的对象数组
-const myObjectArray: MyObject[] = [
-  { id: 1, title: 'Title 1', info: 'Info 1', bh: 1001 },
-  { id: 2, title: 'Title 2', info: 'Info 2', bh: 1002 },
-  { id: 3, title: 'Title 3', info: 'Info 3', bh: 1003 },
-  // ... 可以继续添加更多对象
-];
 function notify(message: string, color: string) {
   $q.notify({
     color: color,
@@ -135,6 +122,10 @@ async function handleImageUpload(event: Event) {
     notify('Error uploading image', 'red-5');
   }
 }
+// 初始的 MyObject 类型的对象数组
+const myInfoArray = ref<MyObject[]>([
+  { id: 1, title: 'Title 1', info: 'Info 1', bh: 1001 }
+]);
 
 const qeditor= ref(
   '<pre>Check out the two different types of dropdowns' +
@@ -240,6 +231,38 @@ const simple=[
   }
 ]
 
+function addInfo(id){
+  console.log("----addInfo---")
+  const timestamp = Date.now();
+  const myObject: MyObject = {
+    id: timestamp,
+    title: 'Example Title',
+    info: 'This is some info',
+    bh: 12345
+  };
+  const updatedArrayAfterInsert =  insertObjectAfterId(myInfoArray.value,id,myObject);
+  myInfoArray.value=updatedArrayAfterInsert;
+  console.log("----addInfo--stop-")
+}
+function delInfo(id){
+  console.log("----delInfo-{id}--")
+  const updatedArrayAfterRemove = removeObjectById(myInfoArray.value, id);
+  myInfoArray.value=updatedArrayAfterRemove;
+  console.log("----delInfo--stop-")
+}
+function newInfo(){
+  console.log("----newInfo-{id}--")
+  const timestamp = Date.now();
+  const myObject: MyObject = {
+    id: timestamp,
+    title: 'Example Title',
+    info: 'This is some info',
+    bh: 12345
+  };
+  const updatedArrayAfterRemove = addObject(myInfoArray.value,myObject);
+  myInfoArray.value=updatedArrayAfterRemove;
+  console.log("----newInfo--stop-")
+}
 </script>
 
 <template>
@@ -281,45 +304,45 @@ const simple=[
             <q-separator />
             <q-card-actions>
               <div>
-              <div class="q-pa-md q-gutter-sm">
+                <div class="q-pa-md q-gutter-sm">
+                  <div>
+                    <q-img
+                      :src="previewImage"
+                      spinner-color="white"
+                      style="height: 140px; max-width: 150px"
+                    />
+                  </div>
+                  <input accept="image/*" type="file" @change="handleImageUpload"/>
+                </div>
                 <div>
-                  <q-img
-                    :src="previewImage"
-                    spinner-color="white"
-                    style="height: 140px; max-width: 150px"
+                  <q-input
+                    v-model="title"
+                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小说名称，长度2-100']"
+                    filled
+                    hint="输入小说名称"
+                    label="小说名称 *"
+                    lazy-rules
                   />
                 </div>
-                <input accept="image/*" type="file" @change="handleImageUpload"/>
-              </div>
-              <div>
-              <q-input
-                v-model="title"
-                :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小说名称，长度2-100']"
-                filled
-                hint="输入小说名称"
-                label="小说名称 *"
-                lazy-rules
-              />
-              </div>
-              <div>
-              <q-input
-                v-model="intro"
-                :rules="[ val => val && val.length >= 5 && val.length <= 300 || '请输入简介，长度5-300']"
-                filled
-                label="简介 *"
-                type="textarea"
-              />
-              </div>
-              <div>
-              <q-input
-                v-model="tags"
-                :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-30']"
-                filled
-                label="标签 *"
-                lazy-rules
-                type="text"
-              />
-              </div>
+                <div>
+                  <q-input
+                    v-model="intro"
+                    :rules="[ val => val && val.length >= 5 && val.length <= 300 || '请输入简介，长度5-300']"
+                    filled
+                    label="简介 *"
+                    type="textarea"
+                  />
+                </div>
+                <div>
+                  <q-input
+                    v-model="tags"
+                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-30']"
+                    filled
+                    label="标签 *"
+                    lazy-rules
+                    type="text"
+                  />
+                </div>
               </div>
             </q-card-actions>
           </q-card>
@@ -331,186 +354,52 @@ const simple=[
             <q-separator />
             <q-card-actions>
               <div>
-<!--              <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="dialogAert = true" size="xs" />)</div>-->
-              <div class="q-pa-md q-gutter-sm">
-                已选择分类：
-                <q-btn  color="brown" label="全部" size="xs"/>
-                <q-btn  color="brown" label="魔法" size="xs"/>
-                <q-btn  color="brown" label="科学" size="xs"/>
-                <q-btn  color="brown" label="远古" size="xs"/>
-                <q-btn  color="brown" label="修真" size="xs"/>
-                <q-btn  color="brown" label="仙侠" size="xs"/>
-              </div>
+                <!--              <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="dialogAert = true" size="xs" />)</div>-->
+                <div class="q-pa-md q-gutter-sm">
+                  已选择分类：
+                  <q-btn  color="brown" label="全部" size="xs"/>
+                  <q-btn  color="brown" label="魔法" size="xs"/>
+                  <q-btn  color="brown" label="科学" size="xs"/>
+                  <q-btn  color="brown" label="远古" size="xs"/>
+                  <q-btn  color="brown" label="修真" size="xs"/>
+                  <q-btn  color="brown" label="仙侠" size="xs"/>
+                </div>
               </div>
             </q-card-actions>
           </q-card>
           <q-card >
             <q-card-section>
               <span class="text-h6 ">小节</span>
-              <span class="text-h6 float-right">添加小节</span>
+              <span class="text-h6 float-right" @click="newInfo()">添加小节</span>
             </q-card-section>
-
             <q-separator />
             <q-card-actions>
-              <q-card >
+              <q-card v-for="(info,index ) in myInfoArray" :key="index" >
                 <q-card-section>
-                <div>
-                <div class="q-pa-md">
-                  <div class="row no-wrap shadow-1">
-                    <q-toolbar class="col-8" :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-grey-3'">
-                      <q-btn flat round dense icon="menu" />
-                      <q-input v-model="title"
-                               label="Standard"
-                               :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小节名称，长度2-100']"
-                               lazy-rules
+                  <div class="q-pa-md">
+                    <div class="row no-wrap shadow-1">
+                      <q-toolbar class="col-8" :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-grey-3'">
+                        <q-btn flat round dense icon="menu" />
+                        <q-input v-model="info.title"
+                                 label="Standard"
+                                 :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小节名称，长度2-100']"
+                                 lazy-rules
 
-                      />
-                      <q-btn flat round dense icon="save" />
-                    </q-toolbar>
-                    <q-toolbar class="col-4 bg-primary text-white">
-                      <q-space />
-                      <q-btn flat round dense icon="add" class="q-mr-sm" />
-                      <q-btn flat round dense icon="delete" />
-                    </q-toolbar>
-                  </div>
-                </div>
-                <div>
-                </div>
-                </div>
-                </q-card-section>
-                  <q-card-actions>
-                  <div class="q-pa-md q-gutter-sm">
-                    <q-editor
-                      v-model="qeditor"
-                      :dense="$q.screen.lt.md"
-                      :definitions="{
-        upload: {
-          tip: 'Upload to cloud',
-          icon: 'cloud_upload',
-          label: 'Upload',
-          handler: uploadIt
-        }
-      }"
-                      :toolbar="[
-        [
-          {
-            label: $q.lang.editor.align,
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            list: 'only-icons',
-            options: ['left', 'center', 'right', 'justify']
-          },
-          {
-            label: $q.lang.editor.align,
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            options: ['left', 'center', 'right', 'justify']
-          }
-        ],
-        ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
-        ['token', 'hr', 'link', 'custom_btn'],
-        ['print', 'fullscreen','upload', ],
-        [
-          {
-            label: $q.lang.editor.formatting,
-            icon: $q.iconSet.editor.formatting,
-            list: 'no-icons',
-            options: [
-              'p',
-              'h1',
-              'h2',
-              'h3',
-              'h4',
-              'h5',
-              'h6',
-              'code'
-            ]
-          },
-          {
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-          },
-          {
-            label: $q.lang.editor.defaultFont,
-            icon: $q.iconSet.editor.font,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'default_font',
-              'arial',
-              'arial_black',
-              'comic_sans',
-              'courier_new',
-              'impact',
-              'lucida_grande',
-              'times_new_roman',
-              'verdana'
-            ]
-          },
-          'removeFormat'
-        ],
-        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
-
-        ['undo', 'redo'],
-        ['viewsource']
-      ]"
-                      :fonts="{
-        arial: 'Arial',
-        arial_black: 'Arial Black',
-        comic_sans: 'Comic Sans MS',
-        courier_new: 'Courier New',
-        impact: 'Impact',
-        lucida_grande: 'Lucida Grande',
-        times_new_roman: 'Times New Roman',
-        verdana: 'Verdana'
-      }"
-                    />
-                  </div>
-            </q-card-actions>
-
-          </q-card>
-              <q-card >
-                <q-card-section>
-                  <div>
-                    <div class="q-pa-md">
-                      <div class="row no-wrap shadow-1">
-                        <q-toolbar class="col-8" :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-grey-3'">
-                          <q-btn flat round dense icon="menu" />
-                          <q-input v-model="title"
-                                   label="Standard"
-                                   :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小节名称，长度2-100']"
-                                   lazy-rules
-
-                          />
-                          <q-btn flat round dense icon="save" />
-                        </q-toolbar>
-                        <q-toolbar class="col-4 bg-primary text-white">
-                          <q-space />
-                          <q-btn flat round dense icon="add" class="q-mr-sm" />
-                          <q-btn flat round dense icon="delete" />
-                        </q-toolbar>
-                      </div>
-                    </div>
-                    <div>
+                        />
+                        <q-btn flat round dense icon="save" />
+                      </q-toolbar>
+                      <q-toolbar class="col-4 bg-primary text-white">
+                        <q-space />
+                        <q-btn flat round dense icon="add" class="q-mr-sm" @click="addInfo(info.id)" />
+                        <q-btn flat round dense icon="delete"  @click="delInfo(info.id)" />
+                      </q-toolbar>
                     </div>
                   </div>
                 </q-card-section>
                 <q-card-actions>
                   <div class="q-pa-md q-gutter-sm">
                     <q-editor
-                      v-model="qeditor"
+                      v-model="info.info"
                       :dense="$q.screen.lt.md"
                       :definitions="{
         upload: {
@@ -608,139 +497,7 @@ const simple=[
                     />
                   </div>
                 </q-card-actions>
-
               </q-card>
-
-              <q-card >
-                <q-card-section>
-                  <div>
-                    <div class="q-pa-md">
-                      <div class="row no-wrap shadow-1">
-                        <q-toolbar class="col-8" :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-grey-3'">
-                          <q-btn flat round dense icon="menu" />
-                          <q-input v-model="title"
-                                   label="Standard"
-                                   :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小节名称，长度2-100']"
-                                   lazy-rules
-
-                          />
-                          <q-btn flat round dense icon="save" />
-                        </q-toolbar>
-                        <q-toolbar class="col-4 bg-primary text-white">
-                          <q-space />
-                          <q-btn flat round dense icon="add" class="q-mr-sm" />
-                          <q-btn flat round dense icon="delete" />
-                        </q-toolbar>
-                      </div>
-                    </div>
-                    <div>
-                    </div>
-                  </div>
-                </q-card-section>
-                <q-card-actions>
-                  <div class="q-pa-md q-gutter-sm">
-                    <q-editor
-                      v-model="qeditor"
-                      :dense="$q.screen.lt.md"
-                      :definitions="{
-        upload: {
-          tip: 'Upload to cloud',
-          icon: 'cloud_upload',
-          label: 'Upload',
-          handler: uploadIt
-        }
-      }"
-                      :toolbar="[
-        [
-          {
-            label: $q.lang.editor.align,
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            list: 'only-icons',
-            options: ['left', 'center', 'right', 'justify']
-          },
-          {
-            label: $q.lang.editor.align,
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            options: ['left', 'center', 'right', 'justify']
-          }
-        ],
-        ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
-        ['token', 'hr', 'link', 'custom_btn'],
-        ['print', 'fullscreen','upload', ],
-        [
-          {
-            label: $q.lang.editor.formatting,
-            icon: $q.iconSet.editor.formatting,
-            list: 'no-icons',
-            options: [
-              'p',
-              'h1',
-              'h2',
-              'h3',
-              'h4',
-              'h5',
-              'h6',
-              'code'
-            ]
-          },
-          {
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-          },
-          {
-            label: $q.lang.editor.defaultFont,
-            icon: $q.iconSet.editor.font,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'default_font',
-              'arial',
-              'arial_black',
-              'comic_sans',
-              'courier_new',
-              'impact',
-              'lucida_grande',
-              'times_new_roman',
-              'verdana'
-            ]
-          },
-          'removeFormat'
-        ],
-        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
-
-        ['undo', 'redo'],
-        ['viewsource']
-      ]"
-                      :fonts="{
-        arial: 'Arial',
-        arial_black: 'Arial Black',
-        comic_sans: 'Comic Sans MS',
-        courier_new: 'Courier New',
-        impact: 'Impact',
-        lucida_grande: 'Lucida Grande',
-        times_new_roman: 'Times New Roman',
-        verdana: 'Verdana'
-      }"
-                    />
-                  </div>
-                </q-card-actions>
-
-              </q-card>
-
             </q-card-actions>
           </q-card>
           <div>

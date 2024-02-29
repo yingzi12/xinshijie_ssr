@@ -31,7 +31,7 @@
           <span class="text-overline">全部</span>
         </div>
         <q-separator spaced />
-        <div class="text-h6">分类</div>
+        <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />)</div>
         <div class="q-pa-md q-gutter-sm">
           <q-btn  color="brown" label="全部" size="xs"/>
           <q-btn  color="brown" label="魔法" size="xs"/>
@@ -39,6 +39,12 @@
           <q-btn  color="brown" label="远古" size="xs"/>
           <q-btn  color="brown" label="修真" size="xs"/>
           <q-btn  color="brown" label="仙侠" size="xs"/>
+        </div>
+        <div>
+          已增加过滤：
+          <div class="q-pa-md q-gutter-sm">
+            <q-btn v-for="(t,index) in ticked" :key="index" color="brown" :label="t" size="xs"/>
+          </div>
         </div>
         <q-separator spaced />
         <div class="text-h6">标签</div>
@@ -108,6 +114,54 @@
     </q-splitter>
 
   </q-page>
+  <q-dialog v-model="alert">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Alert</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <div class="q-pa-md row q-col-gutter-sm">
+          <q-tree class="col-12 col-sm-6"
+                  :nodes="simple"
+                  node-key="label"
+                  tick-strategy="leaf"
+                  v-model:selected="selected"
+                  v-model:ticked="ticked"
+                  v-model:expanded="expanded"
+          />
+          <div class="col-12 col-sm-6 q-gutter-sm">
+            <div class="text-h6">Selected</div>
+            <div>{{ selected }}</div>
+
+            <q-separator spaced />
+
+            <div class="text-h6">Ticked</div>
+            <div>
+              <div v-for="tick in ticked" :key="`ticked-${tick}`">
+                {{ tick }}
+              </div>
+            </div>
+
+            <q-separator spaced />
+
+            <div class="text-h6">Expanded</div>
+            <div>
+              <div v-for="expand in expanded" :key="`expanded-${expand}`">
+                {{ expand }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="Cancel" color="primary" v-close-popup />
+        <q-btn flat label="Turn on Wifi" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script lang="ts" setup>
@@ -116,6 +170,66 @@ import { ref } from 'vue';
 const splitterModel= ref(200); // start at 150px
 const  current= ref(6);
 const seach=ref("");
+const alert=ref(false);
+
+
+const selected= ref('Pleasant surroundings');
+const ticked=ref([ 'Quality ingredients', 'Good table presentation' ]);
+const expanded= ref(['Satisfied customers1', 'Satisfied customers', 'Good service (disabled node)', 'Pleasant surroundings' ]);
+
+const simple=[
+  {
+    label: 'Satisfied customers1',
+    children: [
+      {
+        label: 'Good food11',
+        children: [
+          { label: 'Quality ingredients111' },
+          {
+            label: 'Good recipe112',
+            children: [
+              { label: 'Quality ingredients1121' },
+              { label: 'Good recipe1122' ,
+                children: [
+                  { label: 'Quality ingredients11221' ,
+                    children: [
+                      { label: 'Quality ingredients112211' },
+                      { label: 'Good recipe112212' }
+                    ]
+                  },
+                  { label: 'Good recipe11222' }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        label: 'Good service (disabled node)',
+        disabled: true,
+        children: [
+          {
+            label: 'Prompt attention' ,
+            children: [
+              { label: 'Quality ingredients' },
+              { label: 'Good recipe' }
+            ]
+          },
+          { label: 'Professional waiter'
+          }
+        ]
+      },
+      {
+        label: 'Pleasant surroundings',
+        children: [
+          { label: 'Happy atmosphere' },
+          { label: 'Good table presentation' },
+          { label: 'Pleasing decor' }
+        ]
+      }
+    ]
+  }
+]
 </script>
 
 <style scoped>

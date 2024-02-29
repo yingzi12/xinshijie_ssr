@@ -33,8 +33,7 @@
         <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">管理员: 我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
         <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">更新时间:2024-11-11 11:32:23</q-item-label>
         <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">最新章节:第436章 第356章 捕虫大会</q-item-label>
-        <q-item-label class="q-mb-xs">连载 · 签约 · VIP · 轻小说 · 衍生同人 · 轻小说
-        </q-item-label>
+        <q-item-label class="q-mb-xs">连载 · 签约 · VIP · 轻小说 · 衍生同人 · 轻小说</q-item-label>
         <q-item-label class="three-line-clamp text-caption text-grey q-mb-xs" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
         <div class="q-gutter-sm q-mb-xs">
           <span class="text-h6">
