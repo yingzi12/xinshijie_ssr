@@ -2,14 +2,19 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/detail',
+    path: '/privacyPolicy',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/DetailPage.vue') }],
+    children: [{ path: '', component: () => import('pages/privacyPolicy.vue') }],
   },
   {
-    path: '/play',
+    path: '/use',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/VideoJSPlayer.vue') }],
+    children: [{ path: '', component: () => import('pages/use.vue') }],
+  },
+  {
+    path: '/findImagePage',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/findImagePage.vue') }],
   },
   {
     path: '/login',
@@ -110,6 +115,9 @@ const routes: RouteRecordRaw[] = [
           { path: 'auditElement', component: () => import('pages/admin/world/auditElement.vue') },
           { path: 'auditStory', component: () => import('pages/admin/world/auditStory.vue') },
           { path: 'auditManage', component: () => import('pages/admin/world/auditManage.vue') },
+          { path: 'edit', component: () => import('pages/admin/world/edit.vue') },
+          { path: 'create', component: () => import('pages/admin/world/create.vue') },
+
         ]
       },
       {
@@ -125,21 +133,55 @@ const routes: RouteRecordRaw[] = [
           { path: 'auditChapter', component: () => import('pages/admin/story/auditChapter.vue') },
           { path: 'discuss', component: () => import('pages/admin/story/discuss.vue') },
           { path: 'commit', component: () => import('pages/admin/story/commit.vue') },
+          { path: 'edit', component: () => import('pages/admin/story/edit.vue') },
+          { path: 'create', component: () => import('pages/admin/story/create.vue') },
+        ]
+      },
+      {
+        path: 'element',
+        children:[
+          { path: '', component: () => import('pages/admin/element/index.vue') },
+          { path: 'index', component: () => import('pages/admin/element/index.vue') },
+          { path: 'info', component: () => import('pages/admin/element/info.vue') },
+          { path: 'draft', component: () => import('pages/admin/element/draft.vue') },
+          { path: 'create', component: () => import('pages/admin/element/create.vue') },
+          { path: 'edit', component: () => import('pages/admin/element/edit.vue') },
 
         ]
       },
+      {
+        path: 'chapter',
+        children:[
+          { path: '', component: () => import('pages/admin/chapter/index.vue') },
+          { path: 'index', component: () => import('pages/admin/chapter/index.vue') },
+          { path: 'info', component: () => import('pages/admin/chapter/info.vue') },
+          { path: 'draft', component: () => import('pages/admin/chapter/draft.vue') },
+          { path: 'edit', component: () => import('pages/admin/chapter/edit.vue') },
+          { path: 'create', component: () => import('pages/admin/chapter/create.vue') },
+        ]
+      },
+
     ],
   },
   {
     path: '/users',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/UserLayout.vue'),
     children: [
       {
         path: '',
-        component: () => import('layouts/UsersLayout.vue'),
         children:[
           { path: '', component: () => import('pages/users/index.vue') },
           { path: 'index', component: () => import('pages/users/index.vue') },
+          { path: 'collection', component: () => import('pages/users/collection.vue') },
+          { path: 'password', component: () => import('pages/users/password.vue') },
+          { path: 'service', component: () => import('pages/users/service.vue') },
+          { path: 'invite', component: () => import('pages/users/invite.vue') },
+          { path: 'discuss', component: () => import('pages/users/discuss.vue') },
+          { path: 'commit', component: () => import('pages/users/commit.vue') },
+          { path: 'message', component: () => import('pages/users/message.vue') },
+          { path: 'notification', component: () => import('pages/users/notification.vue') },
+          { path: 'edit', component: () => import('pages/admin/users/edit.vue') },
+
         ]
       },
     ],

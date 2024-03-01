@@ -23,7 +23,6 @@
 
         />
       </q-toolbar>
-
     </q-header>
     <q-drawer
       v-model="leftDrawerOpen" side="left"
@@ -37,7 +36,7 @@
                   :active="link === 'detail'"
                   active-class="my-menu-link"
                   clickable
-                  to="/admin/world/index"
+                  to="/users/"
                   @click="link = 'detail'"
           >
             <q-item-section avatar>
@@ -45,7 +44,7 @@
             </q-item-section>
 
             <q-item-section>
-              世界管理
+              {{ $t(`user.personalInfo`) }}
             </q-item-section>
           </q-item>
 
@@ -53,7 +52,7 @@
                   :active="link === 'attention'"
                   active-class="my-menu-link"
                   clickable
-                  to="/admin/element/index"
+                  to="/users/attention"
                   @click="link = 'attention'"
           >
             <q-item-section avatar>
@@ -61,14 +60,14 @@
             </q-item-section>
 
             <q-item-section>
-              元素草稿
+              {{ $t(`user.myAttention`) }}
             </q-item-section>
           </q-item>
           <q-item v-ripple
                   :active="link === 'collection'"
                   active-class="my-menu-link"
                   clickable
-                  to="/admin/story/index"
+                  to="/users/collection"
                   @click="link = 'collection'"
           >
             <q-item-section avatar>
@@ -76,27 +75,116 @@
             </q-item-section>
 
             <q-item-section>
-              故事管理
+              {{ $t(`user.myCollection`) }}
             </q-item-section>
           </q-item>
           <q-separator/>
           <q-item v-ripple
-                  :active="link === 'buy'"
+                  :active="link === 'notification'"
                   active-class="my-menu-link"
                   clickable
-                  to="/admin/chapter/index"
-                  @click="link = 'buy'"
+                  to="/users/notification"
+                  @click="link = 'notification'"
           >
             <q-item-section avatar>
-              <q-icon name="shopping_bag"/>
+              <q-icon name="notification"/>
             </q-item-section>
             <q-item-section>
-             章节管理
+              {{ $t(`user.notification`) }}
+            </q-item-section>
+          </q-item>
+          <q-item v-ripple
+                  :active="link === 'message'"
+                  active-class="my-menu-link"
+                  clickable
+                  to="/users/message"
+                  @click="link = 'message'"
+          >
+            <q-item-section avatar>
+              <q-icon name="message"/>
+            </q-item-section>
+            <q-item-section>
+              {{ $t(`user.message`) }}
+            </q-item-section>
+          </q-item>
+          <q-item v-ripple
+                  :active="link === 'discuss'"
+                  active-class="my-menu-link"
+                  clickable
+                  to="/users/discuss"
+                  @click="link = 'discuss'"
+          >
+            <q-item-section avatar>
+              <q-icon name="discuss"/>
+            </q-item-section>
+            <q-item-section>
+              {{ $t(`user.discuss`) }}
             </q-item-section>
           </q-item>
           <q-separator/>
 
+          <q-item v-ripple
+                  :active="link === 'invite'"
+                  active-class="my-menu-link"
+                  clickable
+                  to="/users/invite"
+                  @click="link = 'invite'"
+          >
+            <q-item-section avatar>
+              <q-icon name="send"/>
+            </q-item-section>
+            <q-item-section>
+              {{ $t(`user.myInvitation`) }}
+            </q-item-section>
+          </q-item>
+          <q-item v-ripple
+                  :active="link === 'password'"
+                  active-class="my-menu-link"
+                  clickable
+                  to="/users/password"
+                  @click="link = 'password'"
+          >
+            <q-item-section avatar>
+              <q-icon name="password"/>
+            </q-item-section>
+
+            <q-item-section>
+              {{ $t(`user.resetPassword`) }}
+            </q-item-section>
+          </q-item>
+          <q-item
+            v-ripple
+            :active="link === 'service'"
+            active-class="my-menu-link"
+            clickable
+            to="/users/service"
+            @click="link = 'service'"
+          >
+            <q-item-section avatar>
+              <q-icon name="mail_outline"/>
+            </q-item-section>
+
+            <q-item-section>
+              {{ $t(`user.customerService`) }}
+            </q-item-section>
+          </q-item>
+          <q-item
+            v-ripple
+            :active="link === 'drafts'"
+            active-class="my-menu-link"
+            clickable
+            @click="logout"
+          >
+            <q-item-section avatar>
+              <q-icon name="exit_to_app"/>
+            </q-item-section>
+
+            <q-item-section>
+              {{ $t(`user.logOut`) }}
+            </q-item-section>
+          </q-item>
         </q-list>
+
       </q-scroll-area>
 
       <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
@@ -113,7 +201,7 @@
             ( 发送验证邮件)
           </div>
           <div>
-            <q-btn to="/users/index">个人信息</q-btn>
+            <q-btn to="/admin/index">管理中心</q-btn>
           </div>
         </div>
       </q-img>
@@ -175,9 +263,8 @@ import { Cookies, useMeta, useQuasar } from 'quasar';
 import {api} from "boot/axios";
 import { onMounted, ref } from 'vue';
 import {useRouter} from "vue-router";
-const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
-const $q = useQuasar();
 import { useI18n } from 'vue-i18n';
+
 const metaData = {
   // sets document title
   title: '图集网',
@@ -229,25 +316,42 @@ const defaultLanguage = ref('en');
 // };
 
 
+const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
+const $q = useQuasar();
 const leftDrawerOpen = ref(false)
+const link = ref('detail')
+
+const logout = async () => {
+  try {
+    const response = await api.get(`/admin/systemUser/logout`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    Cookies.remove("token");
+    Cookies.remove("id");
+    Cookies.remove("userInfo");
+    router.push('/login'); // 假设登录页面的路由为 '/login'
+  }catch (error){
+    Cookies.remove("token");
+    Cookies.remove("id");
+    Cookies.remove("userInfo");
+    router.push('/login'); // 假设登录页面的路由为 '/login'
+  }
+};
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
   console.log("------------------------")
   console.log(leftDrawerOpen.value)
 }
-const link = ref('detail')
-
 function getImageUrl(url) {
   if (url != null) {
     return `${$q.config.sourceWeb}${url}`;
   }
   return "/favicon.ico";
 }
-// // 在组件挂载后调用设置默认语言的方法
-// onMounted(() => {
-//   setDefaultLanguage();
-// });
 const setDefaultLanguage = () => {
   const userLang = navigator.language || navigator.userLanguage;
   const availableLanguages = ['en', 'zh-CN']; // 示例语言列表

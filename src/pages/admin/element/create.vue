@@ -267,21 +267,6 @@ function newInfo(){
 
 <template>
   <q-page>
-    <q-breadcrumbs class="text-brown q-ma-md">
-      <template v-slot:separator>
-        <q-icon
-          size="1.5em"
-          name="chevron_right"
-          color="primary"
-        />
-      </template>
-
-      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
-      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
-      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="这是世界名称" icon="navigation" to="/world/detail" />
-      <q-breadcrumbs-el label="创建元素" icon="navigation" to="/story/create" />
-    </q-breadcrumbs>
     <q-card class="my-card">
       <q-card-section>
         <div class="text-h6">创建元素</div>

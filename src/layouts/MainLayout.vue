@@ -1,8 +1,10 @@
 <template>
   <q-layout view="hhh LpR fff" style="height: 100vh;">
 
-
-    <HeadComponent></HeadComponent>
+    <q-header elevated class="bg-primary text-white" height-hint="98">
+      <HeadComponent></HeadComponent>
+      <HeadTableComponent></HeadTableComponent>
+    </q-header>
     <q-page-container style="height: 100%;">
       <router-view />
       <q-separator color="orange" inset />
@@ -33,8 +35,9 @@
 <script>
 import { defineComponent } from 'vue';
 import HeadComponent from 'components/HeadComponent.vue';
+import HeadTableComponent from 'components/HeadTableComponent.vue';
 
 export default defineComponent({
-  components: { HeadComponent }
+  components: { HeadTableComponent, HeadComponent }
 });
 </script>

@@ -71,7 +71,7 @@
             </q-toolbar>
             <q-toolbar class="col-4 bg-primary text-white">
               <q-space />
-              <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
+              <q-btn flat round dense icon="add" class="q-mr-sm" to="/element/create"/>
               <q-btn flat round dense icon="more_vert" />
             </q-toolbar>
           </div>

@@ -102,22 +102,23 @@ const seach=ref("");
   <q-toolbar class="bg-purple text-white">
     <q-btn flat round dense icon="assignment_ind" />
     <q-toolbar-title>
-      世界管理
+      元素管理
     </q-toolbar-title>
-    <q-btn flat round dense icon="add" class="q-mr-xs" to="/admin/world/create" />
+    <q-btn flat round dense icon="apps" class="q-mr-xs" />
     <q-btn flat round dense icon="more_vert" />
   </q-toolbar>
   <q-separator dark inset />
-  <div class="row" style="background-color: orange">
-    <q-btn-group outline>
-      <q-btn outline color="brown" label="全部分类" />
-      <q-btn outline color="brown" label="魔法"/>
-      <q-btn outline color="brown" label="科学" />
-      <q-btn outline color="brown" label="远古" />
-      <q-btn outline color="brown" label="修真" />
-      <q-btn outline color="brown" label="历史" />
-    </q-btn-group>
-  </div>
+<!--  <div class="row" style="background-color: orange">-->
+<!--    <q-btn-group outline>-->
+<!--      <q-btn outline color="brown" label="全部分类" />-->
+<!--      <q-btn outline color="brown" label="魔法"/>-->
+<!--      <q-btn outline color="brown" label="科学" />-->
+<!--      <q-btn outline color="brown" label="远古" />-->
+<!--      <q-btn outline color="brown" label="修真" />-->
+<!--      <q-btn outline color="brown" label="历史" />-->
+<!--    </q-btn-group>-->
+<!--  </div>-->
+
   <div class="q-pa-md">
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
@@ -135,22 +136,27 @@ const seach=ref("");
   </div>
   <div class="q-pa-md q-gutter-md">
     <q-list bordered padding class="rounded-borders">
-      <q-item v-for="index in 10" :key="index" to="/admin/world/info">
-        <q-item-section avatar>
-          <img src="/150.webp" class="small-head-image">
-        </q-item-section>
+      <div v-for="index in 10" :key="index">
+        <q-item  to="/admin/element/draft">
+          <q-item-section avatar>
+            <img src="/150.webp" class="small-head-image">
+          </q-item-section>
 
-        <q-item-section>
-          <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-          <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-          <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-        </q-item-section>
-        <q-item-section side top>
-          <q-item-label caption>5 min ago</q-item-label>
-          <q-icon name="star" color="yellow" />
-        </q-item-section>
-      </q-item>
-      <q-separator spaced />
+          <q-item-section>
+            <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
+            <q-item-label class="one-line-clamp text-weight-thin text-overline text-blue">这是世界名称</q-item-label>
+            <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+            <q-item-label class="one-line-clamp text-weight-thin text-overline">2011-11-11 11:11:34</q-item-label>
+            <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+          </q-item-section>
+<!--          <q-item-section side top>-->
+<!--            <q-item-label caption>5 min ago</q-item-label>-->
+<!--            <q-icon name="star" color="yellow" />-->
+<!--          </q-item-section>-->
+        </q-item>
+        <q-separator spaced />
+      </div>
+
 
     </q-list>
     <div class="q-pa-lg flex flex-center">

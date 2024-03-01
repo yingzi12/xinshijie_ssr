@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import {useMeta} from "quasar";
+import { onMounted, ref } from 'vue';
+import { Cookies, useMeta } from 'quasar';
+import { useI18n } from 'vue-i18n';
 const metaData = {
   // sets document title
   title: '图集网',
@@ -24,11 +25,56 @@ const metaData = {
   },
 }
 useMeta(metaData)
-const       tab= ref('images');
+// const       tab= ref('images');
+// 创建一个响应式引用作为默认语言
+const defaultLanguage = ref('en');
+
+const { locale } = useI18n()
+const options= [
+  {
+    label: 'English',
+    value: 'en'
+  },
+  {
+    label: '中文',
+    value: 'zh-CN'
+  }
+]
+
+
+// 设置默认语言的方法
+const setDefaultLanguage = () => {
+  const userLang = navigator.language || navigator.userLanguage;
+  const availableLanguages = ['en', 'zh-CN']; // 示例语言列表
+
+  if (availableLanguages.includes(userLang)) {
+    locale.value = userLang;
+  } else {
+    locale.value = defaultLanguage.value;
+  }
+  Cookies.set("language",locale.value);
+};
+function updateLanguage(language){
+  console.log(`----updateLanguage-----${language}---------`);
+  Cookies.set("language",language);
+
+}
+// 在组件挂载后调用设置默认语言的方法
+onMounted(() => {
+  const language = Cookies.get("language");
+  console.log(language);
+  if( language == null ){
+    console.log("----1--------------");
+    setDefaultLanguage();
+  }else{
+    console.log("----2--------------");
+    locale.value = language;
+  }
+});
 </script>
 
 <template>
-  <q-header elevated class="bg-purple">
+<!--  <q-header elevated class="bg-purple">-->
     <q-toolbar>
       <q-avatar>
         <img src="/logo.ico">
@@ -37,21 +83,32 @@ const       tab= ref('images');
       <q-toolbar-title>心世界</q-toolbar-title>
 
       <q-btn flat round dense icon="whatshot" />
+
+      <q-select
+        filled
+        v-model="locale"
+        :options="options"
+        label="Standard"
+        emit-value
+        map-options
+        @update:model-value="updateLanguage"
+      />
+
     </q-toolbar>
-    <q-tabs
-      v-model="tab"
-      inline-label
-      class="shadow-2"
-    >
-      <q-route-tab name="Home" icon="home" to="/" label="首页" />
-      <q-route-tab name="alarms" icon="public" to="/world/index" label="世界" />
-      <q-route-tab name="movies" icon="menu_book" to="/story/index" label="故事" />
-      <q-route-tab name="order" icon="category" to="/order" label="排行榜" />
-      <q-route-tab name="yard" icon="yard" to="/yard" label="家园" />
-      <q-route-tab name="service" icon="manage_accounts" label="客服端" />
-      <q-route-tab name="help" icon="help" label="帮助中心" />
-    </q-tabs>
-  </q-header>
+<!--    <q-tabs-->
+<!--      v-model="tab"-->
+<!--      inline-label-->
+<!--      class="shadow-2"-->
+<!--    >-->
+<!--      <q-route-tab name="Home" icon="home" to="/" label="首页" />-->
+<!--      <q-route-tab name="alarms" icon="public" to="/world/index" label="世界" />-->
+<!--      <q-route-tab name="movies" icon="menu_book" to="/story/index" label="故事" />-->
+<!--      <q-route-tab name="order" icon="category" to="/order" label="排行榜" />-->
+<!--      <q-route-tab name="yard" icon="yard" to="/yard" label="家园" />-->
+<!--      <q-route-tab name="service" icon="manage_accounts" label="客服端" />-->
+<!--      <q-route-tab name="help" icon="help" label="帮助中心" />-->
+<!--    </q-tabs>-->
+<!--  </q-header>-->
 </template>
 
 <style scoped>

@@ -102,20 +102,23 @@ const seach=ref("");
   <q-toolbar class="bg-purple text-white">
     <q-btn flat round dense icon="assignment_ind" />
     <q-toolbar-title>
-      Toolbar
+      小说管理
     </q-toolbar-title>
     <q-btn flat round dense icon="apps" class="q-mr-xs" />
     <q-btn flat round dense icon="more_vert" />
   </q-toolbar>
   <q-separator dark inset />
-  <div class="q-pa-md q-gutter-sm">
-    <span class="text-overline">全部</span>
-    <span class="text-overline">点击</span>
-    <span class="text-overline">观看</span>
-    <span class="text-overline">全部</span>
-    <span class="text-overline">全部</span>
-    <span class="text-overline">全部</span>
+  <div class="row" style="background-color: orange">
+    <q-btn-group outline>
+      <q-btn outline color="brown" label="全部分类" />
+      <q-btn outline color="brown" label="魔法"/>
+      <q-btn outline color="brown" label="科学" />
+      <q-btn outline color="brown" label="远古" />
+      <q-btn outline color="brown" label="修真" />
+      <q-btn outline color="brown" label="历史" />
+    </q-btn-group>
   </div>
+
   <div class="q-pa-md">
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
@@ -126,7 +129,7 @@ const seach=ref("");
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
-        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
+        <q-btn flat round dense icon="add" class="q-mr-sm" to="/admin/story/create"/>
         <q-btn flat round dense icon="more_vert" />
       </q-toolbar>
     </div>

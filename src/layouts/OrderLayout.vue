@@ -1,7 +1,9 @@
 <template>
   <q-layout view="hhh LpR fff" style="height: 100vh;">
-
-    <HeadComponent></HeadComponent>
+    <q-header elevated class="bg-primary text-white" height-hint="98">
+      <HeadComponent></HeadComponent>
+      <HeadTableComponent></HeadTableComponent>
+    </q-header>
     <q-drawer
       v-model="drawer"
       show-if-above
@@ -60,6 +62,7 @@
 import { ref } from 'vue'
 import {useMeta} from "quasar";
 import HeadComponent from 'components/HeadComponent.vue';
+import HeadTableComponent from 'components/HeadTableComponent.vue';
 
 const menuList = [
   {
