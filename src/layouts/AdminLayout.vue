@@ -53,7 +53,7 @@
                   :active="link === 'attention'"
                   active-class="my-menu-link"
                   clickable
-                  to="/admin/element/index"
+                  to="/admin/draft/element"
                   @click="link = 'attention'"
           >
             <q-item-section avatar>
@@ -84,7 +84,7 @@
                   :active="link === 'buy'"
                   active-class="my-menu-link"
                   clickable
-                  to="/admin/chapter/index"
+                  to="/admin/draft/chapter"
                   @click="link = 'buy'"
           >
             <q-item-section avatar>

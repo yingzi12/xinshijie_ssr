@@ -36,7 +36,7 @@ const seach=ref("");
           <q-btn flat round label="这是分卷名称" to="/admin/story/reel"/>
         </q-toolbar-title>
         <q-space />
-        <q-btn flat round dense icon="add" label="新增章节" to="/admin/chapter/create"/>
+        <q-btn flat round dense icon="add" label="新增章节" to="/admin/chapter/add"/>
 
       </q-toolbar>
     </div>
@@ -50,7 +50,7 @@ const seach=ref("");
 
           <q-item-section  side>
             <q-item-label class="q-mt-sm text-h6">
-              <router-link  to="/admin/story/chapter">这是章节名称</router-link>
+              <router-link  to="/admin/chapter/detail">这是章节名称</router-link>
             </q-item-label>
             <q-item-label class="q-mt-sm text-subtitle2">作者：这是作者，这是作者</q-item-label>
             <q-item-label class="q-mt-sm text-subtitle2">创建时间：2024-11-23 11:12:43</q-item-label>
@@ -81,6 +81,8 @@ const seach=ref("");
           <q-item-section top side >
             <div class="text-grey-8 q-gutter-xs">
               <q-btn class="gt-xs" size="12px" flat dense round icon="lock" />
+              <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
+              <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
             </div>
           </q-item-section>
         </q-item>

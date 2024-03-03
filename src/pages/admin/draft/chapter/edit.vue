@@ -9,7 +9,19 @@ const editor = ref('What you see is <b>what</b> you get.');
 
 <template>
 <q-page>
-  <Head></Head>
+  <div class="row no-wrap shadow-1">
+    <q-toolbar class="col-8 bg-grey-3">
+      <q-btn flat round dense icon="keyboard_return" />
+      <q-toolbar-title>返回草稿详细</q-toolbar-title>
+      <q-btn flat round dense icon="search" />
+    </q-toolbar>
+    <q-toolbar class="col-4 bg-primary text-white">
+      <q-space />
+      <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
+      <q-btn flat round dense icon="more_vert" />
+    </q-toolbar>
+  </div>
+
   <div class="bg-orange text-white">
     <q-toolbar>
 <!--      <q-btn flat round dense icon="menu" class="q-mr-sm" />-->
@@ -49,8 +61,8 @@ const editor = ref('What you see is <b>what</b> you get.');
       </q-card-actions>
       <q-card-actions >
         <div>
-          <q-btn color="primary" label="提交" type="submit"/>
-          <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset"/>
+          <q-btn color="primary" label="提交" type="submit"  to="/admin/draft/chapter/detail" />
+          <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset"  to="/admin/draft/chapter/detail" />
         </div>
       </q-card-actions>
     </q-card>

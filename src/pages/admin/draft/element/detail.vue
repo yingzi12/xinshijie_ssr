@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import Head from 'pages/admin/world/head.vue';
 
 const fabPos = ref([ 18, 18 ]);
 const draggingFab = ref(false);
@@ -23,27 +24,22 @@ const expanded= ref(true);
 
 <template>
   <q-page>
-    <q-breadcrumbs class="text-brown q-ma-md">
-      <template v-slot:separator>
-        <q-icon
-          size="1.5em"
-          name="chevron_right"
-          color="primary"
-        />
-      </template>
-
-      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
-      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
-      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="元素列表" icon="navigation"  to="/world/element"/>
-      <q-breadcrumbs-el label="这是元素名称" icon="navigation"  to="/element/detail"/>
-
-    </q-breadcrumbs>
+<!--    <Head></Head>-->
+    <div class="row no-wrap shadow-1">
+      <q-toolbar class="col-8 bg-grey-3">
+        <q-btn flat round dense icon="keyboard_return" />
+        <q-toolbar-title>元素草稿内容</q-toolbar-title>
+        <q-btn flat round dense icon="search" />
+      </q-toolbar>
+      <q-toolbar class="col-4 bg-primary text-white">
+        <q-space />
+        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
+        <q-btn flat round dense icon="more_vert" />
+      </q-toolbar>
+    </div>
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是元素名称<q-chip size="xs" icon="bookmark">
-        编辑
-      </q-chip></div>
+      <div class="text-h6 text-center">这是元素名称</div>
+      <div class="text-subtitle2 text-center">这是世界名称</div>
       <div class="text-subtitle1 text-center">
         <div class="q-pa-md q-gutter-sm">
           <span class="text-overline">创建者:我是创建人</span>
@@ -52,14 +48,13 @@ const expanded= ref(true);
           <span class="text-overline">更新时间:2022-11-11 11:23:34</span>
         </div>
       </div>
-      <q-card dark bordered class="bg-grey-9">
+      <q-card  bordered class="bg-grey-9">
         <q-card-section>
           <div class="text-h6">分类</div>
         </q-card-section>
         <q-separator dark inset />
         <q-card-section>
-          <div class="q-pa-md q-gutter-sm">
-            <span class="text-overline">分类：</span>
+          <div class="q-gutter-sm">
             <span class="text-overline">其他</span>
             <span class="text-overline">科技</span>
             <span class="text-overline">魔法</span>
@@ -131,28 +126,14 @@ const expanded= ref(true);
 
         </q-card-section>
       </q-card>
-
     </div>
     <div class="q-pa-md">
       <q-btn-group spread>
-        <q-btn color="purple" label="上一章" icon="timeline" />
-        <q-btn color="purple" label="元素列表" icon="visibility" @click="alert = true"/>
-        <q-btn color="purple" label="下一章" icon="visibility" />
-
+        <q-btn color="purple" label="编辑" icon="edit"  to="/admin/draft/element/edit"/>
+        <q-btn color="purple" label="发布" icon="send" @click="alert = true" />
+        <q-btn color="purple" label="比对" icon="visibility" />
       </q-btn-group>
     </div>
-    <q-page-sticky position="bottom-right" :offset="fabPos">
-      <q-fab
-        icon="add"
-        direction="up"
-        color="accent"
-        :disable="draggingFab"
-        v-touch-pan.prevent.mouse="moveFab"
-      >
-        <q-fab-action @click="onClick" color="primary" icon="person_add" :disable="draggingFab" />
-        <q-fab-action @click="onClick" color="primary" icon="mail" :disable="draggingFab" />
-      </q-fab>
-    </q-page-sticky>
   </q-page>
 </template>
 

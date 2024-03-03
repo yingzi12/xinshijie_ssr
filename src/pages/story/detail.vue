@@ -38,17 +38,7 @@
         <q-item-label class="one-line-clamp   q-mb-xs">世界：我是一个世界名称</q-item-label>
         <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">更新时间:2024-11-11 11:32:23</q-item-label>
         <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">最新章节:第436章 第356章 捕虫大会</q-item-label>
-        <q-item-label class="q-mb-xs">连载
-          ·
-          签约
-          ·
-          VIP
-          ·
-          轻小说
-          ·
-          衍生同人
-          ·
-          轻小说
+        <q-item-label class="q-mb-xs">连载 · 签约 · VIP · 轻小说 · 衍生同人 · 轻小说
         </q-item-label>
         <q-item-label class="three-line-clamp text-caption text-grey q-mb-xs" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
         <div class="q-gutter-sm q-mb-xs">
@@ -122,7 +112,7 @@
         <div class="row">
           <div class="col-4" v-for="index in 22" :key="index">
             <div class="q-ma-xs one-line-clamp">
-              <a href="https://we" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+              <a href="/chapter/detail" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
             </div>
           </div>
         </div>
@@ -131,7 +121,7 @@
         <div class="row">
           <div class="col-4" v-for="index in 22" :key="index">
             <div class="q-ma-xs one-line-clamp">
-              <a href="https://we" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+              <a href="/chapter/detail" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
             </div>
           </div>
         </div>

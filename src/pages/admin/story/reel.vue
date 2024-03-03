@@ -58,8 +58,11 @@ const xh=ref("");
            <q-item-section top side >
              <div class="text-grey-8 q-gutter-xs">
                <q-btn class="gt-xs" size="12px" flat dense round icon="lock" />
+               <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
+               <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
              </div>
            </q-item-section>
+
          </q-item>
          <q-separator spaced />
        </div>

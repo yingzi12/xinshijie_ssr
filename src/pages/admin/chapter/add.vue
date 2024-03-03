@@ -13,7 +13,7 @@ const editor = ref('What you see is <b>what</b> you get.');
   <div class="bg-orange text-white">
     <q-toolbar>
 <!--      <q-btn flat round dense icon="menu" class="q-mr-sm" />-->
-      <q-toolbar-title>编辑章节</q-toolbar-title>
+      <q-toolbar-title>创建章节</q-toolbar-title>
 <!--      <q-space />-->
 <!--      <q-btn flat round dense icon="search" class="q-mr-xs" />-->
 <!--      <q-btn flat round dense icon="group_add" />-->

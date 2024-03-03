@@ -36,14 +36,29 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/findImage',
+    path: '/notice',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/findImagePage.vue') }],
+    children: [{ path: '', component: () => import('pages/notice/index.vue') }],
   },
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/index.vue') }],
+  },
+  {
+    path: '/chapter',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: 'detail', component: () => import('pages/chapter/detail.vue') }],
+  },
+  {
+    path: '/notice',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/notice/index.vue') },
+      { path: 'index', component: () => import('pages/notice/index.vue') },
+      { path: 'detail', component: () => import('pages/notice/detail.vue') }
+
+    ],
   },
   {
     path: '/world',
@@ -142,7 +157,7 @@ const routes: RouteRecordRaw[] = [
         children:[
           { path: '', component: () => import('pages/admin/element/index.vue') },
           { path: 'index', component: () => import('pages/admin/element/index.vue') },
-          { path: 'info', component: () => import('pages/admin/element/info.vue') },
+          { path: 'detail', component: () => import('pages/admin/element/detail.vue') },
           { path: 'draft', component: () => import('pages/admin/element/draft.vue') },
           { path: 'create', component: () => import('pages/admin/element/create.vue') },
           { path: 'edit', component: () => import('pages/admin/element/edit.vue') },
@@ -154,10 +169,42 @@ const routes: RouteRecordRaw[] = [
         children:[
           { path: '', component: () => import('pages/admin/chapter/index.vue') },
           { path: 'index', component: () => import('pages/admin/chapter/index.vue') },
-          { path: 'info', component: () => import('pages/admin/chapter/info.vue') },
+          { path: 'detail', component: () => import('pages/admin/chapter/detail.vue') },
           { path: 'draft', component: () => import('pages/admin/chapter/draft.vue') },
           { path: 'edit', component: () => import('pages/admin/chapter/edit.vue') },
-          { path: 'create', component: () => import('pages/admin/chapter/create.vue') },
+          { path: 'add', component: () => import('pages/admin/chapter/add.vue') },
+        ]
+      },
+      {
+        path: 'draft',
+        children:[
+          {
+            path: 'element',
+            // component: () => import('pages/admin/draft/element/index.vue'),
+            children:[
+              { path: '',
+                component: () => import('pages/admin/draft/element/index.vue'),
+              },
+              { path: 'index', component: () => import('pages/admin/draft/element/index.vue'), },
+              { path: 'detail', component: () => import('pages/admin/draft/element/detail.vue'), },
+              { path: 'edit', component: () => import('pages/admin/draft/element/edit.vue'), },
+
+            ]
+          },
+          {
+            path: 'chapter',
+            // component: () => import('pages/admin/draft/chapter/index.vue') ,
+            children:[
+              {
+                path: '',
+                component: () => import('pages/admin/draft/chapter/index.vue'),
+              },
+              { path: 'index', component: () => import('pages/admin/draft/chapter/index.vue'), },
+              { path: 'detail', component: () => import('pages/admin/draft/chapter/detail.vue'), },
+              { path: 'edit', component: () => import('pages/admin/draft/chapter/edit.vue'), },
+
+            ]
+          },
         ]
       },
 

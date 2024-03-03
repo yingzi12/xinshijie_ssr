@@ -62,15 +62,18 @@ const  current= ref(6);
     </div>
     <div class="q-pa-md q-gutter-md">
       <q-list bordered padding class="rounded-borders">
-        <q-item v-for="index in 10" :key="index">
+        <div v-for="index in 10" :key="index">
+        <q-item >
           <q-item-section avatar>
             <img src="/150.webp" class="small-head-image">
           </q-item-section>
 
           <q-item-section>
             <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-            <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+            <q-item-label class="q-mb-xs text-red">这是世界名称</q-item-label>
+            <q-item-label class="q-mb-xs text-blue">连载 · 签约 · VIP · 轻小说 · 衍生同人 · 轻小说</q-item-label>
+              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+            <q-item-label class="two-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
           </q-item-section>
           <q-item-section side top>
             <q-item-label caption>5 min ago</q-item-label>
@@ -78,7 +81,7 @@ const  current= ref(6);
           </q-item-section>
         </q-item>
         <q-separator spaced />
-
+        </div>
       </q-list>
       <div class="q-pa-lg flex flex-center">
         <q-pagination

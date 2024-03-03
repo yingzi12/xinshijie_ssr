@@ -143,11 +143,14 @@ const seach=ref("");
         <q-item-section>
           <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
           <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+          <q-item-label class="one-line-clamp text-weight-thin text-overline">2011-11-11 11:11:34</q-item-label>
           <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
         </q-item-section>
         <q-item-section side top>
-          <q-item-label caption>5 min ago</q-item-label>
-          <q-icon name="star" color="yellow" />
+          <q-item-label color="yellow"  caption>待发布</q-item-label>
+        </q-item-section>
+        <q-item-section side top>
+          <q-icon name="delete" color="red" ></q-icon>
         </q-item-section>
       </q-item>
       <q-separator spaced />

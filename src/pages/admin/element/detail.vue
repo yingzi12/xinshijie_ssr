@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import Head from 'pages/admin/world/head.vue';
 
 const fabPos = ref([ 18, 18 ]);
 const draggingFab = ref(false);
@@ -23,23 +24,19 @@ const expanded= ref(true);
 
 <template>
   <q-page>
-    <q-breadcrumbs class="text-brown q-ma-md">
-      <template v-slot:separator>
-        <q-icon
-          size="1.5em"
-          name="chevron_right"
-          color="primary"
-        />
-      </template>
-
-      <q-breadcrumbs-el label="首页" icon="home" to="/"/>
-      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
-      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="元素列表" icon="navigation"  to="/world/element"/>
-      <q-breadcrumbs-el label="这是元素名称" icon="navigation"  to="/element/detail"/>
-
-    </q-breadcrumbs>
+    <Head></Head>
+    <div class="row no-wrap shadow-1">
+      <q-toolbar class="col-8 bg-grey-3">
+        <q-btn flat round dense icon="keyboard_return" />
+        <q-toolbar-title>元素详细</q-toolbar-title>
+        <q-btn flat round dense icon="search" />
+      </q-toolbar>
+      <q-toolbar class="col-4 bg-primary text-white">
+        <q-space />
+        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
+        <q-btn flat round dense icon="more_vert" />
+      </q-toolbar>
+    </div>
     <div class="q-ma-md">
       <div class="text-h6 text-center">这是元素名称<q-chip size="xs" icon="bookmark">
         编辑

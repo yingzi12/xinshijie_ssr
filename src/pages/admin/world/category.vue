@@ -109,14 +109,14 @@ function onClick () {
       <q-btn flat round dense icon="more_vert" />
     </q-toolbar>
     <q-separator dark inset />
-    <div class="q-pa-md q-gutter-sm">
-      <span class="text-overline">全部</span>
-      <span class="text-overline">点击</span>
-      <span class="text-overline">观看</span>
-      <span class="text-overline">全部</span>
-      <span class="text-overline">全部</span>
-      <span class="text-overline">全部</span>
-    </div>
+<!--    <div class="q-pa-md q-gutter-sm">-->
+<!--      <span class="text-overline">全部</span>-->
+<!--      <span class="text-overline">点击</span>-->
+<!--      <span class="text-overline">观看</span>-->
+<!--      <span class="text-overline">全部</span>-->
+<!--      <span class="text-overline">全部</span>-->
+<!--      <span class="text-overline">全部</span>-->
+<!--    </div>-->
     <div class="q-pa-md q-gutter-sm">
       <div>
         <div class="q-gutter-sm">
