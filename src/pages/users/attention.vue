@@ -83,7 +83,7 @@ function getSystemImageUrl(album) {
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
-        <q-toolbar-title>我的收藏</q-toolbar-title>
+        <q-toolbar-title>我的关注</q-toolbar-title>
         <q-btn flat round dense icon="search" />
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
@@ -108,9 +108,31 @@ function getSystemImageUrl(album) {
 
         <q-tab-panels v-model="tab" animated class="bg-orange-1 text-dark ">
           <q-tab-panel class="bg-lime-1 text-dark" name="mails">
+            <q-item  to="/world/detail">
+              <q-item-section avatar>
+                <img src="/150.webp" class="small-head-image">
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
+                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+                <q-item-label class="one-line-clamp text-weight-thin text-overline">最近更新：这是一个元素名称</q-item-label>
+                <q-item-label class="one-line-clamp text-weight-thin text-overline">更新世界：2011-11-11 11:11:34</q-item-label>
+                <q-item-label class="one-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-item-label color="yellow"  caption>待发布</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-icon name="delete" color="red" ></q-icon>
+                <q-icon color="yellow" name="star"/>
+                <q-icon color="white" name="star_border"/>
+              </q-item-section>
+            </q-item>
+
             <div class="q-pa-md" style="width: 100%">
               <q-list bordered padding>
-                <div v-for="(collectionSystem,index) in collectionSystemList "  :key="index">
+                <div v-for="(collectionSystem,index) in collectionSystemList"  :key="index">
                 <q-item>
                   <q-item-section class="q-ml-none" thumbnail top>
                     <img :src="getSystemImageUrl(collectionSystem)">
@@ -143,6 +165,28 @@ function getSystemImageUrl(album) {
           <q-tab-panel class="bg-lime-1 text-dark" name="alarms">
             <div class="q-pa-md" style="width: 100%">
               <q-list bordered padding>
+                <q-item  to="/story/detail">
+                  <q-item-section avatar>
+                    <img src="/150.webp" class="small-head-image">
+                  </q-item-section>
+
+                  <q-item-section>
+                    <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
+                    <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
+                    <q-item-label class="one-line-clamp text-weight-thin text-overline">2011-11-11 11:11:34</q-item-label>
+                    <q-item-label class="one-line-clamp text-weight-thin text-overline">上次观看：第17章 这是一个章节名称</q-item-label>
+                    <q-item-label class="one-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+                  </q-item-section>
+                  <q-item-section side top>
+                    <q-item-label color="yellow"  caption>待发布</q-item-label>
+                  </q-item-section>
+                  <q-item-section side top>
+                    <q-icon name="delete" color="red" ></q-icon>
+                    <q-icon color="yellow" name="star"/>
+                    <q-icon color="white" name="star_border"/>
+                  </q-item-section>
+                </q-item>
+
                 <div v-for="(collectionUser,index) in collectionUserList "  :key="index">
                   <q-item>
                     <q-item-section class="q-ml-none" thumbnail top>

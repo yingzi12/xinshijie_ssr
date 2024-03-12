@@ -42,7 +42,7 @@ function onLoad (index, done) {
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
-        <q-toolbar-title>人气 </q-toolbar-title>
+        <q-toolbar-title>这是世界名称 </q-toolbar-title>
         <q-input rounded outlined v-model="seach" label="搜索..." />
         <q-btn flat round dense icon="search" />
       </q-toolbar>

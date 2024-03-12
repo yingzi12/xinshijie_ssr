@@ -62,7 +62,7 @@
       <q-toolbar-title>
         世界推荐
       </q-toolbar-title>
-      <q-btn flat round dense icon="more_horiz" />
+      <q-btn flat round dense icon="more_horiz" to="/world/order"/>
     </q-toolbar>
     <div class="q-pa-md">
       <div class="row">
@@ -138,7 +138,7 @@
       <q-toolbar-title>
         故事推荐
       </q-toolbar-title>
-      <q-btn flat round dense icon="more_horiz" />
+      <q-btn flat round dense icon="more_horiz"  to="/story/order" />
     </q-toolbar>
     <div class="q-pa-md">
       <div class="row">
@@ -216,7 +216,7 @@
       <q-toolbar-title>
         世界排行榜
       </q-toolbar-title>
-      <q-btn flat round dense icon="more_horiz" />
+      <q-btn flat round dense icon="more_horiz" to="/world/order" />
     </q-toolbar>
     <div class="row">
       <div>
@@ -435,7 +435,7 @@
       <q-toolbar-title>
         故事排行榜
       </q-toolbar-title>
-      <q-btn flat round dense icon="more_horiz" />
+      <q-btn flat round dense icon="more_horiz" to="/story/order"/>
     </q-toolbar>
     <div class="row">
       <div>

@@ -90,9 +90,9 @@ function edit(){
     </div>
     <div class="q-pa-md">
       <q-btn-group spread>
-        <q-btn color="purple" label="上一章" icon="timeline" />
+        <q-btn color="purple" label="上一章" icon="timeline" to="/story/chapter" />
         <q-btn color="purple" label="目录" icon="visibility" @click="alert = true"/>
-        <q-btn color="purple" label="下一章" icon="visibility" />
+        <q-btn color="purple" label="下一章" icon="visibility" to="/story/chapter" />
 
       </q-btn-group>
     </div>
@@ -137,7 +137,7 @@ function edit(){
                 <div class="row">
                   <div class="col-6" v-for="index in 22" :key="index">
                     <div class="q-ma-xs one-line-clamp">
-                      <a href="https://we" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+                      <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
                     </div>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ function edit(){
                 <div class="row">
                   <div class="col-6" v-for="index in 22" :key="index">
                     <div class="q-ma-xs one-line-clamp">
-                      <a href="https://we" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+                      <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
                     </div>
                   </div>
                 </div>

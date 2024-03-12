@@ -36,6 +36,16 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/discuss',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/discuss/index.vue') },
+      { path: 'index', component: () => import('pages/discuss/index.vue') },
+      { path: 'detail', component: () => import('pages/discuss/detail.vue') }
+
+    ],
+  },
+  {
     path: '/notice',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/notice/index.vue') }],
@@ -48,7 +58,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/chapter',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: 'detail', component: () => import('pages/chapter/detail.vue') }],
+    children: [{ path: 'detail', component: () => import('pages/chapter/detail.vue') },
+      { path: 'create', component: () => import('pages/chapter/create.vue') }],
   },
   {
     path: '/notice',
@@ -101,6 +112,8 @@ const routes: RouteRecordRaw[] = [
       { path: 'detail', component: () => import('pages/element/detail.vue') },
       { path: 'commit', component: () => import('pages/element/commit.vue') },
       { path: 'create', component: () => import('pages/element/create.vue') },
+      { path: 'edit', component: () => import('pages/element/edit.vue') },
+
     ],
   },
   {
@@ -130,7 +143,7 @@ const routes: RouteRecordRaw[] = [
           { path: 'auditElement', component: () => import('pages/admin/world/auditElement.vue') },
           { path: 'auditStory', component: () => import('pages/admin/world/auditStory.vue') },
           { path: 'auditManage', component: () => import('pages/admin/world/auditManage.vue') },
-          { path: 'edit', component: () => import('pages/admin/world/edit.vue') },
+          { path: 'edit', component: () => import('pages/admin/world/editWorld.vue') },
           { path: 'create', component: () => import('pages/admin/world/create.vue') },
 
         ]
@@ -148,7 +161,7 @@ const routes: RouteRecordRaw[] = [
           { path: 'auditChapter', component: () => import('pages/admin/story/auditChapter.vue') },
           { path: 'discuss', component: () => import('pages/admin/story/discuss.vue') },
           { path: 'commit', component: () => import('pages/admin/story/commit.vue') },
-          { path: 'edit', component: () => import('pages/admin/story/edit.vue') },
+          { path: 'edit', component: () => import('pages/admin/story/editStory.vue') },
           { path: 'create', component: () => import('pages/admin/story/create.vue') },
         ]
       },
@@ -219,6 +232,7 @@ const routes: RouteRecordRaw[] = [
         children:[
           { path: '', component: () => import('pages/users/index.vue') },
           { path: 'index', component: () => import('pages/users/index.vue') },
+          { path: 'attention', component: () => import('pages/users/attention.vue') },
           { path: 'collection', component: () => import('pages/users/collection.vue') },
           { path: 'password', component: () => import('pages/users/password.vue') },
           { path: 'service', component: () => import('pages/users/service.vue') },
@@ -227,7 +241,8 @@ const routes: RouteRecordRaw[] = [
           { path: 'commit', component: () => import('pages/users/commit.vue') },
           { path: 'message', component: () => import('pages/users/message.vue') },
           { path: 'notification', component: () => import('pages/users/notification.vue') },
-          { path: 'edit', component: () => import('pages/admin/users/edit.vue') },
+          { path: 'edit', component: () => import('pages/users/userEdit.vue') },
+          { path: 'addService', component: () => import('pages/users/addService.vue') },
 
         ]
       },

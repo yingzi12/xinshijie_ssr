@@ -55,7 +55,7 @@ function onLoad (index, done) {
   </div>
   <div class="q-pa-md q-gutter-md">
     <q-list bordered padding class="rounded-borders">
-      <q-item v-for="index in 10" :key="index">
+      <q-item v-for="index in 10" :key="index" >
         <q-item-section >
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>

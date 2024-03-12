@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
 
 const fabPos = ref([ 18, 18 ]);
 const draggingFab = ref(false);
@@ -18,7 +20,9 @@ function moveFab (ev) {
 };
 const alert=ref(false);
 const expanded= ref(true);
-
+function  toEdit(){
+  router.push('/element/edit'); // Redirect to login page
+}
 </script>
 
 <template>
@@ -41,7 +45,7 @@ const expanded= ref(true);
 
     </q-breadcrumbs>
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是元素名称<q-chip size="xs" icon="bookmark">
+      <div class="text-h6 text-center">这是元素名称<q-chip size="xs" icon="bookmark" @click="toEdit()">
         编辑
       </q-chip></div>
       <div class="text-subtitle1 text-center">

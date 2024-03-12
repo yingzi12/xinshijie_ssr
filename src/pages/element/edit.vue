@@ -279,12 +279,20 @@ function newInfo(){
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
-      <q-breadcrumbs-el label="创建小说" icon="navigation" to="/story/create" />
+      <q-breadcrumbs-el label="这是世界名称" icon="navigation" to="/world/detail" />
+      <q-breadcrumbs-el label="创建元素" icon="navigation" to="/story/create" />
     </q-breadcrumbs>
     <q-card class="my-card">
       <q-card-section>
         <div class="text-h6">创建元素</div>
+        <q-input
+          v-model="title"
+          :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入元素名称，长度2-100']"
+          filled
+          hint="输入元素名称"
+          label="元素名称 *"
+          lazy-rules
+        />
       </q-card-section>
 
       <q-separator />
@@ -296,34 +304,53 @@ function newInfo(){
           @reset="onReset"
           @submit="onSubmit"
         >
-          <q-card >
+          <q-card style="width: 100%" >
+            <q-card-section>
+              <div class="text-h6">世界</div>
+            </q-card-section>
+
+            <q-separator />
+            <q-card-actions >
+              <div  style="width: 100%">
+                <div  >
+                  <q-input
+                    v-model="title"
+                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"
+                    filled
+                    hint="输入世界名称"
+                    label="世界名称 *"
+                    lazy-rules
+                  />
+                </div>
+                <div>
+                  <p class="text-body1 q-ma-md">这是世界简介，这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介
+                    这是世界简介这是世界简介这是世界简介这是世界简介</p>
+
+                </div>
+              </div>
+            </q-card-actions>
+          </q-card>
+
+          <q-card style="width: 100%" >
             <q-card-section>
               <div class="text-h6">基础</div>
             </q-card-section>
 
             <q-separator />
             <q-card-actions>
-              <div>
-                <div class="q-pa-md q-gutter-sm">
-                  <div>
-                    <q-img
-                      :src="previewImage"
-                      spinner-color="white"
-                      style="height: 140px; max-width: 150px"
-                    />
-                  </div>
-                  <input accept="image/*" type="file" @change="handleImageUpload"/>
-                </div>
+              <div class="q-pa-md q-gutter-sm">
                 <div>
-                  <q-input
-                    v-model="title"
-                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小说名称，长度2-100']"
-                    filled
-                    hint="输入小说名称"
-                    label="小说名称 *"
-                    lazy-rules
+                  <q-img
+                    :src="previewImage"
+                    spinner-color="white"
+                    style="height: 140px; max-width: 150px"
                   />
                 </div>
+                <input accept="image/*" type="file" @change="handleImageUpload"/>
+              </div>
+            </q-card-actions>
+            <q-card-actions >
+              <div  style="width: 100%">
                 <div>
                   <q-input
                     v-model="intro"
@@ -346,6 +373,61 @@ function newInfo(){
               </div>
             </q-card-actions>
           </q-card>
+          <!--          <q-card >-->
+          <!--            <q-card-section>-->
+          <!--              <div class="text-h6">基础</div>-->
+          <!--            </q-card-section>-->
+
+          <!--            <q-separator />-->
+          <!--            <q-card-actions>-->
+          <!--              <div>-->
+          <!--                <div class="q-pa-md q-gutter-sm">-->
+          <!--                  <div>-->
+          <!--                    <q-img-->
+          <!--                      :src="previewImage"-->
+          <!--                      spinner-color="white"-->
+          <!--                      style="height: 140px; max-width: 150px"-->
+          <!--                    />-->
+          <!--                  </div>-->
+          <!--                  <input accept="image/*" type="file" @change="handleImageUpload"/>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </q-card-actions>-->
+          <!--                <q-card-actions>-->
+          <!--                  <div style="width: 100%">-->
+
+          <!--                <div>-->
+          <!--                  <q-input-->
+          <!--                    v-model="title"-->
+          <!--                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"-->
+          <!--                    filled-->
+          <!--                    hint="输入世界名称"-->
+          <!--                    label="世界名称 *"-->
+          <!--                    lazy-rules-->
+          <!--                  />-->
+          <!--                </div>-->
+          <!--                <div>-->
+          <!--                  <q-input-->
+          <!--                    v-model="intro"-->
+          <!--                    :rules="[ val => val && val.length >= 5 && val.length <= 300 || '请输入简介，长度5-300']"-->
+          <!--                    filled-->
+          <!--                    label="简介 *"-->
+          <!--                    type="textarea"-->
+          <!--                  />-->
+          <!--                </div>-->
+          <!--                <div>-->
+          <!--                  <q-input-->
+          <!--                    v-model="tags"-->
+          <!--                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-30']"-->
+          <!--                    filled-->
+          <!--                    label="标签 *"-->
+          <!--                    lazy-rules-->
+          <!--                    type="text"-->
+          <!--                  />-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </q-card-actions>-->
+          <!--          </q-card>-->
           <q-card >
             <q-card-section>
               <div class="text-h6">分类(<q-btn flat label="点击选择分类" color="primary" @click="dialogAert = true" />)</div>

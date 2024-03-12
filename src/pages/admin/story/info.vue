@@ -17,7 +17,8 @@ const lorem= 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
     <q-card dark bordered class="bg-grey-9 my-card">
       <q-card-section>
         <div class="float-right q-ma-xs">
-          <q-btn color="red" icon="edit"  label="编辑" />
+          <q-btn color="red" icon="send"  label="发布" />
+          <q-btn color="red" icon="edit"  label="编辑" to="/admin/story/edit" />
         </div>
         <div class="text-h4">
           我是世界名称

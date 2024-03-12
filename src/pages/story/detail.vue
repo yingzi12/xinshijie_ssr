@@ -64,9 +64,10 @@
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="primary" icon="book" label="阅读" />
           <q-btn color="secondary" icon="favorite" label="喜欢" />
-          <q-btn color="red" icon="comment" label="讨论" />
-          <q-btn color="secondary" icon="favorite" label="新增章节" />
-          <q-btn color="secondary" icon="favorite" label="申请作者" />
+          <q-btn color="secondary" icon="grade" label="收藏" />
+          <q-btn color="red" icon="comment" label="讨论" to="/story/discuss" />
+          <q-btn color="secondary" icon="add" label="新增章节"  to="/chapter/create"/>
+          <q-btn color="secondary" icon="add" label="申请作者"  @click="prompt=true"/>
 
         </div>
 
@@ -112,7 +113,7 @@
         <div class="row">
           <div class="col-4" v-for="index in 22" :key="index">
             <div class="q-ma-xs one-line-clamp">
-              <a href="/chapter/detail" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+              <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
             </div>
           </div>
         </div>
@@ -121,7 +122,7 @@
         <div class="row">
           <div class="col-4" v-for="index in 22" :key="index">
             <div class="q-ma-xs one-line-clamp">
-              <a href="/chapter/detail" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
+              <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
             </div>
           </div>
         </div>
@@ -289,13 +290,30 @@
     </div>
   </div>
   </q-page>
+  <q-dialog v-model="prompt" persistent>
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6">申请管理员</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <q-input dense v-model="auditIntro" autofocus @keyup.enter="prompt = false" label="请输入理由" />
+      </q-card-section>
+      <q-card-actions align="right" class="text-primary">
+        <q-btn flat label="取消" v-close-popup />
+        <q-btn flat label="确认" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 
 const  current= ref(6);
-
+const auditIntro=ref("");
+const prompt=ref(false);
 </script>
 
 <style scoped>

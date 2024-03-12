@@ -1,4 +1,5 @@
 <template>
+  <q-page>
   <q-breadcrumbs class="text-brown q-ma-md">
     <template v-slot:separator>
       <q-icon
@@ -57,13 +58,15 @@
         </div>
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="secondary" icon="favorite" label="喜欢" />
+          <q-btn color="secondary" icon="grade" label="收藏" />
+
           <q-btn color="red" icon="comment" to="/world/discuss"  label="讨论" />
           <q-btn color="secondary" icon="hotel_class" to="/world/element" label="元素列表" />
           <q-btn color="secondary" icon="photo_album" to="/world/story" label="故事列表" />
           <q-btn color="secondary" icon="manage_accounts" to="/world/manage" label="管理员列表" />
-          <q-btn color="secondary" icon="add_circle" label="创建元素" />
-          <q-btn color="secondary" icon="add_circle" label="创建故事" />
-          <q-btn color="secondary" icon="add_circle" label="申请管理员" />
+          <q-btn color="secondary" icon="add_circle" label="创建元素" to="/element/create" />
+          <q-btn color="secondary" icon="add_circle" label="创建故事" to="/story/create"/>
+          <q-btn color="secondary" icon="add_circle" label="申请管理员" @click="prompt=true"/>
 
         </div>
 
@@ -317,6 +320,22 @@
 
     </div>
   </div>
+  </q-page>
+  <q-dialog v-model="prompt" persistent>
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6">申请管理员</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <q-input dense v-model="auditIntro" autofocus @keyup.enter="prompt = false" label="请输入理由" />
+      </q-card-section>
+      <q-card-actions align="right" class="text-primary">
+        <q-btn flat label="取消" v-close-popup />
+        <q-btn flat label="确认" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -324,7 +343,8 @@ import { ref } from 'vue';
 
 const  current= ref(6);
 const  text= ref("");
-
+const auditIntro=ref("");
+const prompt=ref(false);
 </script>
 
 <style scoped>

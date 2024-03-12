@@ -69,6 +69,9 @@ const expanded= ref(true);
     </q-btn-group>
   </div>
 </q-page>
+  <q-dialog >
+
+  </q-dialog>
 </template>
 
 <style scoped>

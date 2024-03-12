@@ -11,8 +11,6 @@ const $q = useQuasar()
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
 
 
-const user = ref(null);
-
 const name = ref(null);
 const nickname = ref(null);
 const email = ref(null);
@@ -57,12 +55,6 @@ function triggerFileInput() {
   fileInput.value?.click();
 }
 
-// function handleFileChange(event: Event) {
-//   const file = (event.target as HTMLInputElement).files?.[0];
-//   if (file) {
-//     handleImageUpload(file);
-//   }
-// }
 async function handleImageUpload(event: Event) {
   try {
     userHeadImageStr.value="上传中....";
@@ -105,7 +97,7 @@ function notify(message: string, color: string) {
     message: message
   });
 }
-getDetail();
+// getDetail();
 function getImageUrl(url) {
   if (url != null) {
     return `${$q.config.sourceWeb}${url}`;
@@ -120,29 +112,32 @@ function getImageUrl(url) {
 <!--    <router-link to="/users/userHeadImage">-->
 <!--      <q-btn color="primary" label="编辑头像"/>-->
 <!--    </router-link>-->
-    <router-link to="/users/userEdit">
+    <router-link to="/users/edit">
       <q-btn color="primary" label="编辑个人信息"/>
     </router-link>
   </div>
 
   <div class="q-pa-md row items-start q-gutter-md">
-    <q-card bordered class="my-card" flat>
+    <q-card bordered  flat style="width: 100%">
       <q-item>
 <!--        <q-item-section>-->
 <!--          <q-avatar font-size="52px" size="100px">-->
 <!--            <img :src="previewImage">-->
 <!--          </q-avatar>-->
 <!--        </q-item-section>-->
-        <q-item-section @click="triggerFileInput">
+        <q-item-section @click="triggerFileInput" side>
           <q-avatar font-size="52px" size="100px">
             <img :src="previewImage">
           </q-avatar>
           <input type="file" ref="fileInput" @change="handleImageUpload" hidden>
           <p class="text-caption">{{ userHeadImageStr }}</p>
+          {{ nickname != null ? nickname : '待登录' }}
+          ({{ name != null ? name : '待登录' }})
         </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ nickname != null ? nickname : '待登录' }}
-            ({{ name != null ? name : '待登录' }})
+        <q-item-section side>
+          <div class="q-ma-sm">
+          <q-item-label>
+             jjjkj
           </q-item-label>
           <q-item-label v-if="id" caption>
             ID:{{ id }}
@@ -154,6 +149,7 @@ function getImageUrl(url) {
           <q-item-label v-if="isEmail ==2 " caption>
             （点击发送邮箱验证码）
           </q-item-label>
+          </div>
         </q-item-section>
 
       </q-item>

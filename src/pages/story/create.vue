@@ -185,7 +185,7 @@ function updateCharge(charge: number) {
       <q-separator />
 
       <q-card-actions >
-        <div class="q-pa-md" style="max-width: 400px">
+        <div class="q-pa-md" style="width: 100%" >
 
           <q-form
             class="q-gutter-md"
@@ -202,6 +202,7 @@ function updateCharge(charge: number) {
               </div>
               <input accept="image/*" type="file" @change="handleImageUpload"/>
             </div>
+            <div style="width: 100%">
             <q-input
               v-model="title"
               :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小说名称，长度2-100']"
@@ -235,6 +236,7 @@ function updateCharge(charge: number) {
               lazy-rules
               type="text"
             />
+            </div>
             <div>
               <q-select v-model="charge" :options="chargeList" emit-value hint="分类" label="分类"
                         map-options

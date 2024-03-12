@@ -1,13 +1,17 @@
 export function findAndModify(props: any[], targetId: number, newChild: any): any[] {
+  console.log(`targetId:${targetId} props:${props}`);
   for (let i = 0; i < props.length; i++) {
     const prop = props[i];
+    console.log(`targetId:${targetId} id:${prop.id} ${props.length}`);
     if (prop.id === targetId) {
       if (!prop.children) {
         prop.children = [];
       }
       prop.children.push(newChild);
       return props; // 返回修改后的数组
-    } else if (prop.children) {
+    } else if (prop.children && prop.children.length>0) {
+      console.log(`targetId:${targetId} id2:${prop.id} ${prop.children.length}`);
+
       // 如果当前节点有子节点，递归查找
       const result = findAndModify(prop.children, targetId, newChild);
       if (result) {
@@ -15,12 +19,32 @@ export function findAndModify(props: any[], targetId: number, newChild: any): an
       }
     }
   }
-  return props; // 如果没有找到目标ID，返回原始数组
+  console.log(`end targetId:${targetId} props:${props}`);
+
+  // return props; // 如果没有找到目标ID，返回原始数组
 }
 // 删除找到的节点
-export const deleteFunction = (array: any[], targetId: number) => {
-  return array.filter(item => item.id !== targetId);
-};
+export function removeNodeById(props : any[], id : number) {
+  // 递归函数，用于在给定数组中查找并删除具有指定id的节点
+  function removeNodeFromArray(array : any[] , id : number) {
+    return array.filter(node => {
+      // 如果当前节点是要删除的节点，返回false以从数组中排除它
+      if (node.id === id) {
+        return false;
+      }
+      // 如果当前节点有子节点，递归调用removeNodeFromArray
+      if (node.children) {
+        node.children = removeNodeFromArray(node.children, id);
+      }
+      // 保留其他节点
+      return true;
+    });
+  }
+
+  // 对props数组执行递归删除操作
+  return removeNodeFromArray(props, id);
+}
+
 export function findAndModifyLabel(props: any[], targetId: number, newLabel: string): any[] {
   return props.map(prop => {
     if (prop.id === targetId) {
@@ -111,11 +135,11 @@ const props= [
 
 // 查找并修改props数组
 const modifiedProps = findAndModify(props, targetIdToDelete, newChild);
+console.log(modifiedProps);
 
-
-const finalProps = deleteFunction(modifiedProps, targetIdToDelete);
-
-console.log(finalProps);
+// 使用函数删除指定id的节点及其子节点
+const newProps = removeNodeById(props, 10); // 假设要删除id为10的节点
+console.log(newProps); // 输出更新后的props数组
 // 要修改的目标ID
 const targetId = 2;
 // 新的label
