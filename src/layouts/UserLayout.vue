@@ -30,7 +30,24 @@
       show-if-above
       bordered
     >
-      <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+      <q-scroll-area style="height: calc(100% - 150px);  border-right: 1px solid #ddd">
+        <div class="bg-grey-2 text-center  q-ma-md">
+          <q-avatar  class="q-mb-sm" size="56px">
+            <img :src="getImageUrl('23234')">
+          </q-avatar>
+          <div class="text-weight-bold">'待登录' </div>
+          <div>
+            xun3357234@24.com
+            <q-icon  name="warning" style="color: red"/>
+          </div>
+          <div >
+            (发送验证邮件)
+          </div>
+          <div>
+            <q-btn to="/admin/index">管理中心</q-btn>
+          </div>
+        </div>
+
         <q-list padding>
           <q-item v-ripple
                   :active="link === 'detail'"
@@ -187,24 +204,24 @@
 
       </q-scroll-area>
 
-      <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
-        <div class="absolute-bottom bg-transparent">
-          <q-avatar  class="q-mb-sm" size="56px">
-            <img :src="getImageUrl('23234')">
-          </q-avatar>
-          <div class="text-weight-bold">'待登录' </div>
-          <div>
-            xun3357234@24.com
-            <q-icon  name="warning" style="color: red"/>
-          </div>
-          <div >
-            ( 发送验证邮件)
-          </div>
-          <div>
-            <q-btn to="/admin/index">管理中心</q-btn>
-          </div>
-        </div>
-      </q-img>
+<!--      <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">-->
+<!--        <div class="absolute-bottom bg-transparent">-->
+<!--          <q-avatar  class="q-mb-sm" size="56px">-->
+<!--            <img :src="getImageUrl('23234')">-->
+<!--          </q-avatar>-->
+<!--          <div class="text-weight-bold">'待登录' </div>-->
+<!--          <div>-->
+<!--            xun3357234@24.com-->
+<!--            <q-icon  name="warning" style="color: red"/>-->
+<!--          </div>-->
+<!--          <div >-->
+<!--            ( 发送验证邮件)-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <q-btn to="/admin/index">管理中心</q-btn>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </q-img>-->
     </q-drawer>
 
     <q-page-container>

@@ -68,7 +68,6 @@ async function onSubmit() {
   </div>
 
   <div class="q-pa-md" style="max-width: 400px">
-
     <q-form
         class="q-gutter-md"
         @submit="onSubmit"

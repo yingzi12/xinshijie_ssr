@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import {ref} from "vue";
 import { Cookies } from 'quasar'
-// const user = Cookies.get('userInfo');
 const inviteUrl = ref(`https://user.aiavr.uk/index?invite=234234`);
 const textToCopy = ref(null);
 

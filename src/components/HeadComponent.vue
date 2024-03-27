@@ -81,7 +81,7 @@ onMounted(() => {
       </q-avatar>
 
       <q-toolbar-title>心世界</q-toolbar-title>
-      <q-btn flat round dense icon="whatshot" to="/admin/index"/>
+      <q-btn flat round dense icon="manage_accounts" to="/admin/index"/>
 
       <q-btn flat round dense icon="whatshot" to="/users/index" />
 

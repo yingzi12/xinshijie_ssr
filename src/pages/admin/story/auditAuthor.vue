@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Head from 'pages/admin/story/head.vue';
 import { ref } from 'vue';
-const  current= ref(6);
+const current= ref(6);
 const seach=ref("");
 const prompt = ref(false);
 const address = ref('');

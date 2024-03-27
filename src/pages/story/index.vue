@@ -508,7 +508,6 @@
               <q-item-section avatar>
                 <img src="/150.webp" class="small-head-image">
               </q-item-section>
-
               <q-item-section>
                 <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
                 <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>

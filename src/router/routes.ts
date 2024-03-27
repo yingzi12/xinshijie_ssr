@@ -12,6 +12,31 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/use.vue') }],
   },
   {
+    path: '/forgotPassword',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/forgotPassword.vue') }],
+  },
+  {
+    path: '/error',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/ErrorNotFound.vue') }],
+  },
+  {
+    path: '/restPassword',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/restPassword.vue') }],
+  },
+  {
+    path: '/down',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/down.vue') }],
+  },
+  {
+    path: '/help',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/help.vue') }],
+  },
+  {
     path: '/findImagePage',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/findImagePage.vue') }],

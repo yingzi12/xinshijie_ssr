@@ -109,9 +109,6 @@ function getImageUrl(url) {
 <template>
   <q-page>
   <div>
-<!--    <router-link to="/users/userHeadImage">-->
-<!--      <q-btn color="primary" label="编辑头像"/>-->
-<!--    </router-link>-->
     <router-link to="/users/edit">
       <q-btn color="primary" label="编辑个人信息"/>
     </router-link>
@@ -120,11 +117,6 @@ function getImageUrl(url) {
   <div class="q-pa-md row items-start q-gutter-md">
     <q-card bordered  flat style="width: 100%">
       <q-item>
-<!--        <q-item-section>-->
-<!--          <q-avatar font-size="52px" size="100px">-->
-<!--            <img :src="previewImage">-->
-<!--          </q-avatar>-->
-<!--        </q-item-section>-->
         <q-item-section @click="triggerFileInput" side>
           <q-avatar font-size="52px" size="100px">
             <img :src="previewImage">

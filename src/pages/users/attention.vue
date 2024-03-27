@@ -152,7 +152,6 @@ function getSystemImageUrl(album) {
                     <q-item-label caption>{{ collectionSystem.createTime }}</q-item-label>
                     <q-icon color="yellow" name="star"/>
                     <q-icon color="white" name="star_border"/>
-
                   </q-item-section>
                 </q-item>
                 <q-separator spaced/>

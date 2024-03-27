@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { Cookies } from 'quasar'
-
 import {useQuasar} from "quasar";
 import {useRouter} from "vue-router";
 import {ref} from "vue";

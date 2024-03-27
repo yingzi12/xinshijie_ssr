@@ -1,7 +1,14 @@
 <template>
-  <p v-for="n in 86" :key="n">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-  </p>
+  <q-page>
+     <q-card>
+       <q-card-section>
+         <div>世界：10</div>
+         <div>小说：10</div>
+         <div>元素草稿：10</div>
+         <div>章节草稿：10</div>
+       </q-card-section>
+     </q-card>
+  </q-page>
 </template>
 
 <script lang="ts" setup>

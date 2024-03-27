@@ -109,7 +109,6 @@ const onSubmit = async () => {
       <q-input v-model="email" :rules="[val => !!val || 'Please enter your email']" filled label="E-mail *"
                type="email"/>
       <q-input v-model="intro" :rules="[val => !!val || 'Please enter a Intro']" filled label="Intro *"/>
-      <q-toggle v-model="accept" label="I accept the license and terms"/>
       <div>
         <q-btn color="primary" label="Submit" type="submit"/>
         <q-btn class="q-ml-sm" color="primary" flat label="Reset" type="reset"/>
