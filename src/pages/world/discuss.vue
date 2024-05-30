@@ -59,7 +59,9 @@ function onLoad (index, done) {
         <q-item-section >
           <q-card class="my-card bg-secondary text-white">
             <q-card-section>
-              <div class="text-h6">Our Changing Planet</div>
+              <div class="text-h6">
+                <router-link to="/discuss/detail">Our Changing Planet</router-link>
+              </div>
               <div class="text-subtitle2">by John Doe</div>
             </q-card-section>
 

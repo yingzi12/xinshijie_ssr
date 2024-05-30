@@ -10,6 +10,7 @@
 
 
 const { configure } = require('quasar/wrappers');
+
 const path = require('path');
 
 module.exports = configure(function (/* ctx */) {
@@ -36,8 +37,9 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: [
-      'app.scss'
+      'app.scss',
     ],
+
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -78,7 +80,32 @@ module.exports = configure(function (/* ctx */) {
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
+      // extendViteConf(viteConf) {
+      //   viteConf.optimizeDeps = {
+      //     esbuildOptions: {
+      //       plugins: [
+      //         NodeGlobalsPolyfillPlugin({
+      //           buffer: true,
+      //         }),
+      //         NodeModulesPolyfillPlugin()
+      //       ]
+      //     }
+      //   };
+      //
+      //   viteConf.resolve = {
+      //     alias: {
+      //       util: 'rollup-plugin-node-polyfills/polyfills/util'
+      //     }
+      //   };
+      //
+      //   viteConf.define = {
+      //     'global': 'globalThis'
+      //   };
+      // },
 
+      // chainWebpack(chain) {
+      //   chain.node.set('global', true);
+      // },
       vitePlugins: [
         ['@intlify/vite-plugin-vue-i18n', {
           // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
@@ -102,8 +129,12 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
-
+      config: {
+        sourceWeb: 'https://image.51x.uk/xinshijie',
+        // baseUrl:"http://192.168.68.100:8098",
+        baseUrl:"https://admin.aiavr.uk",
+        notify: { /* look at QuasarConfOptions from the API card */ }
+      },
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
       lang: 'zh-CN',

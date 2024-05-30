@@ -71,25 +71,14 @@
         </div>
 
       </q-card-section>
-      <q-card-section class="q-pt-xs">
-        <div class="text-overline">
-          <q-rating
-            v-model="model1"
-            max="7"
-            size="3em"
-            color="yellow"
-            icon="star_border"
-            icon-selected="star"
-            icon-half="star_half"
-            no-dimming
-          />
-        </div>
-        <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-        <div class="text-caption text-grey">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </div>
+<!--      <q-card-section class="q-pt-xs">-->
+<!--        <div class="text-overline">Overline</div>-->
+<!--        <div class="text-h5 q-mt-sm q-mb-xs">Title</div>-->
+<!--        <div class="text-caption text-grey">-->
+<!--          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.-->
+<!--        </div>-->
 
-      </q-card-section>
+<!--      </q-card-section>-->
 
     </q-card-section>
   </q-card>
@@ -351,7 +340,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-const model1 = ref(3.5)
 
 const  current= ref(6);
 const  text= ref("");

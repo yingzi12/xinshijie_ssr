@@ -108,16 +108,27 @@ const seach=ref("");
     <q-btn flat round dense icon="more_vert" />
   </q-toolbar>
   <q-separator dark inset />
-  <div class="row" style="background-color: orange">
-    <q-btn-group outline>
-      <q-btn outline color="brown" label="全部分类" />
-      <q-btn outline color="brown" label="魔法"/>
-      <q-btn outline color="brown" label="科学" />
-      <q-btn outline color="brown" label="远古" />
-      <q-btn outline color="brown" label="修真" />
-      <q-btn outline color="brown" label="历史" />
-    </q-btn-group>
+  <div>
+    <div class="row" style="background-color: orange">
+      <q-btn-group outline>
+        <q-btn outline color="brown" label="全部状态" />
+        <q-btn outline color="brown" label="已发布"/>
+        <q-btn outline color="brown" label="待发布" />
+      </q-btn-group>
+    </div>
+    <div class="row" style="background-color: orange">
+
+      <q-btn-group outline>
+        <q-btn outline color="brown" label="全部分类" />
+        <q-btn outline color="brown" label="魔法"/>
+        <q-btn outline color="brown" label="科学" />
+        <q-btn outline color="brown" label="远古" />
+        <q-btn outline color="brown" label="修真" />
+        <q-btn outline color="brown" label="历史" />
+      </q-btn-group>
+    </div>
   </div>
+
   <div class="q-pa-md">
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">

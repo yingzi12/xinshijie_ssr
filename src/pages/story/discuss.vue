@@ -35,7 +35,10 @@ function onLoad (index, done) {
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
       <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="讨论列表" icon="navigation"  to="/world/detail"/>
+      <q-breadcrumbs-el label="小说列表" icon="navigation"  to="/world/story"/>
+      <q-breadcrumbs-el label="小说信息" icon="navigation"  to="/story/detail"/>
+      <q-breadcrumbs-el label="讨论列表" icon="navigation"  to="/story/discuss"/>
+      <q-breadcrumbs-el label="讨论详细" icon="navigation"  to="/story/discuss"/>
 
     </q-breadcrumbs>
   <div class="q-pa-md">

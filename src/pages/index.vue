@@ -3,8 +3,8 @@
     <q-tabs v-model="seach" shrink stretch>
       <q-input name="title" label="搜索" v-model="title" style="width: 600px"  @keyup.enter="getList(1)"/>          <q-icon name="search" @click="getList(1)"/>
     </q-tabs>
-    <div class="row">
-      <div>
+    <div class="row" >
+      <div  class="col" style="min-width: 300px">
         <div class="q-pa-md q-gutter-md">
         <q-list bordered padding class="rounded-borders" style="max-width: 300px">
           <q-item-label header>编辑推荐</q-item-label>
@@ -23,7 +23,7 @@
         </q-list>
       </div>
       </div>
-      <div style="width: 60%">
+      <div  class="col-md-6" style="min-width: 300px">
         <div class="q-pa-md">
           <q-carousel
             swipeable
@@ -39,7 +39,7 @@
           </q-carousel>
         </div>
       </div>
-      <div>
+      <div class="col" style="min-width: 300px">
         <div class="q-pa-md q-gutter-md">
         <q-list bordered padding class="rounded-borders" style="max-width: 300px">
           <q-item-label header>公告</q-item-label>
@@ -71,7 +71,6 @@
             <q-toolbar class="bg-primary text-white shadow-2">
               <q-toolbar-title>优秀精品</q-toolbar-title>
             </q-toolbar>
-
           <q-item v-for="index in 4" :key="index" to="/story/detail">
             <q-item-section avatar>
               <img src="/150.webp" class="small-head-image">
@@ -714,7 +713,6 @@
 
 <script setup lang="ts">
 import {reactive, ref, toRefs} from 'vue'
-// import { listAlbum } from "../api/album";
 import { api,tansParams } from 'boot/axios'
 import {useMeta} from "quasar";
 import { useRouter } from 'vue-router';
@@ -741,11 +739,7 @@ const metaData = {
     }
   },
 }
-
-
-    // needs to be called in setup()
 useMeta(metaData)
-
 const seach=ref("")
 
 const current = ref(1)
@@ -755,29 +749,26 @@ const title = ref('')
 const albumList = ref([]);
 const total = ref(0);
 const data = reactive({
-  form: {},
   queryParams: {
     pageNum: 1,
-    title:'',
-  },
-  rules: {
+    recType:2,
   }
 });
 const image=ref("")
-const { queryParams, form, rules } = toRefs(data);
-function getList(page: number) {
-   // 滚动到顶部
-  current.value=page
-  queryParams.value.title=title.value;
-  queryParams.value.pageNum=page;
-  api.get("album/list"+'?' + tansParams(queryParams.value)).then(response => {
-    albumList.value = response.data.data;
-    total.value = response.data.total;
-    title.value=''
-    // image.value="https://usa.img111.top/uploads/1178/T/UGirls-APP/2642/2642_010_q9q_2766_4614.webp"
-  }) .catch(() => {
-    // console.log("dddddddddd")
-  });
+const { queryParams } = toRefs(data);
+
+async function getList(recType: number) {
+  queryParams.value.recType = recType;
+  try {
+    const response = await api.get('/wiki/recommendWorld/list?' + tansParams(queryParams.value));
+    if (response.data.code == 200) {
+      total.value = response.data.total;
+      // maxPage.value=  total.value/10+1;
+      albumList.value = response.data.data;
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
 }
 getList(1)
 

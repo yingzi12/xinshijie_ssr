@@ -61,6 +61,29 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/m',
+    component: () => import('layouts/MobileLayout.vue'),
+    children: [
+      // { path: '/', component: () => import('pages/mobile/index.vue') },
+      {
+        path: '/world',
+        component: () => import('pages/mobile/world/index.vue') ,
+        children: [
+
+        ]
+      },
+      {
+        path: '/story',
+        component: () => import('pages/mobile/story/index.vue') ,
+        children: [
+
+        ]
+      },
+      { path: '', component: () => import('pages/mobile/index.vue') },
+
+    ],
+  },
+  {
     path: '/discuss',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -77,6 +100,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/index.vue') }],
+  },
+  {
+    path: '/index',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/index.vue') }],
   },
@@ -138,6 +166,28 @@ const routes: RouteRecordRaw[] = [
       { path: 'commit', component: () => import('pages/element/commit.vue') },
       { path: 'create', component: () => import('pages/element/create.vue') },
       { path: 'edit', component: () => import('pages/element/edit.vue') },
+
+    ],
+  },
+  {
+    path: '/manager',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/manager/index.vue') },
+      { path: 'hearWorldModule', component: () => import('pages/manager/hearWorldModule.vue') },
+      { path: 'hearStoryModule', component: () => import('pages/manager/hearStoryModule.vue') },
+
+    ],
+  },
+  {
+    path: '/product',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/product/index.vue') },
+      { path: 'buy', component: () => import('pages/product/buy.vue') },
+      { path: 'chat', component: () => import('pages/product/chat.vue') },
+      { path: 'find', component: () => import('pages/product/find.vue') },
+
 
     ],
   },

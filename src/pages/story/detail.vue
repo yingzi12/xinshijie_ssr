@@ -127,6 +127,62 @@
           </div>
         </div>
       </div>
+      <div  class="q-ma-md bg-grey-2">
+        <div class="text-h6">评论</div>
+        <div class="row">
+          <div class="q-pa-md">
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/img/avatar.png">
+            </q-avatar>          </div>
+          <div style="width: 90%">
+            <div class="q-pa-md" >
+              <div >
+                <q-input
+                  v-model="text"
+                  filled
+                  type="textarea"
+                />
+              </div>
+              <div class="float-right q-ma-xs">
+                <q-btn color="red" icon="send"  label="发送评论" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <div class="text-subtitle1">全部评论</div>
+          <q-separator   />
+          <q-list bordered>
+            <q-item clickable v-ripple v-for="index in 10 " :key="index">
+              <q-item-section avatar>
+                <q-avatar square>
+                  <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section>
+                <q-banner rounded class="bg-purple-8 text-white">
+                  We can't find your saved recipes until you sign in.
+                  <template v-slot:action>
+                    <q-btn flat color="white" label="Continue as a Guest"  icon="thumb_up"/>
+                    <q-btn flat color="white" label="Sign in"  icon="thumb_down"/>
+                  </template>
+                </q-banner>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+        <div class="q-pa-lg flex flex-center">
+          <q-pagination
+            v-model="current"
+            color="purple"
+            :max="10"
+            :max-pages="6"
+            boundary-numbers
+          />
+        </div>
+      </div>
+
     </div>
     <div>
       <div class="q-pa-md q-gutter-md">
@@ -314,6 +370,7 @@ import { ref } from 'vue';
 const  current= ref(6);
 const auditIntro=ref("");
 const prompt=ref(false);
+const text=ref("");
 </script>
 
 <style scoped>
