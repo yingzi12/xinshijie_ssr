@@ -15,18 +15,18 @@ export default {
   privateTerms: '隐私条款',
   introTerms: '我接受许可和条款',
   welcome: '欢迎',
-  title: '图集',
+  title: '心世界',
   search:"搜索",
   home:'首页',
   webVip:'会员',
   trending:'最热',
   findImage:'寻找图片',
-  usersAlbum:'用户图集',
+  usersAlbum:'用户心世界',
   usersIndex:'用户推荐',
   users:'用户中心',
   down:'下载App',
   footer: {
-    about: "关于图集",
+    about: "关于心世界",
     contact: "联系我们",
     help: "帮助中心",
     suggestions: "提交建议",
@@ -37,8 +37,8 @@ export default {
     // 更多页脚文本...
   },
   meta: {
-    description: "图集网 - 美女、照片、摄影、秀人网。",
-    title: "图集网",
+    description: "心世界网 - 美女、照片、摄影、秀人网。",
+    title: "心世界网",
   },
   vip: {
     monthly: '包月套餐',
@@ -83,7 +83,7 @@ export default {
     consumptionRecord: '消费记录',
     customerService: '客服服务',
     logOut: '退出',
-    aboutAlbum: '关于图集',
+    aboutAlbum: '关于心世界',
     contactUs: '联系我们',
     helpCenter: '帮助中心',
     submitSuggestions: '提交建议',
@@ -103,7 +103,7 @@ export default {
     login:"登录",
     regis:"注册",
     sumbit:"提交",
-    welcome:"欢迎加入图集，创建属于你的图集.",
+    welcome:"欢迎加入心世界，创建属于你的心世界.",
     refreshCode:"点击图片刷新验证码"
   }
 

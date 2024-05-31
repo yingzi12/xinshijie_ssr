@@ -414,7 +414,7 @@ Facebook Connect </span><span>或开放</span><span lang="EN-US"> ID </span><spa
         href="mailto:support@aiavr.uk.com"><span>support@aiavr.uk.com</span></a> </span><span>请其删除这些数据并终止您孩子的帐户。</span><span
         lang="EN-US"></span></p>
     <p align="left" class="MsoNormal"><b><span>收集个人信息之实体</span></b><b><span lang="EN-US"></span></b></p>
-    <p align="left" class="MsoNormal">图集网，Album Gallery App</p>
+    <p align="left" class="MsoNormal">心世界网，Album Gallery App</p>
     <p align="left" class="MsoNormal"><i><span>电子邮件：</span></i><i><span lang="EN-US"><a
         href="mailto:privacy@aiavr.uk"><span>privacy@aiavr.uk</span></a></span></i><i><span lang="EN-US"></span></i></p>
     <p align="left" class="MsoNormal"><span>我们已为</span><span lang="EN-US">
@@ -470,7 +470,7 @@ Facebook Connect </span><span>或开放</span><span lang="EN-US"> ID </span><spa
     <div class="col-2"></div>
     <div class="col-auto" style="margin: 0px">
       <div class="footter" style="margin: 0px;text-align: center;">
-        <router-link to="">关于图集</router-link>
+        <router-link to="">关于心世界</router-link>
         |
         <router-link to="">联系我们</router-link>
         |
@@ -489,7 +489,7 @@ Facebook Connect </span><span>或开放</span><span lang="EN-US"> ID </span><spa
       </div>
       <div class="footerText text-weight-thin"><p>Copyright © 2002-2022 www.aiavr.uk Rights Reserved 版权所有
         心世界未来科技有限公司</p></div>
-      <div class="footerText text-weight-thin"><p>图片,美女,写真,图集</p></div>
+      <div class="footerText text-weight-thin"><p>图片,美女,写真,心世界</p></div>
       <div class="footerText text-weight-light"><p>
         本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</p>
       </div>

@@ -3,7 +3,7 @@
     <div style="width: 600px" class="caption">
      <form>
        <q-form @submit="onSubmit">
-         <q-input label="图集名称" v-model="form.title"
+         <q-input label="心世界名称" v-model="form.title"
                   ref="inputRef"
                   filled
                   :rules="[ val => val.length <= 200 || '最多200个字符']"
@@ -24,11 +24,11 @@
     </div>
     <div>
       <div class="q-pa-md">
-        <p class="text-h5">待寻找图集</p>
+        <p class="text-h5">待寻找心世界</p>
         <q-markup-table>
           <thead>
           <tr>
-            <th class="text-left">图集</th>
+            <th class="text-left">心世界</th>
             <th class="text-right">模特</th>
             <th class="text-right">拍摄时间</th>
             <th class="text-right">提交时间</th>
@@ -56,7 +56,7 @@
       <div class="col-2"> </div>
       <div class="col-auto" style="margin: 0px">
         <div class="footter" style="margin: 0px;text-align: center;">
-          <router-link to="">关于图集</router-link>|
+          <router-link to="">关于心世界</router-link>|
           <router-link to="">联系我们</router-link>|
           <router-link to="">帮助中心</router-link>|
           <router-link to="">提交建议</router-link>|
@@ -64,7 +64,7 @@
           <router-link to="">漏洞提交</router-link>|
         </div>
         <div class="footerText text-weight-thin"> <p>Copyright © 2002-2022 www.aiavr.uk Rights Reserved 版权所有 心世界信息科技有限公司</p></div>
-        <div class="footerText text-weight-thin"><p>图片,美女,写真,图集</p></div>
+        <div class="footerText text-weight-thin"><p>图片,美女,写真,心世界</p></div>
         <div class="footerText text-weight-light"><p>本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</p></div>
         <div class="footerText text-weight-thin"><a href="https://www.51k.uk">心世界小说网</a>|<a  href="https://www.30dizhi.uk">30导航</a>|<a  href="https://www.aravrw.com">心世界</a></div>
       </div>
@@ -90,7 +90,7 @@ function  onSubmit(){
   if(form.value.title == undefined || form.value.title == null || form.value.title.trim() == '' || form.value.title.trim().length ==0 ){
     $q.dialog({
       title: '信息',
-      message: '必须填写图集名称.'
+      message: '必须填写心世界名称.'
     }).onOk(() => {
       // console.log('OK')
     }).onCancel(() => {

@@ -80,7 +80,7 @@ function  onSubmit(){
   if(form.value.title == undefined || form.value.title == null || form.value.title.trim() == '' || form.value.title.trim().length ==0 ){
     $q.dialog({
       title: '信息',
-      message: '必须填写图集名称.'
+      message: '必须填写心世界名称.'
     });
     return;
   }

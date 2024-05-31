@@ -152,7 +152,7 @@
             <div class="col-2"></div>
             <div class="col-auto" style="margin: 0px">
               <div class="footter" style="margin: 0px;text-align: center;">
-                <router-link to="">关于图集</router-link>
+                <router-link to="">关于心世界</router-link>
                 |
                 <router-link to="">联系我们</router-link>
                 |
@@ -171,7 +171,7 @@
               </div>
               <div class="footerText text-weight-thin"><p>Copyright © 2002-2022 www.aiavr.uk Rights Reserved 版权所有
                 心世界未来科技有限公司</p></div>
-              <div class="footerText text-weight-thin"><p>图片,美女,写真,图集</p></div>
+              <div class="footerText text-weight-thin"><p>图片,美女,写真,心世界</p></div>
               <div class="footerText text-weight-light"><p>
                 本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</p>
               </div>
@@ -198,22 +198,22 @@ const $q = useQuasar();
 import { useI18n } from 'vue-i18n';
 const metaData = {
   // sets document title
-  title: '图集网',
+  title: '心世界网',
   // optional; sets final title as "Index Page - My Website", useful for multiple level meta
   titleTemplate: (title) => `${title} - 最热门 Photo Gallery, Beauty, Photo, Photography, Showman.com`,
 
   // meta tags
   meta: {
     verification:{name:"baidu-site-verification", content:"codeva-y79QY7Z0Nm"},
-    description: { name: 'description', content: '图集网  最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
-    keywords: { name: 'keywords', content: '图集网 最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
+    description: { name: 'description', content: '心世界网  最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
+    keywords: { name: 'keywords', content: '心世界网 最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
     equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
     // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
     ogTitle:  {
       property: 'og:title',
       // optional; similar to titleTemplate, but allows templating with other meta properties
       template (ogTitle) {
-        return `${ogTitle} - 最热门 图集网 美女 写真 摄影 秀人网  Photo Gallery, Beauty, Photo, Photography, Showman.com`
+        return `${ogTitle} - 最热门 心世界网 美女 写真 摄影 秀人网  Photo Gallery, Beauty, Photo, Photography, Showman.com`
       }
     }
   },
