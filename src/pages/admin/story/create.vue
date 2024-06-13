@@ -1,71 +1,82 @@
 <script lang="ts" setup>
-import { useQuasar } from 'quasar';
-import pica from "pica";
+import { Dialog, useQuasar } from 'quasar';
 import { api } from "boot/axios";
-import { compressAccurately } from 'image-conversion';
 import { Cookies } from 'quasar'
-import {useRouter} from "vue-router";
-import {ref} from "vue";
+import { useRoute, useRouter } from 'vue-router';
+import { reactive, ref, toRefs } from 'vue';
 import {compressIfNeeded} from "boot/tools";
 const token = Cookies.get('token');
 const $q = useQuasar();
+const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
-const title = ref(null);
-const wname = ref("");
-const wid = ref(0);
-const intro = ref(null);
-const payIntro = ref(null);
-const tags = ref(null);
 const imgUrl = ref(null);
-const vipPrice = ref(0.0);
-const price = ref(0.0);
-const accept = ref(false);
-const charge = ref(1);
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
+const storyKind=reactive([{value:1,label:"主线"},{value:2,label:"支线"},{value:3,label:"杂谈"},{value:3,label:"异想"}])
+
+const data = reactive({
+  addForm: {
+    wid:wid.value,
+    wname:wname.value,
+    types:"",
+    isPrivate:1,
+    kind:1,
+    intro:"",
+    descriptionZip:"",
+    tags:"",
+    name: "",
+    status: 0,
+    source: "",
+    imgUrl:"",
+    checkList:[],
+  }
+});
+const { addForm } = toRefs(data);
 const previewImage = ref("/favicon.ico");
 const selectedImage = ref<File | null>(null);
 
-function notify(message: string, color: string) {
-  $q.notify({
-    color: color,
-    textColor: 'white',
-    icon: color === 'red-5' ? 'warning' : 'cloud_done',
-    message: message
-  });
-}
-
-function onReset() {
-  title.value = null;
-  wname.value = "";
-  intro.value = null;
-  tags.value = null;
-  imgUrl.value = null;
-  charge.value = 1;
-  accept.value = false;
-  payIntro.value = null;
-
-}
 
 async function onSubmit() {
-  const response = await api.post("/admin/userAlbum/add", JSON.stringify({
-    title: title.value,
-    intro: intro.value,
-    payIntro: payIntro.value,
-    girl: girl.value,
-    imgUrl: imgUrl.value,
-    tags: tags.value,
-    charge: charge.value,
-    price: price.value,
-    vipPrice: vipPrice.value,
-  }), {
+  if(addForm.value.imgUrl ==null || addForm.value.imgUrl == undefined || addForm.value.imgUrl ==""){
+    Dialog.create({
+      title: '错误',
+      message: '请上传封面图.',
+      ok: {
+        push: true
+      },
+    })
+    return;
+  }
+  if(addForm.value.types ==null || addForm.value.types == undefined || addForm.value.types ==""){
+    Dialog.create({
+      title: '错误',
+      message: '请选择分类.',
+      ok: {
+        push: true
+      },
+    })
+    return;
+  }
+  if(addForm.value.checkList.length==0){
+    Dialog.create({
+      title: '错误',
+      message: '请选择世界来源.',
+      ok: {
+        push: true
+      },
+    })
+    return;
+  }
+  addForm.value.source=addForm.value.checkList.toString();
+  const response = await api.post("/admin/story/add", JSON.stringify(addForm.value), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
   });
   const data = response.data;
-  //console.log(data)
   if (data.code == 200) {
-    $q.dialog({
+    Dialog.create({
       title: '通知',
       message: '添加成功.',
       ok: {
@@ -77,34 +88,37 @@ async function onSubmit() {
       router.push('/users/album'); // Redirect to login page
     });
   } else {
-    $q.notify({
-      color: 'green-4',
-      textColor: 'white',
-      icon: 'cloud_done',
-      message: '创建成功'
-    });
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
   }
 }
 
 async function handleImageUpload(event: Event) {
   try {
-    console.log("----------handleImageUpload---------------")
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) {
       throw new Error("No file selected");
     }
-    console.log("----------handleImageUpload----2-----------")
     selectedImage.value = file;
     const compressedFile = await compressIfNeeded(file);
     const formData = new FormData();
     formData.append('file', compressedFile);
-    console.log("----------handleImageUpload----3-----------")
-    const response = await api.post( '/admin/userAlbum/upload',  formData);
+    const response = await api.put( '/admin/file/upload',  formData,{
+      headers: {
+        'Content-Type': 'multipart/form-data', // 实际上通常不需要手动设置，这里仅作示例
+        'Authorization': `Bearer ${token}`
+      },
+    });
     const data = await response.data; // 确保使用 await 等待 json 解析完成
-    console.log("----------handleImageUpload----4-----------")
     if (data.code === 200) {
       previewImage.value = $q.config.sourceWeb + data.data;
       imgUrl.value = data.data;
+      addForm.value.imgUrl=data.data;
     } else {
       $q.dialog({
         title: '错误',
@@ -118,7 +132,6 @@ async function handleImageUpload(event: Event) {
       // throw new Error('Image upload failed');
     }
   } catch (error) {
-    notify('Error uploading image', 'red-5');
   }
 }
 
@@ -151,30 +164,36 @@ const chargeList = [
     value: 5
   }
 ]
-function updateCharge(charge: number) {
-  price.value = 1.0;
-  vipPrice.value = 1.0;
+const ischeck=ref(0)
+function handleSurce(){
+  if(addForm.value.checkList.length==0){
+    ischeck.value=0;
+  }else {
+    if (addForm.value.checkList.indexOf("原创") != -1) {
+      ischeck.value = 1;
+    } else {
+      ischeck.value = 2;
+    }
+  }
 }
-
-
 
 </script>
 
 <template>
   <q-page>
+
     <q-card class="my-card">
       <q-card-section>
-        <div class="text-h6">创建小说</div>
+        <div class="text-h6">创建世界</div>
       </q-card-section>
 
       <q-separator />
 
       <q-card-actions >
-        <div class="q-pa-md" style="max-width: 400px">
+        <div class="q-pa-md" >
 
           <q-form
             class="q-gutter-md"
-            @reset="onReset"
             @submit="onSubmit"
           >
             <div class="q-pa-md q-gutter-sm">
@@ -187,25 +206,52 @@ function updateCharge(charge: number) {
               </div>
               <input accept="image/*" type="file" @change="handleImageUpload"/>
             </div>
-            <q-input
-              v-model="title"
-              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小说名称，长度2-100']"
-              filled
-              hint="输入小说名称"
-              label="小说名称 *"
-              lazy-rules
-            />
-            <q-input
-              v-model="wname"
-              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"
-              filled
-              hint="输入世界名称"
-              label="世界名称 *"
-              lazy-rules
-            />
 
             <q-input
-              v-model="intro"
+              v-model="addForm.name"
+              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入故事名称，长度2-100']"
+              filled
+              hint="输入故事名称"
+              label="故事名称 *"
+              lazy-rules
+            />
+            <q-card style="width: 100%" >
+              <q-card-section>
+                <div class="text-h6">世界</div>
+              </q-card-section>
+
+              <q-separator />
+              <q-card-actions >
+                <div  style="width: 100%">
+                  <div  >
+                    <q-input
+                      v-model="addForm.wname"
+                      :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"
+                      filled
+                      hint="输入世界名称"
+                      label="世界名称 *"
+                      lazy-rules
+                    />
+                  </div>
+                  <div>
+                    <p class="text-body1 q-ma-md">这是世界简介，这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介
+                      这是世界简介这是世界简介这是世界简介这是世界简介</p>
+
+                  </div>
+                </div>
+              </q-card-actions>
+            </q-card>
+
+            <q-input
+              v-model="addForm.tags"
+              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度2-100']"
+              filled
+              hint="输入标签。多个使用英文;分割"
+              label="标签 *"
+              lazy-rules
+            />
+            <q-input
+              v-model="addForm.intro"
               :rules="[ val => val && val.length >= 5 && val.length <= 300 || '请输入简介，长度5-300']"
               filled
               label="简介 *"
@@ -213,18 +259,54 @@ function updateCharge(charge: number) {
             />
             <!--      </div>-->
             <q-input
-              v-model="tags"
-              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-30']"
+              v-model="addForm.descriptionZip"
+              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-500']"
               filled
-              label="标签 *"
+              label="描述 *"
               lazy-rules
-              type="text"
+              type="textarea"
             />
+
             <div>
-              <q-select v-model="charge" :options="chargeList" emit-value hint="分类" label="分类"
+              <q-select v-model="addForm.types" :options="chargeList" emit-value hint="分类" label="分类"
                         map-options
                         outlined
-                        @update:modelValue="updateCharge"/>
+              />
+            </div>
+            <div>
+              <div class="text-subtitle1">是否公开：</div>
+
+              <div class="q-gutter-sm">
+                <q-radio v-model="addForm.isPrivate" :val="1" label="公开" />
+                <q-radio v-model="addForm.isPrivate" :val="2" label="私有" />
+              </div>
+            </div>
+            <div>
+              <div>
+                <p>主线：必须符合世界观规定，并且会影响到世界发展走势</p>
+                <p>支线：必须符合世界观规定，不会影响到到世界发展走势，记录主线之外发生的事</p>
+                <p>杂谈：在世界观的基础，进行戏说，可以不完全符合世界观，不会对世界产生影响</p>
+                <p>异想：无需符合世界规定，跟世界线无关，不会对世界产生影响</p>
+              </div>
+              <div>
+                <q-select v-model="addForm.kind" :options="storyKind" emit-value hint="类 型" label="类 型"
+                          map-options
+                          outlined
+                />
+              </div>
+            </div>
+            <div>
+              <div class="text-subtitle1">世界来源：</div>
+              <div class="q-gutter-sm">
+                <q-checkbox v-model="addForm.checkList" val="原创" label="原创" v-if="ischeck==0 || ischeck==1" @click="handleSurce" />
+                <q-checkbox v-model="addForm.checkList" val="游戏" label="游戏"  v-if="ischeck==0 || ischeck==2" @click="handleSurce"/>
+                <q-checkbox v-model="addForm.checkList" val="小说" label="小说" v-if="ischeck==0 || ischeck==2" @click="handleSurce"/>
+                <q-checkbox v-model="addForm.checkList" val="电影" label="电影"  v-if="ischeck==0 || ischeck==2" @click="handleSurce" />
+                <q-checkbox v-model="addForm.checkList" val="动漫" label="动漫"  v-if="ischeck==0 || ischeck==2"  @click="handleSurce"/>
+                <q-checkbox v-model="addForm.checkList" val="电视剧" label="电视剧"  v-if="ischeck==0 || ischeck==2" @click="handleSurce" />
+                <q-checkbox v-model="addForm.checkList" val="其他" label="其他"  v-if="ischeck==0 || ischeck==2"  @click="handleSurce"/>
+
+              </div>
             </div>
             <div>
               <q-btn color="primary" label="提交" type="submit"/>

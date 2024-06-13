@@ -2,7 +2,7 @@
 import { reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
 import { useQuasar } from 'quasar';
-import {  chargeListWorldFilterRemo, chargeListWorldRemo, getByCode } from 'boot/consts';
+import {  chargeListPCFilterRemo, chargeListPCRemo, getByCode } from 'boot/consts';
 const $q = useQuasar();
 
 const title=ref("");
@@ -11,12 +11,11 @@ const charge=ref(1);
 const charge2=ref(-1);
 
 
-const chargeList = chargeListWorldRemo;
-const chargeList2 = chargeListWorldFilterRemo;
+const chargeList = chargeListPCRemo;
+const chargeList2 = chargeListPCFilterRemo;
 
 function updateCharge(charge: number) {
-  // price.value = 1.0;
-  // vipPrice.value = 1.0;
+  recType.value=charge;
 }
 
 function updateCharge2(charge: number) {

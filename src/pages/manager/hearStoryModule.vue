@@ -2,174 +2,45 @@
 import { reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
 import { useQuasar } from 'quasar';
+import {  chargeListPCFilterRemo, chargeListPCRemo, getByCode } from 'boot/consts';
 const $q = useQuasar();
 
 const title=ref("");
 const editor = ref('What you see is <b>what</b> you get.');
 const charge=ref(1);
+const charge2=ref(-1);
 
-const chargeList = [
-  {
-    label: '分卷1',
-    value: 1
-  },
-  {
-    label: '分卷2',
-    value: 2
-  },
-]
+
+const chargeList = chargeListPCRemo;
+const chargeList2 = chargeListPCFilterRemo;
+
 function updateCharge(charge: number) {
+  recType.value=charge;
+}
+
+function updateCharge2(charge: number) {
+  getList(charge)
   // price.value = 1.0;
   // vipPrice.value = 1.0;
 }
 
 
-const columns = [
-  {
-    name: 'name',
-    required: true,
-    label: 'Dessert (100g serving)',
-    align: 'left',
-    field: row => row.name,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-  { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-  { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-  { name: 'protein', label: 'Protein (g)', field: 'protein' },
-  { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-  { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
-]
+const sidList=ref("");
 
-const rows = [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-    iron: '1%'
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-    iron: '7%'
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-    iron: '8%'
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-    iron: '16%'
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-    iron: '0%'
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-    iron: '2%'
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-    iron: '45%'
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-    iron: '22%'
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-    iron: '6%'
-  }
-]
-const visibleColumns= ref([ 'calories', 'desc', 'fat', 'carbs', 'protein', 'sodium', 'calcium', 'iron' ]);
-const model =ref(null);
-const  options= [
-  'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-];
-const text = ref('');
-const  ph = ref('');
-const dense =  ref(false);
-const selected = ref([]);
-const shape = ref('line');
-
-const widList=ref("");
-
-const wids=ref(["0"]);
-const sids=ref([]);
+const sids=ref(["0"]);
 const recType=ref(1);
 const way=ref(1);
 
-async function onAddWorld() {
-  wids.value=widList.value.split(",");
+async function onAddStory() {
+  sids.value=sidList.value.split(",");
   const response = await api.post("/wiki/recommendStory/add", JSON.stringify({
     recType: recType.value,
-    wids: wids.value,
+    sids: sids.value,
     way: way.value,
-  }));
+  }),{
+    headers: {
+      'Content-Type': 'application/json',},
+  });
   const data = response.data;
   //console.log(data)
   if (data.code == 200) {
@@ -197,15 +68,18 @@ const albumList = ref([]);
 const data = reactive({
   queryParams: {
     pageNum: 1,
-    recType:0,
   }
 });
 const image=ref("")
 const { queryParams } = toRefs(data)
 async function getList(recType: number) {
-  queryParams.value.recType = recType;
+  if(recType != -1){
+    queryParams.value.recType = recType;
+  }else{
+    queryParams.value.recType = null;
+  }
   try {
-    const response = await api.get('/wiki/recommendWorld/list?' + tansParams(queryParams.value));
+    const response = await api.get('/wiki/recommendStory/listAll?' + tansParams(queryParams.value));
     if (response.data.code == 200) {
       // total.value = response.data.total;
       // maxPage.value=  total.value/10+1;
@@ -215,7 +89,9 @@ async function getList(recType: number) {
     console.error('Error fetching images:', error);
   }
 }
-getList(1)
+getList(-1)
+
+
 </script>
 
 <template>
@@ -230,12 +106,12 @@ getList(1)
       </template>
 
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
-      <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
-      <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
-      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
+      <q-breadcrumbs-el label="世界首页" icon="sidgets"  to="/story/index"/>
+      <q-breadcrumbs-el label="小说首页" icon="sidgets"  to="/story/index"/>
+      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/story/order" />
       <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
-      <q-breadcrumbs-el label="这个是世界名称" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="世界小说" icon="navigation"  to="/world/story"/>
+      <q-breadcrumbs-el label="这个是世界名称" icon="navigation"  to="/story/detail"/>
+      <q-breadcrumbs-el label="世界小说" icon="navigation"  to="/story/story"/>
       <q-breadcrumbs-el label="这个是小说名称" icon="navigation"  to="/story/detail"/>
       <q-breadcrumbs-el label="章节名称" icon="navigation"  to="/story/chapter"/>
     </q-breadcrumbs>
@@ -262,100 +138,75 @@ getList(1)
         <q-card-section>
           <!--        <div class="text-h6">创建章节</div>-->
           <q-input
-            v-model="widList"
+            v-model="sidList"
             :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界id，长度2-100']"
             filled
             hint="世界ID"
             label="世界id *"
             lazy-rules
           />
-<!--          <div class="q-gutter-sm">-->
-<!--            <q-radio v-model="shape" val="line" label="Line" />-->
-<!--            <q-radio v-model="shape" val="rectangle" label="Rectangle" />-->
-<!--            <q-radio v-model="shape" val="ellipse" label="Ellipse" />-->
-<!--            <q-radio v-model="shape" val="polygon" label="Polygon" />-->
-<!--          </div>-->
+          <!--          <div class="q-gutter-sm">-->
+          <!--            <q-radio v-model="shape" val="line" label="Line" />-->
+          <!--            <q-radio v-model="shape" val="rectangle" label="Rectangle" />-->
+          <!--            <q-radio v-model="shape" val="ellipse" label="Ellipse" />-->
+          <!--            <q-radio v-model="shape" val="polygon" label="Polygon" />-->
+          <!--          </div>-->
         </q-card-section>
 
         <q-separator />
         <q-card-actions >
           <div>
-            <q-btn color="primary" label="提交" type="submit" @click="onAddWorld"/>
+            <q-btn color="primary" label="提交" type="submit" @click="onAddStory"/>
             <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset"/>
           </div>
         </q-card-actions>
       </q-card>
     </div>
     <div class="q-pa-md">
-      <q-table
-        title="Treats"
-        :rows="rows"
-        :columns="columns"
-        row-key="name"
-        :visible-columns="visibleColumns"
-        selection="multiple"
-        v-model:selected="selected"
-      >
-        <template v-slot:top="props">
-          <div class="col-2 q-table__title">Treats</div>
+      <div class="q-pa-md">
+        <div class="row no-wrap shadow-1">
+          <q-toolbar class="col-8 bg-grey-3">
+            <q-btn flat round dense icon="menu" />
+            <q-toolbar-title>人气 </q-toolbar-title>
+            <q-select v-model="charge2" :options="chargeList2" emit-value hint="分类" label="分类"
+                      map-options
+                      outlined
+                      @update:modelValue="updateCharge2"/>
+            <q-input rounded outlined v-model="seach" label="搜索..." />
+            <q-btn flat round dense icon="search" />
+          </q-toolbar>
+          <q-toolbar class="col-4 bg-primary text-white">
+            <q-space />
+            <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
+            <q-btn flat round dense icon="more_vert" />
+          </q-toolbar>
+        </div>
+      </div>
+      <div class="q-pa-md q-gutter-md">
+        <q-list bordered padding class="rounded-borders">
+          <q-item v-for="(album,index) in albumList" :key="index" to="/admin/story/info">
+            <q-item-section avatar>
+              <img :src="$q.config.sourceWeb+album.imgUrl" class="small-head-image">
+            </q-item-section>
 
-          <q-space />
+            <q-item-section>
+              <q-item-label class="one-line-clamp">{{album.wname}}({{album.sid}})</q-item-label>
+              <q-item-label class="one-line-clamp text-weight-thin text-overline"><span>{{getByCode(album.recType)}}</span></q-item-label>
+              <q-item-label class="one-line-clamp text-weight-thin text-overline">{{album.intro}}</q-item-label>
+              <q-item-label class="one-line-clamp text-weight-thin text-overline">{{album.createTime}}</q-item-label>
+              <!--              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>-->
+            </q-item-section>
+            <q-item-section side top>
+              <q-item-label color="yellow"  caption>待发布</q-item-label>
+            </q-item-section>
+            <q-item-section side top>
+              <q-icon name="delete" color="red" ></q-icon>
+            </q-item-section>
+          </q-item>
+          <q-separator spaced />
 
-          <div v-if="$q.screen.gt.xs" class="col">
-            <q-toggle v-model="visibleColumns" val="calories" label="Calories" />
-            <q-toggle v-model="visibleColumns" val="fat" label="Fat" />
-            <q-toggle v-model="visibleColumns" val="carbs" label="Carbs" />
-            <q-toggle v-model="visibleColumns" val="protein" label="Protein" />
-            <q-toggle v-model="visibleColumns" val="sodium" label="Sodium" />
-            <q-toggle v-model="visibleColumns" val="calcium" label="Calcium" />
-            <q-toggle v-model="visibleColumns" val="iron" label="Iron" />
-            <q-select v-model="model" :options="options" label="Standard" />
-            <q-input bottom-slots v-model="text" label="Label" counter :dense="dense">
-              <template v-slot:prepend>
-                <q-icon name="place" />
-              </template>
-              <template v-slot:append>
-                <q-icon name="close" @click="text = ''" class="cursor-pointer" />
-              </template>
-
-              <template v-slot:hint>
-                Field hint
-              </template>
-            </q-input>
-            <div class="q-gutter-sm">
-              <q-radio v-model="shape" val="line" label="Line" />
-              <q-radio v-model="shape" val="rectangle" label="Rectangle" />
-              <q-radio v-model="shape" val="ellipse" label="Ellipse" />
-              <q-radio v-model="shape" val="polygon" label="Polygon" />
-            </div>
-          </div>
-          <q-select
-            v-else
-            v-model="visibleColumns"
-            multiple
-            borderless
-            dense
-            options-dense
-            :display-value="$q.lang.table.columns"
-            emit-value
-            map-options
-            :options="columns"
-            option-value="name"
-            style="min-width: 150px"
-          />
-
-          <q-btn
-            flat round dense
-            :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-            @click="props.toggleFullscreen"
-            class="q-ml-md"
-          />
-          <div class="q-mt-md">
-            Selected: {{ JSON.stringify(selected) }}
-          </div>
-        </template>
-
-      </q-table>
+        </q-list>
+      </div>
     </div>
   </q-page>
 </template>

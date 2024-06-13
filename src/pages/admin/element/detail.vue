@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Head from 'pages/admin/world/head.vue';
+import Head from 'components/world/headComponent.vue';
 
 const fabPos = ref([ 18, 18 ]);
 const draggingFab = ref(false);

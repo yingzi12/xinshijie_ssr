@@ -6,7 +6,11 @@
       <HeadTableComponent></HeadTableComponent>
     </q-header>
     <q-page-container style="height: 100%;">
-      <router-view />
+      <div class="div-center" >
+        <div class="div-center-child" style="max-width: 1280px">
+        <router-view />
+        </div>
+      </div>
       <q-separator color="orange" inset />
         <div class="row">
           <div class="col-2"> </div>
@@ -41,3 +45,11 @@ export default defineComponent({
   components: { HeadTableComponent, HeadComponent }
 });
 </script>
+<style lang="sass" scoped>
+.div-center
+  pxdisplay: flex
+  flex-direction: column
+  justify-content: center
+.div-center-child
+  margin: auto
+</style>

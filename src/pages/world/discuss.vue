@@ -1,8 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+import { api, tansParams } from 'boot/axios';
+import  cardItemComponent  from 'components/discuss/cardItemComponent.vue';
+const route = useRoute();
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
+const source = ref(route.query.source);
+
+const $q = useQuasar();
+const router = useRouter()
 
 const splitterModel= ref(200); // start at 150px
-const  current= ref(6);
+const  current= ref(1);
 const seach=ref("");
 const commitHide=ref(false);
 
@@ -18,6 +29,168 @@ function onLoad (index, done) {
     done()
   }, 2000)
 }
+
+
+const circleUrl=ref('')
+const disabled=ref(true)
+
+const username=ref('')
+
+//评论列表
+const commentActive = ref('allComm')
+const commentList = ref<Comment[]>([])
+const loading = ref(true);
+
+
+
+//讨论信息
+const discuss=ref({})
+//
+// /** 查询讨论详细 */
+// function handleDiscuss() {
+//   if(did.value == undefined){
+//     ElMessage.error("缺少必要参数")
+//     return;
+//   }
+//   getDiscuss(did.value).then(response => {
+//     discuss.value = response.data
+//   });
+// }
+// // 第一级回复评论
+// //分页信息
+// const dateRange = ref([]);
+const total = ref(0);
+const data = reactive({
+  form: {
+    comment:undefined,
+    wid:wid.value,
+    upid:undefined,
+    source:source.value
+  },
+  replyForm: {
+    comment:undefined,
+    wid:wid.value,
+    upid:undefined,
+    source:source.value
+  },
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
+
+    auditStatus:0,
+    current:1,
+    name: undefined,
+    types: undefined,
+    pid:null,
+    wid:wid.value,
+    source:source.value,
+    ranks:0,
+    // wid:wid.value,
+  },
+  queryReplyParams: {
+    pageNum: 1,
+    pageSize: 3,
+    pid:null,
+    wid:wid.value,
+    source:source.value,
+  },
+  rules: {
+    // userName: [{ required: true, message: "用户名称不能为空", trigger: "blur" }, { min: 2, max: 20, message: "用户名称长度必须介于 2 和 20 之间", trigger: "blur" }],
+  }
+});
+const { queryParams,queryReplyParams, form,replyForm, rules } = toRefs(data);
+// function onAddSubmit(){
+//   if(form.value.comment.length<10 || form.value.comment.length>500){
+//     ElMessage.error("回复内容需大于10小于500")
+//     return;
+//   }
+//   addDiscussComment(form.value).then(response => {
+//     // dissComment.value=''
+//     form.value.comment="";
+//     getList(1)
+//   })
+// }
+// function onReplySubmit(comment,replyComment){
+//   if(replyComment.replyComment.length<10 || replyComment.replyComment.length>500){
+//     ElMessage.error("回复内容需大于10小于500")
+//     return;
+//   }
+//   replyForm.value.upid=replyComment.id;
+//   replyForm.value.comment=replyComment.replyComment;
+//   replyDiscussComment(replyForm.value).then(response => {
+//     ElMessage.info("回复成功")
+//     getReplyList(comment,1)
+//   })
+// }
+/** 查询世界列表 */
+// function getList(page: number) {
+//   window.scrollTo(0, 0); // 滚动到顶部
+//   queryParams.value.pageNum=page;
+//
+//   queryParams.value.ranks=0
+//   listDiscussComment(queryParams.value).then(response => {
+//     loading.value = false;
+//     commentList.value = response.data;
+//     total.value = response.total;
+//   });
+// }
+// function getReplyList(comment,page: number) {
+//   window.scrollTo(0, 0); // 滚动到顶部
+//   queryReplyParams.value.pageNum=page;
+//
+//   queryReplyParams.value.pid=comment.id
+//   listDiscussComment(queryReplyParams.value).then(response => {
+//     loading.value = false;
+//     comment.replyList = response.data;
+//     total.value = response.total;
+//   });
+// }
+//
+// function handleHideReply(comment){
+//   if(comment.replyHide) {
+//     comment.replyHide = false;
+//   }else {
+//     comment.replyHide = true;
+//   }
+//   getReplyList(comment,1)
+// }
+// function handleHideCommentReply(comment){
+//   if(comment.replyHide) {
+//     comment.replyHide = false;
+//   }else {
+//     comment.replyHide = true;
+//   }
+// }
+// //跳转回复详细
+// function handleReplyDetail(comment){
+//   const url="/discuss/reply?wid="+comment.wid+"&did="+comment.did+"&dcid="+comment.id+"&source="+comment.source;
+//   if(comment.source==2){
+//     router.push(url+"&sid="+comment.sid);
+//   }else{
+//     router.push(url);
+//   }
+// }
+
+const  maxPage=ref(0);
+const valueList=ref([]);
+async function getDiscussList() {
+  try {
+    queryParams.value.pageNum=current.value;
+    const response = await api.get('/wiki/discussComment/list?' + tansParams(queryParams.value));
+    if (response.data.code == 200) {
+      total.value = response.data.total;
+      valueList.value=response.data.data;
+      if(total.value % queryParams.value.pageSize == 0){
+        maxPage.value=total.value/queryParams.value.pageSize;
+      }else{
+        maxPage.value=total.value/queryParams.value.pageSize+1;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+}
+getDiscussList();
 </script>
 
 <template>
@@ -42,45 +215,21 @@ function onLoad (index, done) {
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
-        <q-toolbar-title>这是世界名称 </q-toolbar-title>
+        <q-toolbar-title>{{ wname }} </q-toolbar-title>
         <q-input rounded outlined v-model="seach" label="搜索..." />
         <q-btn flat round dense icon="search" />
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
-        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-        <q-btn flat round dense icon="more_vert" />
+<!--        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
+        <q-btn flat round dense icon="add" label="新增讨论"  :to="{ path: '/discuss/create', query: { wid: wid ,wname: wname,source: 1 }}"/>
       </q-toolbar>
     </div>
   </div>
   <div class="q-pa-md q-gutter-md">
     <q-list bordered padding class="rounded-borders">
-      <q-item v-for="index in 10" :key="index">
-        <q-item-section >
-          <q-card class="my-card bg-secondary text-white">
-            <q-card-section>
-              <div class="text-h6">
-                <router-link to="/discuss/detail">Our Changing Planet</router-link>
-              </div>
-              <div class="text-subtitle2">by John Doe</div>
-            </q-card-section>
-
-            <q-card-section>
-              <q-item-label class="five-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-card-section>
-
-            <q-separator dark />
-
-            <q-card-actions>
-              <q-btn flat icon="assistant_navigation">赞同 111</q-btn>
-              <q-btn flat icon="arrow_drop_down_circle">反对</q-btn>
-              <q-btn flat icon="textsms" @click="alert = true">2条评论</q-btn>
-              <q-btn flat icon="grade">收藏</q-btn>
-
-            </q-card-actions>
-          </q-card>
-        </q-item-section>
-
+      <q-item v-for="(value,index) in valueList" :key="index">
+         <card-item-component :value="value"></card-item-component>
 
       </q-item>
       <q-separator spaced />
@@ -91,7 +240,7 @@ function onLoad (index, done) {
         v-model="current"
         color="purple"
         :max="10"
-        :max-pages="6"
+        :max-pages="maxPage"
         boundary-numbers
       />
     </div>

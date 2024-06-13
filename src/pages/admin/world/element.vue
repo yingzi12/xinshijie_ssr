@@ -1,201 +1,139 @@
 <script setup lang="ts">
-import Head from 'pages/admin/world/head.vue';
-import { ref } from 'vue';
-const  current= ref(6);
-const seach=ref("");
+import headComponent from 'components/world/headComponent.vue';
+import adminElementItemComponent from 'components/world/elementItemComponent.vue';
+import chooseCategoryComponent from 'components/category/chooseCategoryComponent.vue';
 
-const alert=ref(false);
+import { reactive, ref, toRefs } from 'vue';
+import { useRoute } from 'vue-router';
+import { api, tansParams } from 'boot/axios';
+import { moduleOptions } from 'boot/consts';
+const route = useRoute();
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
 
-const selected= ref('Pleasant surroundings');
-const ticked=ref([ 'Quality ingredients', 'Good table presentation' ]);
-const expanded= ref(['Satisfied customers1', 'Satisfied customers', 'Good service (disabled node)', 'Pleasant surroundings' ]);
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
 
-const simple=[
-  {
-    label: 'Satisfied customers1',
-    children: [
-      {
-        label: 'Good food11',
-        children: [
-          { label: 'Quality ingredients111' },
-          {
-            label: 'Good recipe112',
-            children: [
-              { label: 'Quality ingredients1121' },
-              { label: 'Good recipe1122' ,
-                children: [
-                  { label: 'Quality ingredients11221' ,
-                    children: [
-                      { label: 'Quality ingredients112211' },
-                      { label: 'Good recipe112212' }
-                    ]
-                  },
-                  { label: 'Good recipe11222' }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Good service (disabled node)',
-        disabled: true,
-        children: [
-          {
-            label: 'Prompt attention' ,
-            children: [
-              { label: 'Quality ingredients' },
-              { label: 'Good recipe' }
-            ]
-          },
-          { label: 'Professional waiter'
-          }
-        ]
-      },
-      {
-        label: 'Pleasant surroundings',
-        children: [
-          { label: 'Happy atmosphere' },
-          { label: 'Good table presentation' },
-          { label: 'Pleasing decor' }
-        ]
-      }
-    ]
+    title: undefined,
+    types: undefined,
+    wid:wid.value
   }
-]
+});
+
+// 弹出框
+const temType = ref(1)
+
+const { queryParams } = toRefs(data);
+const elementList = ref([]);
+
+//搜索的元素名称
+const title= ref();
+
+//当前页
+const  current= ref(1);
+//总数
+const  total= ref(0);
+//有多少页
+const  maxPage=ref(0);
+async  function getList(){
+  queryParams.value.wid=wid.value;
+  queryParams.value.title=title.value;
+  const response =await api.get("/admin/element/listElementWorld?"+ tansParams(queryParams.value));
+  elementList.value = response.data.data;
+  total.value = response.data.total;
+  if(total.value % queryParams.value.pageSize == 0){
+    maxPage.value=total.value/queryParams.value.pageSize;
+  }else{
+    maxPage.value=total.value/queryParams.value.pageSize+1;
+  }
+}
+getList();
+const dialog=ref(false);
+const cidTagList=ref([]);
+// 定义处理函数来接收子组件传递的数据
+const handleCidList = (selectedIds) => {
+  console.log("从子组件接收到的选中ID列表:", selectedIds);
+  // 在这里您可以根据需要处理这些ID，比如更新父组件的状态、发起新的API请求等
+  cidTagList.value=selectedIds;
+};
+const cid=ref("0");
+function onType(id:string){
+  console.log(cid);
+  cid.value=id;
+}
 </script>
 
 <template>
   <q-page>
-    <Head></Head>
+    <head-component :wid="wid" :wname="wname" :types="4"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
-        <q-toolbar-title>统计（11)
-<!--          <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />)</div>-->
-          <q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />
+        <q-toolbar-title>统计（{{ total }})
         </q-toolbar-title>
-        <q-btn flat round dense icon="search" />
+<!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
         <q-btn flat round dense icon="add" class="q-mr-sm" to="/admin/element/create" />
-        <q-btn flat round dense icon="more_vert" />
       </q-toolbar>
     </div>
     <div class="row" style="background-color: orange">
-      <q-btn-group outline>
-        <q-btn outline color="brown" label="全部分类" />
-        <q-btn outline color="brown" label="魔法"/>
-        <q-btn outline color="brown" label="科学" />
-        <q-btn outline color="brown" label="远古" />
-        <q-btn outline color="brown" label="修真" />
-        <q-btn outline color="brown" label="历史" />
-      </q-btn-group>
+      <div>
+        <q-btn outline color="brown" label="全部大类" />
+        <q-btn v-for="(o,index) in moduleOptions" :key="index" outline color="brown" :label="o.label"/>
+      </div>
     </div>
     <div class="row" style="background-color: orange">
-      <div>
-        已增加过滤：
-        <div class="q-pa-md q-gutter-sm">
-          <q-btn v-for="(t,index) in ticked" :key="index" color="brown" :label="t" size="xs"/>
-        </div>
+      <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="dialog = true" size="xs" />)</div>
+      <div class="q-pa-md q-gutter-sm">
+        <q-chip clickable :color="cid==='0'?  'orange':'yellow' " label="全部"  @click="onType(`0`)" />
+        <q-chip clickable v-for="(tag,index) in cidTagList" :key="index" :color="cid===tag.split(`$$`)[0] ?  'orange':'yellow' "  @click="onType(tag.split(`$$`)[0])">
+          {{tag.split("$$")[1]}}
+        </q-chip>
       </div>
-<!--      <q-btn-group outline>-->
-<!--        <q-btn outline color="brown" label="已选择分类" />-->
-<!--      </q-btn-group>-->
     </div>
-
+    <div>
+      <q-toolbar class="col-8 bg-grey-3">
+        <q-input rounded outlined v-model="queryParams.title" placeholder="输入世界名称"  label="搜索..." @click="getList" />
+        <q-btn flat round dense icon="search" @click="getList"/>
+      </q-toolbar>
+    </div>
 
 
     <div class="q-pa-md q-gutter-md">
       <q-list bordered padding class="rounded-borders">
-        <div v-for="index in 10" :key="index">
-        <q-item  to="/admin/element/detail">
-          <q-item-section avatar>
-            <img src="/150.webp" class="small-head-image">
-          </q-item-section>
-
-          <q-item-section side>
-            <q-item-label class="one-line-clamp  text-subtitle1">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-            <q-item-label class="q-mb-xs"><span style="color: #C10015">已发布</span> · 连载 · 签约 · VIP · 轻小说 · 衍生同人 · 轻小说</q-item-label>
-            <q-item-label class="twp-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-          </q-item-section>
-          <q-item-section side top>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline">更新人：我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline">更新时间：2022-11-11 11:11:23</q-item-label>
-<!--            <q-item-label caption>5 min ago</q-item-label>-->
-<!--            <q-icon name="star" color="yellow" />-->
-          </q-item-section>
-          <q-item-section top side>
-            <div class="text-grey-8 q-gutter-xs">
-              <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
-              <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-<!--              <q-btn size="12px" flat dense round icon="more_vert" />-->
-            </div>
-          </q-item-section>
-        </q-item>
-        <q-separator spaced />
+        <div v-for="(value,index) in elementList" :key="index">
+           <admin-element-item-component :value="value"></admin-element-item-component>
         </div>
       </q-list>
-      <div class="q-pa-lg flex flex-center">
-        <q-pagination
-          v-model="current"
-          color="purple"
-          :max="10"
-          :max-pages="6"
-          boundary-numbers
-        />
+        <div class="q-pa-lg flex flex-center">
+          <q-pagination
+            v-model="current"
+            color="purple"
+            :max="maxPage"
+            :max-pages="6"
+            boundary-numbers
+            @update:model-value="getList"
+          />
       </div>
     </div>
   </q-page>
-  <q-dialog v-model="alert">
-    <q-card>
-      <q-card-section>
-        <div class="text-h6">Alert</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        <div class="q-pa-md row q-col-gutter-sm">
-          <q-tree class="col-12 col-sm-6"
-                  :nodes="simple"
-                  node-key="label"
-                  tick-strategy="leaf"
-                  v-model:selected="selected"
-                  v-model:ticked="ticked"
-                  v-model:expanded="expanded"
-          />
-          <div class="col-12 col-sm-6 q-gutter-sm">
-            <div class="text-h6">Selected</div>
-            <div>{{ selected }}</div>
-
-            <q-separator spaced />
-
-            <div class="text-h6">Ticked</div>
-            <div>
-              <div v-for="tick in ticked" :key="`ticked-${tick}`">
-                {{ tick }}
-              </div>
-            </div>
-
-            <q-separator spaced />
-
-            <div class="text-h6">Expanded</div>
-            <div>
-              <div v-for="expand in expanded" :key="`expanded-${expand}`">
-                {{ expand }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="Cancel" color="primary" v-close-popup />
-        <q-btn flat label="Turn on Wifi" color="primary" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+    <q-dialog v-model="dialog">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">选择分类</div>
+        </q-card-section>
+        <q-card-section>
+          <choose-category-component :wid="wid" :cid-list="cidTagList" @cid-list="handleCidList" ></choose-category-component>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="确认" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
 </template>
 

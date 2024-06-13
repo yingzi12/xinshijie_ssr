@@ -67,7 +67,7 @@ function getImageUrl(imgUrl:string) {
   if (imgUrl != null && imgUrl != undefined && imgUrl != '') {
     return `${$q.config.sourceWeb}${imgUrl}`; // Replace with your default image URL
   }
-  return `/empty.png`;
+  return `/empty.jpg`;
 }
 function getSystemImageUrl(album) {
   if (album.sourceUrl != null && album.sourceUrl.startsWith('/image')) {

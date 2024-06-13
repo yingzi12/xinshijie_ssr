@@ -11,15 +11,15 @@ const metaData = {
   // meta tags
   meta: {
     verification:{name:"baidu-site-verification", content:"codeva-y79QY7Z0Nm"},
-    description: { name: 'description', content: '心世界网  最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
-    keywords: { name: 'keywords', content: '心世界网 最热门 美女 写真 摄影 秀人网 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
+    description: { name: 'description', content: '心世界网  最热门 世界观 游戏 故事 小说 背景 电影 电视剧 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
+    keywords: { name: 'keywords', content: '心世界网 最热门 世界观 游戏 故事 小说 背景 电影 电视剧 Photo Gallery, Beauty, Photo, Photography, Showman.com' },
     equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
     // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
     ogTitle:  {
       property: 'og:title',
       // optional; similar to titleTemplate, but allows templating with other meta properties
       template (ogTitle) {
-        return `${ogTitle} - 最热门 心世界网 美女 写真 摄影 秀人网  Photo Gallery, Beauty, Photo, Photography, Showman.com`
+        return `${ogTitle} - 最热门 心世界网 世界观 游戏 故事 小说 背景 电影 电视剧  Photo Gallery, Beauty, Photo, Photography, Showman.com`
       }
     }
   },

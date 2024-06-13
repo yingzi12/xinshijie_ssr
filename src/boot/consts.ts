@@ -6,7 +6,7 @@ const chargeList = [
     value: 1
   },
   {
-    label: '科学',
+    label: '科技',
     value: 2
   },
 
@@ -56,7 +56,7 @@ export  const applyStatus=reactive([
   {id:4,name: "取消申请"},
 ])
 export const storyTypesMap=new Map([
-  [6,"科学"],
+  [6,"科技"],
   [1,"武侠"],
   [2,"仙侠"],
   [3,"魔幻"],
@@ -66,18 +66,33 @@ export const storyTypesMap=new Map([
 
 ])
 
-export const storyTypes=reactive([{id:6,name:"科学"},{id:1,name:"武侠"},{id:2,name:"仙侠"},{id:3,name:"魔幻"},{id:4,name:"奇幻"},{id:5,name:"其他"}])
+export const storyTypes=reactive([
+  {id:6,name:"科技"},
+  {id:1,name:"武侠"},{id:2,name:"仙侠"},{id:3,name:"魔幻"},{id:4,name:"奇幻"},{id:5,name:"其他"}])
 export const storyKind=reactive([{id:1,name:"主线"},{id:2,name:"支线"},{id:3,name:"杂谈"},{id:3,name:"异想"}])
 export const worldTypesMap=new Map([
-  [6,"科学"],
   [1,"武侠"],
   [2,"仙侠"],
   [3,"魔幻"],
-  [4,"奇幻"],
-  [6,"诡异"],
-  [5,"其他"],
+  [4,"神话"],
+  [5,"灵异"],
+  [6,"科技"],
+  [7,"超能力/异能"],
+  [8,"其他"],
+
 ])
-export const worldTypes=reactive([{id:6,name:"科学"},{id:1,name:"武侠"},{id:2,name:"仙侠"},{id:3,name:"魔幻"},{id:4,name:"奇幻"},{id:5,name:"其他"}])
+export const worldTypes=reactive([
+  {id:1,name:"武侠"},
+  {id:2,name:"仙侠"}
+  ,{id:3,name:"魔幻"},
+  {id:4,name:"神话"},
+  {id:5,name:"灵异"},
+  {id:6,name:"科技"},
+  {id:7,name:"超能力/异能"},
+  {id:8,name:"其他"}
+
+  ]
+)
 export const worldSource=reactive([{id:1,name:"原创"},{id:2,name:"电影"},{id:3,name:"小说"},{id:4,name:"游戏"},{id:5,name:"动漫"},{id:5,name:"电视剧"},{id:6,name:"其他"}])
 export const storyStatusMap = new Map([
   [0, "全部"],
@@ -171,9 +186,9 @@ export const elementStatus =reactive([
 
 export const RecommendEnums = {
   1: { describe: "HEAD头的轮播图", max: 6 },
-  2: { describe: "编辑推荐", max: 4 },
+  2: { describe: "编辑推荐", max: 6 },
   3: { describe: "最有潜力得", max: 9 },
-  4: { describe: "最优秀得", max: 12 },
+  4: { describe: "最优秀得", max: 4 },
   5: { describe: "最新的", max: 12 },
   6: { describe: "非原创推荐", max: 12 },
   7: { describe: "原创推荐", max: 12 },
@@ -186,7 +201,19 @@ export const RecommendEnums = {
   14: { describe: "本月推荐", max: 4 },
   15: { describe: "等级最高的", max: 4 },
   16: { describe: "居民最多的", max: 4 },
-  17: { describe: "精品", max: 9 },
+  17: { describe: "精品", max: 6 },
+  18: { describe: "热门", max: 8 },
+
+  20: { describe: "武侠", max: 6 },
+  21: { describe: "仙侠", max: 6 },
+  22: { describe: "魔幻", max: 6 },
+  23: { describe: "神话", max: 6 },
+  24: { describe: "灵异", max: 6 },
+  25: { describe: "科技", max: 6 },
+  26: { describe: "超能力/异能", max: 6 },
+  27: { describe: "其他", max: 6 },
+
+
 
   101: { describe: "HEAD头的轮播图", max: 6 },
   102: { describe: "编辑推荐", max: 5 },
@@ -231,6 +258,7 @@ export const chargeListAllRemo = [
   { label: "等级最高的", value: 15 },
   { label: "居民最多的", value: 16 },
   { label: "精品", value: 17 },
+  { label: "热门", value: 18 },
 
   // Including the second set for completeness, as per your original enums
   { label: "HEAD头的轮播图", value: 101 },
@@ -253,7 +281,7 @@ export const chargeListAllRemo = [
   { label: "热门", value: 118 },
 ];
 
-export const chargeListStoryRemo = [
+export const chargeListMobileRemo = [
 
   // Including the second set for completeness, as per your original enums
   { label: "HEAD头的轮播图", value: 101 },
@@ -274,9 +302,12 @@ export const chargeListStoryRemo = [
   { label: "居民最多的", value: 116 },
   { label: "精品推荐", value: 117 },
   { label: "热门", value: 118 },
+
+
+
 ];
 
-export const chargeListWorldRemo = [
+export const chargeListPCRemo = [
   { label: "HEAD头的轮播图", value: 1 },
   { label: "编辑推荐", value: 2 },
   { label: "最有潜力得", value: 3 },
@@ -294,10 +325,19 @@ export const chargeListWorldRemo = [
   { label: "等级最高的", value: 15 },
   { label: "居民最多的", value: 16 },
   { label: "精品", value: 17 },
+  { label: "热门", value: 18 },
 
+  { label: "武侠", value: 20 },
+  { label: "仙侠", value: 21 },
+  { label: "魔幻", value: 22 },
+  { label: "神话", value: 23 },
+  { label: "灵异", value: 24 },
+  { label: "科技", value: 25 },
+  { label: "超能力/异能", value: 26 },
+  { label: "其他", value: 27 },
 ];
 
-export const chargeListWorldFilterRemo = [
+export const chargeListPCFilterRemo = [
   { label: "全部", value: -1 },
   { label: "HEAD头的轮播图", value: 1 },
   { label: "编辑推荐", value: 2 },
@@ -316,5 +356,106 @@ export const chargeListWorldFilterRemo = [
   { label: "等级最高的", value: 15 },
   { label: "居民最多的", value: 16 },
   { label: "精品", value: 17 },
+  { label: "热门", value: 18 },
+
+  { label: "武侠", value: 20 },
+  { label: "仙侠", value: 21 },
+  { label: "魔幻", value: 22 },
+  { label: "神话", value: 23 },
+  { label: "灵异", value: 24 },
+  { label: "科技", value: 25 },
+  { label: "超能力/异能", value: 26 },
+  { label: "其他", value: 27 },
 
 ];
+export const chargeListMobileFilterRemo = [
+  { label: "全部", value: -1 },
+  { label: "HEAD头的轮播图", value: 1 },
+  { label: "编辑推荐", value: 2 },
+  { label: "最有潜力得", value: 3 },
+  { label: "最优秀得", value: 4 },
+  { label: "最新的", value: 5 },
+  { label: "非原创推荐", value: 6 },
+  { label: "原创推荐", value: 7 },
+  { label: "随机推荐", value: 8 },
+  { label: "今日最活跃", value: 9 },
+  { label: "本周最活跃", value: 10 },
+  { label: "本月最活跃", value: 11 },
+  { label: "今日推荐", value: 12 },
+  { label: "本周推荐", value: 13 },
+  { label: "本月推荐", value: 14 },
+  { label: "等级最高的", value: 15 },
+  { label: "居民最多的", value: 16 },
+  { label: "精品", value: 17 },
+  { label: "热门", value: 18 },
+
+  { label: "武侠", value: 20 },
+  { label: "仙侠", value: 21 },
+  { label: "魔幻", value: 22 },
+  { label: "神话", value: 23 },
+  { label: "灵异", value: 24 },
+  { label: "科技", value: 25 },
+  { label: "超能力/异能", value: 26 },
+  { label: "其他", value: 27 },
+];
+
+export const moduleOptions = [
+  {
+    value: 1,
+    label: '通用',
+  },
+  {
+    value: 2,
+    label:'角色/人物' ,
+  },
+  {
+    value: 3,
+    label:'组织/势力',
+    disabled: true,
+  },
+  {
+    value: 4,
+    label: '动物/植物',
+    disabled: true,
+  },
+  {
+    value:5 ,
+    label: '种族',
+    disabled: true,
+  },
+  {
+    value:6 ,
+    label: '宗教/党派',
+    disabled: true,
+  },
+  {
+    value:7 ,
+    label: '习俗',
+    disabled: true,
+  },
+  {
+    value:8,
+    label: '矿物',
+    disabled: true,
+  },
+  {
+    value:9 ,
+    label: '武器',
+    disabled: true,
+  },
+  {
+    value:10 ,
+    label: '药品',
+    disabled: true,
+  },
+  {
+    value:10 ,
+    label: '城市/港口',
+    disabled: true,
+  },
+  {
+    value:10 ,
+    label: '物品',
+    disabled: true,
+  },
+]

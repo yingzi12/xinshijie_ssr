@@ -1,100 +1,49 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import { api, tansParams } from 'boot/axios';
+import adminElementItemComponent from 'components/draft/adminElementItemComponent.vue';
 
-const selected = ref(null);
-function selectGoodService () {
-  if (selected.value !== 'Good service') {
-    selected.value = 'Good service'
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
+    status:-1,
+    title: "",
+  }
+});
+
+// 弹出框
+const temType = ref(1)
+
+const { queryParams } = toRefs(data);
+const elementList = ref([]);
+
+//搜索的元素名称
+const title= ref();
+//当前页
+const  current= ref(1);
+//总数
+const  total= ref(0);
+//有多少页
+const  maxPage=ref(0);
+async  function getList(){
+  queryParams.value.title=title.value;
+  const response =await api.get("/admin/draftElement/list?"+ tansParams(queryParams.value));
+  elementList.value = response.data.data;
+  total.value = response.data.total;
+  if(total.value % queryParams.value.pageSize == 0){
+    maxPage.value=total.value/queryParams.value.pageSize;
+  }else{
+    maxPage.value=total.value/queryParams.value.pageSize+1;
   }
 }
-
-function unselectNode () {
-  selected.value = null
-}
-
-const props= [
-  {
-    id: 1,
-    label: 'Satisfied customers',
-    avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-    isOp:false,
-    children: [
-      {
-        id: 2,
-        label: 'Good food',
-        icon: 'restaurant_menu',
-        isOp:false,
-        children: [
-          {
-            id: 10,
-            label: 'Quality ingredients',
-            isOp:false,
-          },
-
-          {
-            id: 11,
-            isOp:false,
-            label: 'Good recipe'
-          }
-        ]
-      },
-      {
-        id: 3,
-        label: 'Good service',
-        icon: 'room_service',
-        isOp:false,
-        children: [
-          {
-            id: 8,
-            isOp:false,
-            label: 'Prompt attention' },
-          {
-            id: 9,
-            isOp:false,
-            label: 'Professional waiter'
-          }
-        ]
-      },
-      {
-        id: 4,
-        label: 'Pleasant surroundings',
-        icon: 'photo',
-        isOp:false,
-        children: [
-          {
-            id: 5,
-            isOp:false,
-            label: 'Happy atmosphere'
-          },
-          {
-            id: 6,
-            isOp:false,
-            label: 'Good table presentation'
-          },
-          {
-            id: 7,
-            isOp:false,
-
-            label: 'Pleasing decor'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id:21,
-    label: 'Satisfied customers1',
-    avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-    isOp:false,
+getList();
+function  onStatus(status:number){
+  if(queryParams.value.status != status){
+    queryParams.value.status=status;
+    getList();
   }
-]
-const fab1 = ref(false);
-
-function onClick () {
-  // console.log('Clicked on a fab action')
 }
-const  current= ref(6);
-const seach=ref("");
 </script>
 
 <template>
@@ -102,18 +51,17 @@ const seach=ref("");
   <q-toolbar class="bg-purple text-white">
     <q-btn flat round dense icon="assignment_ind" />
     <q-toolbar-title>
-      统计（11）
+      元素草稿
     </q-toolbar-title>
     <q-btn flat round dense icon="apps" class="q-mr-xs" />
     <q-btn flat round dense icon="more_vert" />
   </q-toolbar>
   <q-separator dark inset />
   <div class="row" style="background-color: orange">
-    <q-btn-group outline>
-      <q-btn outline color="brown" label="全部" />
-      <q-btn outline color="brown" label="已发布"/>
-      <q-btn outline color="brown" label="待发布" />
-    </q-btn-group>
+
+      <q-chip clickable  color="brown" label="全部" @click="onStatus(-1)" />
+      <q-chip clickable color="brown" label="已发布" @click="onStatus(1)"/>
+      <q-chip clickable color="brown" label="待发布"  @click="onStatus(2)"/>
   </div>
 
   <div class="q-pa-md">
@@ -121,8 +69,8 @@ const seach=ref("");
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
         <q-toolbar-title>人气 </q-toolbar-title>
-        <q-input rounded outlined v-model="seach" label="搜索..." />
-        <q-btn flat round dense icon="search" />
+        <q-input rounded outlined v-model="queryParams.title" label="搜索..." @click="getList"/>
+        <q-btn flat round dense icon="search" @click="getList"/>
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
@@ -131,41 +79,25 @@ const seach=ref("");
       </q-toolbar>
     </div>
   </div>
+
+
   <div class="q-pa-md q-gutter-md">
     <q-list bordered padding class="rounded-borders">
-      <div v-for="index in 10" :key="index">
-        <q-item  to="/admin/draft/element/detail">
-          <q-item-section avatar>
-            <img src="/150.webp" class="small-head-image">
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline text-blue">这是世界名称</q-item-label>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline">2011-11-11 11:11:34</q-item-label>
-            <q-item-label class="one-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-          </q-item-section>
-          <q-item-section side top>
-            <q-item-label color="yellow"  caption>待发布</q-item-label>
-            <!--            <q-icon name="star" color="yellow" />-->
-          </q-item-section>
-          <q-item-section side top>
-            <q-icon name="delete" color="red" ></q-icon>
-          </q-item-section>
-        </q-item>
-        <q-separator spaced />
+      <div v-for="(value,index) in elementList" :key="index">
+        <admin-item-card-component :value="value"> </admin-item-card-component>
       </div>
 
+      <q-separator spaced />
 
     </q-list>
     <div class="q-pa-lg flex flex-center">
       <q-pagination
         v-model="current"
         color="purple"
-        :max="10"
+        :max="maxPage"
         :max-pages="6"
         boundary-numbers
+        @update:model-value="getList"
       />
     </div>
   </div>

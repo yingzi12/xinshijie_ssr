@@ -19,34 +19,71 @@
     >
 
       <template v-slot:before>
-        <div class="text-h6">排行榜</div>
+        <div class="text-h6">排序</div>
         <div class="q-pa-md q-gutter-sm">
-            <span class="text-overline">全部</span>
-          <span class="text-overline">点击</span>
-          <span class="text-overline">观看</span>
-          <span class="text-overline">全部</span>
-          <span class="text-overline">全部</span>
-          <span class="text-overline">全部</span>
+          <q-chip clickable size="xs"  :color="order == -1 ? 'orange':'grey'" @click="onOrder(-1)">
+            默认
+          </q-chip>
+          <q-chip clickable size="xs"  :color="order == 1 ? 'orange':'grey'" @click="onOrder(1)">
+            等级
+          </q-chip>
+          <q-chip clickable size="xs"  :color="order == 2 ? 'orange':'grey'" @click="onOrder(2)">
+            评分
+          </q-chip>
+          <q-chip clickable size="xs"  :color="order == 3 ? 'orange':'grey'" @click="onOrder(3)">
+            点击
+          </q-chip>
+          <q-chip clickable size="xs"  :color="order == 4 ? 'orange':'grey'" @click="onOrder(4)">
+            关注
+          </q-chip>
+          <q-chip clickable size="xs"  :color="order == 5 ? 'orange':'grey'" @click="onOrder(5)">
+            喜欢
+          </q-chip>
+          <q-chip clickable size="xs"  :color="order == 6 ? 'orange':'grey'" @click="onOrder(6)">
+            元素
+          </q-chip>
+          <q-chip clickable size="xs"  :color="order == 7 ? 'orange':'grey'" @click="onOrder(7)">
+            故事
+          </q-chip>
           </div>
         <q-separator spaced />
         <div class="text-h6">分类</div>
         <div class="q-pa-md q-gutter-sm">
-          <q-btn  color="brown" label="全部" size="xs"/>
-          <q-btn  color="brown" label="魔法" size="xs"/>
-          <q-btn  color="brown" label="科学" size="xs"/>
-          <q-btn  color="brown" label="远古" size="xs"/>
-          <q-btn  color="brown" label="修真" size="xs"/>
-          <q-btn  color="brown" label="仙侠" size="xs"/>
+          <q-chip clickable size="xs"  :color="types == -1 ? 'orange':'grey'" @click="onTypes(-1)">
+            全部
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 1 ? 'orange':'grey'" @click="onTypes(1)">
+            武侠
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 2 ? 'orange':'grey'" @click="onTypes(2)">
+            仙侠
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 3 ? 'orange':'grey'" @click="onTypes(3)">
+            魔幻
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 4 ? 'orange':'grey'" @click="onTypes(4)">
+            神话
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 5 ? 'orange':'grey'" @click="onTypes(5)">
+            灵异
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 6 ? 'orange':'grey'" @click="onTypes(6)">
+            科技
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 7 ? 'orange':'grey'" @click="onTypes(7)">
+            超能力/异能
+          </q-chip>
+          <q-chip clickable size="xs"  :color="types == 8 ? 'orange':'grey'" @click="onTypes(8)">
+            其他
+          </q-chip>
         </div>
         <q-separator spaced />
         <div class="text-h6">标签</div>
         <div class="q-pa-md q-gutter-sm">
           <span class="text-overline">全部</span>
-          <span class="text-overline">点击</span>
-          <span class="text-overline">观看</span>
-          <span class="text-overline">全部</span>
-          <span class="text-overline">全部</span>
-          <span class="text-overline">全部</span>
+          <span class="text-overline">原创</span>
+          <span class="text-overline">二次元</span>
+          <span class="text-overline">其他</span>
         </div>
         <q-separator spaced />
       </template>
@@ -55,45 +92,32 @@
         <div class="q-pa-md">
           <div class="row no-wrap shadow-1">
             <q-toolbar class="col-8 bg-grey-3">
-              <q-btn flat round dense icon="menu" />
-              <q-toolbar-title>人气 </q-toolbar-title>
+<!--              <q-btn flat round dense icon="menu" />-->
+              <q-toolbar-title>统计（{{total}}） </q-toolbar-title>
               <q-input rounded outlined v-model="seach" label="搜索..." />
               <q-btn flat round dense icon="search" />
             </q-toolbar>
             <q-toolbar class="col-4 bg-primary text-white">
               <q-space />
-              <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-              <q-btn flat round dense icon="more_vert" />
+              <q-btn flat round dense icon="add" class="q-mr-sm" label="创建世界" @click="routerAddWorld"/>
+<!--              <q-btn flat round dense icon="more_vert" />-->
             </q-toolbar>
           </div>
         </div>
         <div class="q-pa-md q-gutter-md">
           <q-list bordered padding class="rounded-borders">
-            <q-item v-for="index in 10" :key="index" to="/world/detail">
-              <q-item-section avatar>
-                <img src="/150.webp" class="small-head-image">
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-                <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-                <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-              </q-item-section>
-              <q-item-section side top>
-                <q-item-label caption>5 min ago</q-item-label>
-                <q-icon name="star" color="yellow" />
-              </q-item-section>
-            </q-item>
-            <q-separator spaced />
-
+            <div v-for="(value,index) in worldList" :key="index">
+               <world-list-detail-component :value="value"></world-list-detail-component>
+            </div>
           </q-list>
           <div class="q-pa-lg flex flex-center">
             <q-pagination
               v-model="current"
               color="purple"
-              :max="10"
+              :max="maxPage"
               :max-pages="6"
               boundary-numbers
+              @update:model-value="getWorldList"
             />
           </div>
         </div>
@@ -105,11 +129,74 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import { api, tansParams } from 'boot/axios';
+import { useQuasar } from 'quasar';
+import { useRouter } from 'vue-router';
+import worldListDetailComponent from 'components/world/worldListDetailComponent.vue';
+
+const $q = useQuasar();
+const router = useRouter()
 
 const splitterModel= ref(200); // start at 150px
-const  current= ref(6);
 const seach=ref("");
+const order=ref(-1);
+const types=ref(-1);
+
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
+    types:-1,
+    name:null,
+    orderBy:-1,
+  }
+});
+const { queryParams } = toRefs(data);
+
+const worldList=ref([]);
+//当前页
+const  current= ref(1);
+//总数
+const  total= ref(0);
+//有多少页
+const  maxPage=ref(0);
+async function getWorldList() {
+  if(seach.value != null && seach.value != '' ){
+    queryParams.value.name = seach.value;
+  }
+  queryParams.value.pageNum=current.value
+  queryParams.value.orderBy=order.value;
+  queryParams.value.types=types.value;
+
+  try {
+    const response = await api.get('/wiki/world/list?' + tansParams(queryParams.value));
+    const data=response.data;
+    if (data.code == 200) {
+      worldList.value=data.data;
+      total.value=data.total;
+      if(data.total % 20 == 0){
+        maxPage.value=data.total/20;
+      }else{
+        maxPage.value=data.total/20+1;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+}
+function routerAddWorld(){
+  router.push(`/world/create`);
+}
+function onOrder(or:number){
+  order.value=or;
+  getWorldList();
+}
+function onTypes(or:number){
+  types.value=or;
+  getWorldList();
+}
+getWorldList();
 </script>
 
 <style scoped>

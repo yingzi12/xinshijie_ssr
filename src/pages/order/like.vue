@@ -1,10 +1,114 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import worldListDetailComponent from 'components/world/worldListDetailComponent.vue';
+import storyListDetailComponent from 'components/story/storyListDetailComponent.vue';
+import { api, tansParams } from 'boot/axios';
 
-const  tab= ref('mails');
-const  tabClasses= ref('world');
+const  types= ref('world');
+const  dateType= ref('week');
+const  orderBy= ref('week');
 
-const  current= ref(6);
+const  worldType= ref('0');
+const  storyType= ref('0');
+
+const storyCurrent = ref(0);
+
+const storyTotal = ref(0);
+const storyMaxPage = ref(0);
+
+const storyData = reactive({
+  storyQueryParams: {
+    pageNum: 1,
+    pageSize: 10,
+    types:"0",
+    orderBy:-1,
+  }
+});
+const { storyQueryParams } = toRefs(storyData);
+
+const worldCurrent = ref(0);
+const worldTotal = ref(0);
+const worldMaxPage = ref(0);
+
+const worldData = reactive({
+  worldQueryParams: {
+    pageNum: 1,
+    pageSize: 10,
+    types:"0",
+    orderBy:-1,
+  }
+});
+const { worldQueryParams } = toRefs(worldData);
+const storyList = ref([]);
+
+async function getStoryList() {
+  if(storyType.value != "0"){
+    storyQueryParams.value.types = storyType.value;
+  }else{
+    storyQueryParams.value.types = null;
+  }
+  try {
+    const response = await api.get('/wiki/story/list?' + tansParams(storyQueryParams.value));
+    if (response.data.code == 200) {
+      storyTotal.value = response.data.total;
+      storyList.value = response.data.data;
+      if( storyTotal.value%storyQueryParams.value.pageSize ==0){
+        storyMaxPage.value=  storyTotal.value/storyQueryParams.value.pageSize;
+      }else{
+        storyMaxPage.value=  storyTotal.value/storyQueryParams.value.pageSize+1;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+}
+getStoryList();
+const worldList = ref([]);
+
+async function getWorldList() {
+  if(storyType.value != "0"){
+    worldQueryParams.value.types = storyType.value;
+  }else{
+    worldQueryParams.value.types = null;
+  }
+  try {
+    const response = await api.get('/wiki/world/list?' + tansParams(worldQueryParams.value));
+    if (response.data.code == 200) {
+      worldTotal.value = response.data.total;
+      worldList.value = response.data.data;
+      if( worldTotal.value%worldQueryParams.value.pageSize ==0){
+        worldMaxPage.value=  worldTotal.value/worldQueryParams.value.pageSize;
+      }else{
+        worldMaxPage.value=  worldTotal.value/worldQueryParams.value.pageSize+1;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+}
+getWorldList();
+function onOrder(or:number) {
+  if (types.value == "world") {
+    getWorldList();
+  }else {
+    getStoryList();
+  }
+}
+function onDateOrder(or:number) {
+  if (types.value == "world") {
+    getWorldList();
+  }else {
+    getStoryList();
+  }
+}
+function onWorldTypes(or:number){
+  worldType.value=or;
+  getWorldList();
+}
+function onStoryTypes(or:number){
+  storyType.value=or;
+  getStoryList();
+}
 </script>
 
 <template>
@@ -18,7 +122,7 @@ const  current= ref(6);
   </q-toolbar>
   <div>
     <q-tabs
-      v-model="tabClasses"
+      v-model="types"
       no-caps
       align="left"
       outside-arrows
@@ -29,73 +133,102 @@ const  current= ref(6);
       <q-tab name="story" label="故事" />
     </q-tabs>
     <q-tabs
-      v-model="tab"
+      v-model="dateType"
       no-caps
       align="left"
       outside-arrows
       mobile-arrows
       class="bg-orange text-white shadow-2"
     >
-      <q-tab name="mails" label="周" />
-      <q-tab name="alarms" label="月" />
-      <q-tab name="movies" label="总" />
+      <q-tab name="week" label="周" />
+      <q-tab name="month" label="月" />
+      <q-tab name="total" label="总" />
     </q-tabs>
-    <div class="row" style="background-color: orange">
-
-      <q-btn-group  v-if="tabClasses == 'world'" outline>
-        <q-btn outline color="brown" label="全部分类" />
-        <q-btn outline color="brown" label="魔法"/>
-        <q-btn outline color="brown" label="科学" />
-        <q-btn outline color="brown" label="远古" />
-        <q-btn outline color="brown" label="修真" />
-        <q-btn outline color="brown" label="仙侠" />
-        <q-btn outline color="brown" label="其他" />
-      </q-btn-group>
-      <q-btn-group  v-if="tabClasses == 'story'" outline>
-        <q-btn outline color="brown" label="全部分类" />
-        <q-btn outline color="brown" label="魔法"/>
-        <q-btn outline color="brown" label="科学" />
-        <q-btn outline color="brown" label="远古" />
-        <q-btn outline color="brown" label="修真" />
-        <q-btn outline color="brown" label="历史" />
-      </q-btn-group>
+    <q-tabs
+      v-if="types == 'world'"
+      v-model="storyType"
+      no-caps
+      align="left"
+      outside-arrows
+      mobile-arrows
+      class="bg-orange text-white shadow-2"
+    >
+      <q-tab outline color="brown" name="0" label="全部分类" />
+      <q-tab outline color="brown" name="1" label="魔法"/>
+      <q-tab outline color="brown" name="2" label="科学" />
+      <q-tab outline color="brown" name="3" label="远古" />
+      <q-tab outline color="brown" name="4" label="修真" />
+      <q-tab outline color="brown" name="5" label="仙侠" />
+      <q-tab outline color="brown" name="6" label="其他" />
+    </q-tabs>
+    <q-tabs
+      v-if="types == 'story'"
+      v-model="worldType"
+      no-caps
+      align="left"
+      outside-arrows
+      mobile-arrows
+      class="bg-orange text-white shadow-2"
+    >
+      <q-tab outline color="brown" name="0" label="全部分类" />
+      <q-tab outline color="brown" name="1" label="魔法"/>
+      <q-tab outline color="brown" name="2" label="科学" />
+      <q-tab outline color="brown" name="3" label="远古" />
+      <q-tab outline color="brown" name="4" label="修真" />
+      <q-tab outline color="brown" name="5" label="仙侠" />
+      <q-tab outline color="brown" name="6" label="其他" />
+    </q-tabs>
     </div>
     <div class="q-pa-md q-gutter-md">
-      <q-list bordered padding class="rounded-borders">
-        <div v-for="index in 10" :key="index">
-        <q-item :to=" tabClasses =='world' ?`/world/detail`:`/story/detail`">
-          <q-item-section avatar>
-            <img src="/150.webp" class="small-head-image">
-          </q-item-section>
+      <q-tab-panels v-model="types" animated>
+        <q-tab-panel name="world">
+          <q-toolbar >
+            <q-input model-value="" label="搜索"></q-input>
+          </q-toolbar>
+          <q-list bordered padding class="rounded-borders">
+            <div v-for="(value,index) in worldList" :key="index"  >
+                <world-list-detail-component :value="value"></world-list-detail-component>
+              <q-separator spaced />
+            </div>
+          </q-list>
+          <div class="q-pa-lg flex flex-center">
+            <q-pagination
+              v-model="worldCurrent"
+              color="purple"
+              :max="worldMaxPage"
+              max-pages="6"
+              boundary-numbers
+            />
+          </div>
+        </q-tab-panel>
 
-          <q-item-section>
-            <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-            <q-item-label class="q-mb-xs text-red">这是世界名称</q-item-label>
-            <q-item-label class="q-mb-xs text-blue">连载 · 签约 · VIP · 轻小说 · 衍生同人 · 轻小说</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-            <q-item-label class="two-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-          </q-item-section>
-          <q-item-section side top>
-            <q-item-label caption>5 min ago</q-item-label>
-            <q-icon name="star" color="yellow" />
-          </q-item-section>
-        </q-item>
-        <q-separator spaced />
-        </div>
-      </q-list>
-      <div class="q-pa-lg flex flex-center">
-        <q-pagination
-          v-model="current"
-          color="purple"
-          :max="10"
-          :max-pages="6"
-          boundary-numbers
-        />
-      </div>
+        <q-tab-panel name="story">
+          <q-toolbar >
+<!--            <q-btn flat round dense icon="menu" />-->
+            <q-input model-value="" label="搜索"></q-input>
+
+<!--            <q-toolbar-title>-->
+<!--              统计{{storyTotal}}-->
+<!--            </q-toolbar-title>-->
+          </q-toolbar>
+          <q-list bordered padding class="rounded-borders">
+            <div v-for="(value,index) in storyList" :key="index"  >
+              <story-list-detail-component :value="value"></story-list-detail-component>
+            </div>
+          </q-list>
+          <div class="q-pa-lg flex flex-center">
+            <q-pagination
+              v-model="storyCurrent"
+              color="purple"
+              :max="storyMaxPage"
+              max-pages="6"
+              boundary-numbers
+            />
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
+
     </div>
-
-  </div>
-
 </q-page>
 </template>
 

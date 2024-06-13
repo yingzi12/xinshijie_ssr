@@ -38,7 +38,7 @@ async function onSubmit() {
   }
 
   try {
-    const response = await api.post("/systemUser/login", JSON.stringify({
+    const response = await api.post("/login", JSON.stringify({
       username: username.value,
       password: password.value,
       uuid: uuid.value,
@@ -54,6 +54,7 @@ async function onSubmit() {
       console.log(data);
       $q.cookies.set('token',data.token,{path:"/"});
       $q.cookies.set('id',data.id,{path:"/"});
+      $q.cookies.set('avatar',data.user.avatar,{path:"/"});
       $q.cookies.set('userInfo',data.user,{path:"/"});
       router.push('/users/'); // 或者其他页面
     } else {

@@ -1,100 +1,54 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import adminItemCardComponent from 'components/world/adminItemCardComponent.vue';
+import { api, tansParams } from 'boot/axios';
 
 const selected = ref(null);
-function selectGoodService () {
-  if (selected.value !== 'Good service') {
-    selected.value = 'Good service'
-  }
-}
-
-function unselectNode () {
-  selected.value = null
-}
-
-const props= [
-  {
-    id: 1,
-    label: 'Satisfied customers',
-    avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-    isOp:false,
-    children: [
-      {
-        id: 2,
-        label: 'Good food',
-        icon: 'restaurant_menu',
-        isOp:false,
-        children: [
-          {
-            id: 10,
-            label: 'Quality ingredients',
-            isOp:false,
-          },
-
-          {
-            id: 11,
-            isOp:false,
-            label: 'Good recipe'
-          }
-        ]
-      },
-      {
-        id: 3,
-        label: 'Good service',
-        icon: 'room_service',
-        isOp:false,
-        children: [
-          {
-            id: 8,
-            isOp:false,
-            label: 'Prompt attention' },
-          {
-            id: 9,
-            isOp:false,
-            label: 'Professional waiter'
-          }
-        ]
-      },
-      {
-        id: 4,
-        label: 'Pleasant surroundings',
-        icon: 'photo',
-        isOp:false,
-        children: [
-          {
-            id: 5,
-            isOp:false,
-            label: 'Happy atmosphere'
-          },
-          {
-            id: 6,
-            isOp:false,
-            label: 'Good table presentation'
-          },
-          {
-            id: 7,
-            isOp:false,
-
-            label: 'Pleasing decor'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id:21,
-    label: 'Satisfied customers1',
-    avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
-    isOp:false,
-  }
-]
-const fab1 = ref(false);
-
-function onClick () {
-  // console.log('Clicked on a fab action')
-}
-const  current= ref(6);
 const seach=ref("");
+
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
+    orderBy:"",
+    name:"",
+    types:0,
+    status:0,
+    title:"",
+    tags:"",
+  }
+});
+const { queryParams } = toRefs(data);
+const  current= ref(1);
+
+const worldList=ref([]);
+//总数
+const  total= ref(0);
+//有多少页
+const  maxPage=ref(0);
+async function getWorldList() {
+  if(seach.value != null && seach.value != '' ){
+    queryParams.value.name = seach.value;
+  }
+  queryParams.value.pageNum=current.value
+
+  try {
+    const response = await api.get('/wiki/world/list?' + tansParams(queryParams.value));
+    const data=response.data;
+    if (data.code == 200) {
+      worldList.value=data.data;
+      total.value=data.total;
+      if(data.total % 20 == 0){
+        maxPage.value=data.total/20;
+      }else{
+        maxPage.value=data.total/20+1;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+}
+getWorldList();
 </script>
 
 <template>
@@ -110,60 +64,55 @@ const seach=ref("");
   <q-separator dark inset />
   <div>
     <div class="row" style="background-color: orange">
-      <q-btn-group outline>
-        <q-btn outline color="brown" label="全部状态" />
-        <q-btn outline color="brown" label="已发布"/>
-        <q-btn outline color="brown" label="待发布" />
-      </q-btn-group>
+      <q-tabs
+        v-model="queryParams.status"
+        no-caps
+        align="left"
+        outside-arrows
+        mobile-arrows
+        class="bg-orange text-white shadow-2"
+        @update:modelValue="getWorldList"
+      >
+        <q-tab outline color="brown" name="0" label="全部" co/>
+        <q-tab outline color="brown" name="1" label="已发布"/>
+        <q-tab outline color="brown" name="2" label="待发布" />
+      </q-tabs>
     </div>
     <div class="row" style="background-color: orange">
-
-      <q-btn-group outline>
-        <q-btn outline color="brown" label="全部分类" />
-        <q-btn outline color="brown" label="魔法"/>
-        <q-btn outline color="brown" label="科学" />
-        <q-btn outline color="brown" label="远古" />
-        <q-btn outline color="brown" label="修真" />
-        <q-btn outline color="brown" label="历史" />
-      </q-btn-group>
+      <q-tabs
+        v-model="queryParams.types"
+        no-caps
+        align="left"
+        outside-arrows
+        mobile-arrows
+        class="bg-orange text-white shadow-2"
+        @update:modelValue="getWorldList"
+      >
+        <q-tab outline color="brown" name="0" label="全部"/>
+        <q-tab outline color="brown" name="1" label="武侠"/>
+        <q-tab outline color="brown" name="2" label="仙侠" />
+        <q-tab outline color="brown" name="3" label="魔幻" />
+        <q-tab outline color="brown" name="4" label="神话" />
+        <q-tab outline color="brown" name="4" label="灵异" />
+        <q-tab outline color="brown" name="4" label="科技" />
+        <q-tab outline color="brown" name="4" label="超能力/异能" />
+        <q-tab outline color="brown" name="4" label="其他" />
+      </q-tabs>
     </div>
-  </div>
-
-  <div class="q-pa-md">
-    <div class="row no-wrap shadow-1">
+    <div>
       <q-toolbar class="col-8 bg-grey-3">
-        <q-btn flat round dense icon="menu" />
-        <q-toolbar-title>人气 </q-toolbar-title>
-        <q-input rounded outlined v-model="seach" label="搜索..." />
-        <q-btn flat round dense icon="search" />
-      </q-toolbar>
-      <q-toolbar class="col-4 bg-primary text-white">
-        <q-space />
-        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-        <q-btn flat round dense icon="more_vert" />
+        <q-input rounded outlined v-model="queryParams.name" placeholder="输入世界名称"  label="搜索..." @click="getWorldList" />
+        <q-btn flat round dense icon="search" @click="getWorldList"/>
       </q-toolbar>
     </div>
   </div>
+
   <div class="q-pa-md q-gutter-md">
     <q-list bordered padding class="rounded-borders">
-      <q-item v-for="index in 10" :key="index" to="/admin/world/info">
-        <q-item-section avatar>
-          <img src="/150.webp" class="small-head-image">
-        </q-item-section>
+      <div v-for="(value,index) in worldList" :key="index">
+      <admin-item-card-component :value="value"> </admin-item-card-component>
+      </div>
 
-        <q-item-section>
-          <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-          <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-          <q-item-label class="one-line-clamp text-weight-thin text-overline">2011-11-11 11:11:34</q-item-label>
-          <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-        </q-item-section>
-        <q-item-section side top>
-          <q-item-label color="yellow"  caption>待发布</q-item-label>
-        </q-item-section>
-        <q-item-section side top>
-          <q-icon name="delete" color="red" ></q-icon>
-        </q-item-section>
-      </q-item>
       <q-separator spaced />
 
     </q-list>
@@ -171,9 +120,10 @@ const seach=ref("");
       <q-pagination
         v-model="current"
         color="purple"
-        :max="10"
+        :max="maxPage"
         :max-pages="6"
         boundary-numbers
+        @update:model-value="getWorldList"
       />
     </div>
   </div>
