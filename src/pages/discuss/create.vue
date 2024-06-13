@@ -19,12 +19,12 @@ const data = reactive({
   addForm: {
     wid:wid.value,
     sid:sid.value,
-    wname:sname.value,
-    sname:wname.value,
+    wname:wname.value,
+    sname:sname.value,
     source:source.value,
     title:"",
-    editor:"",
-    charge:1,
+    commitZip:"",
+    types:1,
     tags:"",
   }
 });
@@ -74,7 +74,7 @@ const chargeList = [
 
 async function onSubmit() {
 
-  if(addForm.value.charge ==null || addForm.value.charge == undefined ){
+  if(addForm.value.types ==null || addForm.value.types == undefined ){
     Dialog.create({
       title: '错误',
       message: '请选择分类.',
@@ -153,7 +153,7 @@ async function onSubmit() {
       <q-card style="height: 100%">
         <q-card-section>
           <div>
-            <q-select v-model="addForm.charge" :options="chargeList" emit-value hint="分类" label="分类"
+            <q-select v-model="addForm.types" :options="chargeList" emit-value hint="分类" label="分类"
                       map-options
                       outlined
             />
@@ -183,7 +183,7 @@ async function onSubmit() {
         </q-card-section>
         <q-separator />
         <q-card-actions  >
-          <editor-text-component :content="addForm.editor" @editor="args => addForm.editor=args"></editor-text-component>
+          <editor-text-component :content="addForm.commitZip" @editor="args => addForm.commitZip=args"></editor-text-component>
         </q-card-actions>
         <q-card-actions >
           <div>

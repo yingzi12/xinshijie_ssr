@@ -22,7 +22,7 @@ import Head from 'pages/admin/chapter/head.vue';
     <q-btn class="text-subtitle1" to="/admin/story/reel">分卷/目录</q-btn>
     <q-btn class="text-subtitle1" to="/admin/story/auditChapter">章节审核</q-btn>
     <q-btn class="text-subtitle1" to="/admin/story/discuss">评论</q-btn>
-    <q-btn class="text-subtitle1" to="/admin/story/commit">讨论</q-btn>
+    <q-btn class="text-subtitle1" to="/admin/story/comment">讨论</q-btn>
   </div>
   </q-page>
 

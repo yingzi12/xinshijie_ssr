@@ -7,7 +7,7 @@ import { ref } from 'vue';
 const router = useRouter()
 const $q = useQuasar();
 
-interface World {
+interface Comment {
   imgUrl: string;
   id: string;
   name: string;
@@ -23,7 +23,7 @@ interface World {
   ranks:number;
   scores:number;
 }
-const props = defineProps<{ value: World }>();
+const props = defineProps<{ value: Comment }>();
 const tagList=ref([]);
 if(props.value.tags != null){
   tagList.value=props.value.tags.split(";");

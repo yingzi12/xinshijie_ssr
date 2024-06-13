@@ -115,12 +115,12 @@ async function delCategory(id:number) {
     <head-component :wid="wid" :wname="wname" :types="6"></head-component>
 
     <q-toolbar class="bg-purple text-white">
-      <q-btn flat round dense icon="assignment_ind" />
+<!--      <q-btn flat round dense icon="assignment_ind" />-->
       <q-toolbar-title>
-        Toolbar
+        分类管理
       </q-toolbar-title>
-      <q-btn flat round dense icon="apps" class="q-mr-xs" />
-      <q-btn flat round dense icon="more_vert" />
+<!--      <q-btn flat round dense icon="apps" class="q-mr-xs" />-->
+<!--      <q-btn flat round dense icon="more_vert" />-->
     </q-toolbar>
     <q-separator dark inset />
     <div class="q-pa-md q-gutter-sm">

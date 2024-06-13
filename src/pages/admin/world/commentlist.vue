@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import headComponent from 'components/story/headComponent.vue';
+import headComponent from 'components/world/headComponent.vue';
 import { reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const sid = ref(route.query.sid);
-const sname = ref(route.query.sname);
-import adminElementItemComponent from 'components/discuss/adminItemComponent.vue';
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
+import adminItemComponent from 'components/comment/adminItemComponent.vue';
 import { api, tansParams } from 'boot/axios';
 
 const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 20,
+    wid:wid.value,
     status:-1,
+    source:1,
     title: "",
   }
 });
@@ -33,7 +35,7 @@ const  total= ref(0);
 const  maxPage=ref(0);
 async  function getList(){
   queryParams.value.title=title.value;
-  const response =await api.get("/admin/discuss/list?"+ tansParams(queryParams.value));
+  const response =await api.get("/admin/comment/listAdmin?"+ tansParams(queryParams.value));
   valueList.value = response.data.data;
   total.value = response.data.total;
   if(total.value % queryParams.value.pageSize == 0){
@@ -53,7 +55,7 @@ function  onStatus(status:number){
 
 <template>
   <q-page>
-    <head-component :sid="sid" :wname="sname" :types="9"></head-component>
+    <head-component :wid="wid" :wname="wname" :types="9"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
@@ -76,7 +78,7 @@ function  onStatus(status:number){
     <div class="q-pa-md q-gutter-md">
       <q-list bordered padding class="rounded-borders">
         <div v-for="(value,index) in valueList" :key="index">
-          <admin-item-card-component :value="value"> </admin-item-card-component>
+          <admin-item-component :value="value"> </admin-item-component>
         </div>
 
         <q-separator spaced />

@@ -4,12 +4,12 @@ import { ref } from 'vue';
 const splitterModel= ref(200); // start at 150px
 const  current= ref(6);
 const seach=ref("");
-const commitHide=ref(false);
+const commentHide=ref(false);
 
 const alert=ref(false);
 const alert2=ref(false);
 
-const commit=ref("");
+const comment=ref("");
 
 const items = ref([ {}, {}, {}, {}, {}, {}, {} ])
 function onLoad (index, done) {
@@ -110,13 +110,13 @@ function onLoad (index, done) {
                       <q-item-label class="float-left q-ma-xs" caption>2022-11-11 11:23:23</q-item-label>
                       <!--                          <q-btn color="primary" icon="mail" size="xs" label="On Left" />-->
                       <q-btn class="float-right q-ma-xs" icon-right="mail" size="xs"  label="On Right" />
-                      <q-btn  class="float-right q-ma-xs" color="red" size="xs" icon="mail" icon-right="send" label="Right" @click="commitHide =true"/>
+                      <q-btn  class="float-right q-ma-xs" color="red" size="xs" icon="mail" icon-right="send" label="Right" @click="commentHide =true"/>
                     </div>
                   </div>
                 </div>
-                <div v-if="commitHide == true">
+                <div v-if="commentHide == true">
                   <div>
-                    <q-input filled v-model="commit"  />
+                    <q-input filled v-model="comment"  />
                   </div>
                   <div class="float-right q-ma-xs">
                     <q-btn color="red" icon="send"  label="发送评论" />
@@ -147,9 +147,9 @@ function onLoad (index, done) {
                         <div>
 
                         </div>
-                        <div v-if="commitHide == true">
+                        <div v-if="commentHide == true">
                           <div>
-                            <q-input filled v-model="commit"  />
+                            <q-input filled v-model="comment"  />
                           </div>
                           <div class="float-right q-ma-xs">
                             <q-btn color="red" icon="send"  label="发送评论" />
@@ -216,9 +216,9 @@ function onLoad (index, done) {
                   </div>
                 </div>
               </div>
-              <div v-if="commitHide == true">
+              <div v-if="commentHide == true">
                 <div>
-                  <q-input filled v-model="commit"  />
+                  <q-input filled v-model="comment"  />
                 </div>
                 <div class="float-right q-ma-xs">
                   <q-btn color="red" icon="send"  label="发送评论" />
@@ -255,9 +255,9 @@ function onLoad (index, done) {
                       </div>
                     </div>
                   </div>
-                  <div v-if="commitHide == true">
+                  <div v-if="commentHide == true">
                     <div>
-                      <q-input filled v-model="commit"  />
+                      <q-input filled v-model="comment"  />
                     </div>
                     <div class="float-right q-ma-xs">
                       <q-btn color="red" icon="send"  label="发送评论" />

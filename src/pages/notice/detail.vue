@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Head from 'pages/admin/story/head.vue';
+import Head from 'components/story/headComponent.vue';
 
 const alert=ref(false);
 const expanded= ref(true);

@@ -12,8 +12,8 @@ const data = reactive({
     pageSize: 20,
     orderBy:"",
     name:"",
-    types:0,
-    status:0,
+    types:-1,
+    status:-1,
     title:"",
     tags:"",
   }

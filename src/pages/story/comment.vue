@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const commit=ref("");
-const commitHide=ref(false);
+const comment=ref("");
+const commentHide=ref(false);
 
 const items = ref([ {}, {}, {}, {}, {}, {}, {} ])
 function onLoad (index, done) {
@@ -28,7 +28,7 @@ function onLoad (index, done) {
     <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
     <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
     <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
-    <q-breadcrumbs-el label="评论列表" icon="navigation"  to="/world/commit"/>
+    <q-breadcrumbs-el label="评论列表" icon="navigation"  to="/world/comment"/>
   </q-breadcrumbs>
   <q-card>
     <!--      <q-card-section>-->
@@ -62,9 +62,9 @@ function onLoad (index, done) {
             </div>
           </div>
         </div>
-        <div v-if="commitHide == true">
+        <div v-if="commentHide == true">
           <div>
-            <q-input filled v-model="commit"  />
+            <q-input filled v-model="comment"  />
           </div>
           <div class="float-right q-ma-xs">
             <q-btn color="red" icon="send"  label="发送评论" />
@@ -101,9 +101,9 @@ function onLoad (index, done) {
                 </div>
               </div>
             </div>
-            <div v-if="commitHide == true">
+            <div v-if="commentHide == true">
               <div>
-                <q-input filled v-model="commit"  />
+                <q-input filled v-model="comment"  />
               </div>
               <div class="float-right q-ma-xs">
                 <q-btn color="red" icon="send"  label="发送评论" />

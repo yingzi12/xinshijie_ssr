@@ -70,15 +70,15 @@ function onType(id:string){
     <head-component :wid="wid" :wname="wname" :types="4"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
-        <q-btn flat round dense icon="menu" />
+<!--        <q-btn flat round dense icon="menu" />-->
         <q-toolbar-title>统计（{{ total }})
         </q-toolbar-title>
 <!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
-      <q-toolbar class="col-4 bg-primary text-white">
-        <q-space />
-        <q-btn flat round dense icon="add" class="q-mr-sm" to="/admin/element/create" />
-      </q-toolbar>
+<!--      <q-toolbar class="col-4 bg-primary text-white">-->
+<!--        <q-space />-->
+<!--        <q-btn flat round dense icon="add" class="q-mr-sm" to="/admin/element/create" />-->
+<!--      </q-toolbar>-->
     </div>
     <div class="row" style="background-color: orange">
       <div>

@@ -60,9 +60,9 @@ function imageUrl(url) {
     <head-component :wid="wid" :wname="wname" :types="2"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
-        <q-btn flat round dense icon="menu" />
+<!--        <q-btn flat round dense icon="menu" />-->
         <q-toolbar-title>统计（{{ total }}）</q-toolbar-title>
-        <q-btn flat round dense icon="search" />
+<!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
@@ -70,8 +70,6 @@ function imageUrl(url) {
       </q-toolbar>
     </div>
     <q-list bordered class="rounded-borders" >
-      <q-item-label header>Google Inbox style</q-item-label>
-
       <q-item v-for="(value,index) in valueList" :key="index">
         <q-item-section avatar top>
           <q-avatar>

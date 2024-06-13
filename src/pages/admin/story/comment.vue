@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import headComponent from 'components/world/headComponent.vue';
+import Head from 'components/story/headComponent.vue';
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
-const route = useRoute();
-const wid = ref(route.query.wid);
-const wname = ref(route.query.wname);
 const  current= ref(6);
 const seach=ref("");
 </script>
 
 <template>
   <q-page>
-    <head-component :wid="wid" :wname="wname" :types="10"></head-component>
+    <Head></Head>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />

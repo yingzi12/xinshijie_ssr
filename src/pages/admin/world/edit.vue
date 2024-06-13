@@ -193,7 +193,7 @@ function handleSurce(){
 
     <q-card class="my-card">
       <q-card-section>
-        <div class="text-h6">创建世界</div>
+        <div class="text-h6">修改世界</div>
       </q-card-section>
 
       <q-separator />

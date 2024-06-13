@@ -6,6 +6,7 @@ import { reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import { moduleOptions } from 'boot/consts';
 import { api, tansParams } from 'boot/axios';
+import ChooseCategoryComponent from 'components/category/chooseCategoryComponent.vue';
 
 const route = useRoute();
 const wid = ref(route.query.wid);
@@ -15,8 +16,9 @@ const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 20,
-    title: undefined,
+    title: "",
     types: undefined,
+    status:-1,
     wid:wid.value
   }
 });
@@ -61,6 +63,12 @@ function onType(id:string){
   console.log(cid);
   cid.value=id;
 }
+function  onStatus(status:number){
+  if(queryParams.value.status != status){
+    queryParams.value.status=status;
+    getList();
+  }
+}
 </script>
 
 <template>
@@ -68,24 +76,26 @@ function onType(id:string){
     <head-component :wid="wid" :wname="wname" :types="5"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
-        <q-btn flat round dense icon="menu" />
+<!--        <q-btn flat round dense icon="menu" />-->
         <q-toolbar-title>统计（11)
 <!--          <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />)</div>-->
-          <q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />
+<!--          <q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />-->
         </q-toolbar-title>
-        <q-btn flat round dense icon="search" />
+<!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
-      <q-toolbar class="col-4 bg-primary text-white">
-        <q-space />
-        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-        <q-btn flat round dense icon="more_vert" />
-      </q-toolbar>
+<!--      <q-toolbar class="col-4 bg-primary text-white">-->
+<!--        <q-space />-->
+<!--        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
+<!--        <q-btn flat round dense icon="more_vert" />-->
+<!--      </q-toolbar>-->
     </div>
     <div class="row" style="background-color: orange">
-        <q-chip outline color="brown" label="全部状态" />
-        <q-chip outline color="brown" label="待审核"/>
-        <q-chip outline color="brown" label="审核成功" />
-        <q-chip outline color="brown" label="审核失败" />
+
+      <q-chip clickable  color="brown" label="全部" @click="onStatus(-1)" />
+      <q-chip clickable color="brown" label="待审核" @click="onStatus(1)"/>
+      <q-chip clickable color="brown" label="审核成功"  @click="onStatus(2)"/>
+      <q-chip clickable color="brown" label="审核失败"  @click="onStatus(2)"/>
+
     </div>
     <div class="row" style="background-color: orange">
       <div>

@@ -37,8 +37,8 @@ const props = defineProps({
     <q-btn  class="text-black" :color="props.types==6?'orange':'yellow'"   :to="{ path: '/admin/world/category', query: { wid:props.wid,wname:props.wname }}">分类</q-btn>
     <q-btn class="text-black"  :color="props.types==7?'orange':'yellow'"   :to="{ path: '/admin/world/story', query: { wid:props.wid,wname:props.wname }}">故事</q-btn>
     <q-btn class="text-black"  :color="props.types==8?'orange':'yellow'"   :to="{ path: '/admin/world/redident', query: { wid:props.wid,wname:props.wname }}">居民</q-btn>
-    <q-btn class="text-black"  :color="props.types==9?'orange':'yellow'"   :to="{ path: '/admin/world/discuss', query: { wid:props.wid,wname:props.wname }}">评论</q-btn>
-    <q-btn class="text-black"  :color="props.types==10?'orange':'yellow'"  :to="{ path: '/admin/world/commit', query: { wid:props.wid,wname:props.wname }}">讨论</q-btn>
+    <q-btn class="text-black"  :color="props.types==9?'orange':'yellow'"   :to="{ path: '/admin/world/comment', query: { wid:props.wid,wname:props.wname }}">评论</q-btn>
+    <q-btn class="text-black"  :color="props.types==10?'orange':'yellow'"  :to="{ path: '/admin/world/discuss', query: { wid:props.wid,wname:props.wname }}">讨论</q-btn>
   </div>
 </template>
 
