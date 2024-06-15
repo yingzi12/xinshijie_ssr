@@ -10,7 +10,7 @@
         >
           <q-item-section avatar>
 <!--            <img src="/150.webp" class="small-head-image">-->
-            <img
+            <q-img
               class="small-head-image"
               :src="imageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
             />

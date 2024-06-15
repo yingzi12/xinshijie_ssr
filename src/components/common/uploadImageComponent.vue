@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineEmits, defineProps, ref, watch } from 'vue';
-import { compressIfNeeded } from 'boot/tools';
+import { compressIfNeeded, getImageUrl } from 'boot/tools';
 import { api } from 'boot/axios';
 import { Cookies, Dialog, Notify } from 'quasar';
 const previewImage = ref<string>();
@@ -80,9 +80,10 @@ watch(
     <div class="q-pa-md q-gutter-sm">
       <div>
         <q-img
-          :src="imageUrl() || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
           spinner-color="white"
           style="height: 140px; max-width: 150px"
+          :src="getImageUrl(previewImage)"
+          @error.once="() => { $event.target.src = '/empty.jpg'; }"
         />
       </div>
       <input accept="image/*" type="file" @change="handleImageUpload"/>

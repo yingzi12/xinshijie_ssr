@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {compressIfNeeded} from "boot/tools";
+import { compressIfNeeded, getImageUrl } from 'boot/tools';
 import {api} from "boot/axios";
 import {Dialog, useQuasar} from "quasar";
 import { ref, defineProps, reactive, toRefs } from 'vue';
@@ -130,10 +130,10 @@ function imageUrl(pic:string) {
     </q-card-section>
     <div class="q-pa-md q-gutter-sm">
       <div>
-        <q-img
-            :src="imageUrl(props.value.imgUrl)"
-            spinner-color="white"
-            style="height: 140px; max-width: 150px"
+        <q-img  style="height: 140px; max-width: 150px"
+                spinner-color="white"
+                :src="getImageUrl(props.value.imgUrl)"
+               @error.once="() => { $event.target.src = '/empty.jpg'; }"
         />
       </div>
       <input accept="image/*" type="file" @change="handleImageUpload"/>

@@ -99,7 +99,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'manage', component: () => import('pages/world/manage.vue') },
       { path: 'discuss', component: () => import('pages/world/discuss.vue') },
       { path: 'element', component: () => import('pages/world/element.vue') },
-      { path: 'commit', component: () => import('pages/world/comment.vue') },
+      { path: 'comment', component: () => import('pages/world/comment.vue') },
       { path: 'create', component: () => import('pages/admin/world/create.vue') },
 
     ],
@@ -114,7 +114,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'order', component: () => import('pages/story/order.vue') },
       { path: 'chapter', component: () => import('pages/story/chapter.vue') },
       { path: 'discuss', component: () => import('pages/story/discuss.vue') },
-      { path: 'commit', component: () => import('pages/story/commit.vue') },
+      { path: 'comment', component: () => import('pages/story/comment.vue') },
       { path: 'create', component: () => import('pages/admin/story/create.vue') },
 
     ],
@@ -126,7 +126,7 @@ const routes: RouteRecordRaw[] = [
       { path: '', component: () => import('pages/element/index.vue') },
       { path: 'index', component: () => import('pages/element/index.vue') },
       { path: 'detail', component: () => import('pages/element/detail.vue') },
-      { path: 'commit', component: () => import('pages/element/commit.vue') },
+      { path: 'comment', component: () => import('pages/element/comment.vue') },
       { path: 'create', component: () => import('pages/admin/element/create.vue') },
       { path: 'edit', component: () => import('pages/admin/element/edit.vue') },
 
@@ -176,7 +176,7 @@ const routes: RouteRecordRaw[] = [
           { path: 'element', component: () => import('pages/admin/world/element.vue') },
           { path: 'manage', component: () => import('pages/admin/world/manage.vue') },
           { path: 'discuss', component: () => import('pages/admin/world/discuss.vue') },
-          { path: 'commit', component: () => import('pages/admin/world/commit.vue') },
+          { path: 'comment', component: () => import('pages/admin/world/commentlist.vue') },
           { path: 'redident', component: () => import('pages/admin/world/redident.vue') },
           { path: 'auditElement', component: () => import('pages/admin/world/auditElement.vue') },
           { path: 'auditStory', component: () => import('pages/admin/world/auditStory.vue') },
@@ -198,7 +198,7 @@ const routes: RouteRecordRaw[] = [
           { path: 'chapter', component: () => import('pages/admin/story/chapter.vue') },
           { path: 'auditChapter', component: () => import('pages/admin/story/auditChapter.vue') },
           { path: 'discuss', component: () => import('pages/admin/story/discuss.vue') },
-          { path: 'commit', component: () => import('pages/admin/story/commit.vue') },
+          { path: 'comment', component: () => import('pages/admin/story/comment.vue') },
           { path: 'edit', component: () => import('pages/admin/story/edit.vue') },
           { path: 'create', component: () => import('pages/admin/story/create.vue') },
         ]
@@ -276,7 +276,7 @@ const routes: RouteRecordRaw[] = [
           { path: 'service', component: () => import('pages/users/service.vue') },
           { path: 'invite', component: () => import('pages/users/invite.vue') },
           { path: 'discuss', component: () => import('pages/users/discuss.vue') },
-          { path: 'commit', component: () => import('pages/users/commit.vue') },
+          { path: 'comment', component: () => import('pages/users/comment.vue') },
           { path: 'message', component: () => import('pages/users/message.vue') },
           { path: 'notification', component: () => import('pages/users/notification.vue') },
           { path: 'edit', component: () => import('pages/users/userEdit.vue') },

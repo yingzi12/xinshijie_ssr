@@ -95,9 +95,10 @@ async function onSubmit() {
         push: true
       },
     }).onOk(async () => {
-      router.push('/users/album'); // Redirect to login page
+      router.go(-1);
+      // router.push('/users/album'); // Redirect to login page
     }).onCancel(async () => {
-      router.push('/users/album'); // Redirect to login page
+      router.go(-1)
     });
   } else {
     Dialog.create({

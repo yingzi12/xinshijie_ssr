@@ -18,9 +18,10 @@
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
       <q-card-section class="col-5 flex flex-center" style="width: 200px">
-        <img style="height: 240px;width: 180px"
+        <q-img style="height: 240px;width: 180px"
           class="rounded-borders"
-          :src="imageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+          :src="getImageUrl(world.imgUrl)"
+          @error.once="() => { $event.target.src = '/empty.jpg'; }"
         />
       </q-card-section>
       <q-card-section class="q-pt-xs">
@@ -158,6 +159,7 @@ import rendomWorldItemList from 'components/world/rendomWorldItemListComponent.v
 import rendomStoryItemList from 'components/story/rendomStoryItemListComponent.vue'; // 确保路径正确对应你的文件结构
 import commontListComponent from 'components/common/commontListComponent.vue'; // 确保路径正确对应你的文件结构
 import { Cookies, useQuasar } from 'quasar';
+import { getImageUrl } from 'boot/tools';
 const $q = useQuasar();
 
 // 接收url里的参数
@@ -174,7 +176,7 @@ const prompt=ref(false);
 
 const world=ref({});
 /** 查询世界详细 */
-async function handWorld() {
+async function getDetail() {
   const response = await api.get(`/wiki/world/getInfo/${wid.value}`);
   const data=response.data;
   if (data.code == 200) {
@@ -186,9 +188,9 @@ async function handWorld() {
 function imageUrl(imgUrl) {
   return `${$q.config.sourceWeb}${imgUrl}`;
 }
-handWorld();
+getDetail();
 onMounted(() => {
-  handWorld();
+  getDetail();
 });
 
 // 添加watch来监听wid的变化
@@ -196,7 +198,7 @@ watch(() => route.query.wid, async (newWid, oldWid) => {
   if (newWid !== oldWid) {
     // 当wid变化时，重新加载数据
     wid.value = newWid;
-    await handWorld(); // 重新获取世界详细信息
+    await getDetail(); // 重新获取世界详细信息
     // await getAllWorldComment(); // 重新获取评论列表
   }
 }, { immediate: true }); // immediate: true 确保在初始渲染时也触发watcher

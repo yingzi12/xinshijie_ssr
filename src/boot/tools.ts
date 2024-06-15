@@ -1,5 +1,6 @@
 import pica from "pica";
 import { compressAccurately } from 'image-conversion';
+import { useQuasar } from 'quasar';
 
 export function tansParams(params: { [x: string]: any; }) {
     let result = ''
@@ -99,4 +100,13 @@ export function compressImage(file) {
     reader.onerror = () => reject(new Error('FileReader error'));
     reader.readAsDataURL(file);
   });
+}
+export function getImageUrl(imgUrl) {
+  const $q = useQuasar();
+  // Ensure imgUrl is not null or undefined before appending
+  if (imgUrl) {
+    return `${$q.config.sourceWeb}${imgUrl}`;
+  }
+  // If imgUrl is not provided or is falsy, return the default empty image path directly
+  return '/empty.jpg';
 }

@@ -80,7 +80,6 @@ function  onStatus(status:number){
         <div v-for="(value,index) in valueList" :key="index">
           <admin-item-component :value="value"> </admin-item-component>
         </div>
-
         <q-separator spaced />
 
       </q-list>

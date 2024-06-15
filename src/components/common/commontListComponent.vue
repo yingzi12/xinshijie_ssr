@@ -4,12 +4,12 @@
     <div class="row">
       <div class="q-pa-md">
         <q-avatar>
-          <img
-            class="small-user-head-image"
-            :src="imageUrl(circleUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+          <q-img
+            :src="getImageUrl(circleUrl)"
+            @error.once="() => { $event.target.src = '/empty.jpg'; }"
           />
-<!--          <img src="https://cdn.quasar.dev/img/avatar.png">-->
-        </q-avatar>          </div>
+        </q-avatar>
+      </div>
       <div style="width: 90%">
         <div class="q-pa-md" >
           <div >
@@ -37,9 +37,10 @@
         <q-item clickable v-ripple v-for="(value,index) in valueList " :key="index">
           <q-item-section avatar>
             <q-avatar square>
-              <img
+              <q-img
                 class="small-user-head-image"
-                :src="imageUrl(value.circleUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+                :src="getImageUrl(value.circleUrl)"
+                @error.once="() => { $event.target.src = '/empty.jpg'; }"
               />
             </q-avatar>
           </q-item-section>
@@ -92,10 +93,11 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, reactive, ref, toRefs, watch } from 'vue';
+import { defineProps, reactive, ref, toRefs } from 'vue';
 import { Cookies, useQuasar } from 'quasar';
 import { api, tansParams } from 'boot/axios';
-import loginComponent from 'components/users/loginComponent.vue'; // 确保路径正确对应你的文件结构
+import loginComponent from 'components/users/loginComponent.vue';
+import { getImageUrl } from 'boot/tools'; // 确保路径正确对应你的文件结构
 
 const $q = useQuasar();
 const token = Cookies.get("token");
@@ -179,13 +181,6 @@ async function onSubmit(){
     // ElMessage.error("评论不了少于20字")
     return;
   }
-  // if(props.wid.value == undefined){
-  //   errorText.value="缺少必要参数";
-  //   errorDiaLog.value=true;
-  //
-  //   // ElMessage.error("缺少必要参数")
-  //   return;
-  // }
   const response = await api.post('/admin/comment/add', JSON.stringify({
     wid: props.wid,
     source: props.source,
@@ -201,12 +196,6 @@ async function onSubmit(){
   if (data.code == 200) {
     getAllWorldComment();
   }
-  // addComment(commentForm.value).then(response => {
-  //   ElMessage.success("评论成功")
-  //   commentForm.value.comment=''
-  //   //console.log("评论成功")
-  //   getAllWorldComment();
-  // })
 }
 
 // 检查登录状态的方法

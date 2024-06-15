@@ -2,6 +2,7 @@
 
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
+import { getImageUrl } from 'boot/tools';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -43,7 +44,10 @@ function handleSee(id:number,wid:number,softtype:number){
   <q-item>
     <q-item-section avatar top>
       <q-avatar>
-        <img :src="imageUrl(value.circleUrl)">
+        <q-img
+          :src="getImageUrl(value.circleUrl)"
+          @error.once="() => { $event.target.src = '/empty.jpg'; }"
+        />
       </q-avatar>
     </q-item-section>
 

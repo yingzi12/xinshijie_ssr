@@ -4,7 +4,7 @@
     <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-avatar>
+        <q-avatar avatar >
 <!--          <img src="/logo.ico" />-->
           <a href="/"> <img src="/logo.ico" alt="首页" /> </a>
         </q-avatar>
@@ -35,7 +35,10 @@
       <q-scroll-area style="height: calc(100% - 150px);  border-right: 1px solid #ddd">
         <div class="bg-grey-2 text-center q-ma-md">
             <q-avatar  class="q-mb-sm" size="56px">
-              <img :src="getImageUrl('23234')">
+              <q-img
+                :src="getImageUrl(value.circleUrl)"
+                @error.once="() => { $event.target.src = '/empty.jpg'; }"
+              />
             </q-avatar>
             <div class="text-weight-bold">'待登录' </div>
             <div>

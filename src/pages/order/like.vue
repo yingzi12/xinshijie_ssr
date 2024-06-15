@@ -21,6 +21,7 @@ const storyData = reactive({
     pageNum: 1,
     pageSize: 10,
     types:"0",
+    name:"",
     orderBy:-1,
   }
 });
@@ -34,6 +35,7 @@ const worldData = reactive({
   worldQueryParams: {
     pageNum: 1,
     pageSize: 10,
+    name:"",
     types:"0",
     orderBy:-1,
   }
@@ -178,13 +180,16 @@ function onStoryTypes(or:number){
       <q-tab outline color="brown" name="5" label="仙侠" />
       <q-tab outline color="brown" name="6" label="其他" />
     </q-tabs>
+    <q-toolbar class="bg-blue text-white">
+      <q-toolbar-title>
+      <q-input v-if="types == 'story'" v-model="storyQueryParams.name" label="搜索" @click="getStoryList"></q-input>
+      <q-input v-if="types == 'world'" v-model="worldQueryParams.name"  label="搜索" @click="worldQueryParams"></q-input>
+      </q-toolbar-title>
+    </q-toolbar>
     </div>
     <div class="q-pa-md q-gutter-md">
       <q-tab-panels v-model="types" animated>
         <q-tab-panel name="world">
-          <q-toolbar >
-            <q-input model-value="" label="搜索"></q-input>
-          </q-toolbar>
           <q-list bordered padding class="rounded-borders">
             <div v-for="(value,index) in worldList" :key="index"  >
                 <world-list-detail-component :value="value"></world-list-detail-component>
@@ -203,14 +208,7 @@ function onStoryTypes(or:number){
         </q-tab-panel>
 
         <q-tab-panel name="story">
-          <q-toolbar >
-<!--            <q-btn flat round dense icon="menu" />-->
-            <q-input model-value="" label="搜索"></q-input>
 
-<!--            <q-toolbar-title>-->
-<!--              统计{{storyTotal}}-->
-<!--            </q-toolbar-title>-->
-          </q-toolbar>
           <q-list bordered padding class="rounded-borders">
             <div v-for="(value,index) in storyList" :key="index"  >
               <story-list-detail-component :value="value"></story-list-detail-component>
