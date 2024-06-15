@@ -1,17 +1,66 @@
 <script setup lang="ts">
-import Head from 'components/story/headComponent.vue';
-import { ref } from 'vue';
-const  current= ref(6);
-const seach=ref("");
+import headComponent from 'components/story/headComponent.vue';
+import { reactive, ref, toRefs } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const sid = ref(route.query.sid);
+const id = ref(route.query.id);
+const sname = ref(route.query.sname);
+import adminItemComponent from 'components/comment/adminItemComponent.vue';
+import { api, tansParams } from 'boot/axios';
+
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
+    sid:sid.value,
+    status:-1,
+    source:2,
+    title: "",
+  }
+});
+
+// 弹出框
+const temType = ref(1)
+
+const { queryParams } = toRefs(data);
+const valueList = ref([]);
+
+//搜索的元素名称
+const title= ref();
+//当前页
+const  current= ref(1);
+//总数
+const  total= ref(0);
+//有多少页
+const  maxPage=ref(0);
+async  function getList(){
+  queryParams.value.title=title.value;
+  const response =await api.get("/admin/comment/listAdmin?"+ tansParams(queryParams.value));
+  valueList.value = response.data.data;
+  total.value = response.data.total;
+  if(total.value % queryParams.value.pageSize == 0){
+    maxPage.value=total.value/queryParams.value.pageSize;
+  }else{
+    maxPage.value=total.value/queryParams.value.pageSize+1;
+  }
+}
+getList();
+function  onStatus(status:number){
+  if(queryParams.value.status != status){
+    queryParams.value.status=status;
+    getList();
+  }
+}
 </script>
 
 <template>
   <q-page>
-    <Head></Head>
+    <head-component :sid="sid" :sname="sname" :id="id"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
-        <q-toolbar-title>统计（11）</q-toolbar-title>
+        <q-toolbar-title>统计（{{ total }}）</q-toolbar-title>
         <q-btn flat round dense icon="search" />
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
@@ -21,53 +70,33 @@ const seach=ref("");
       </q-toolbar>
     </div>
     <div class="row" style="background-color: orange">
-      <q-btn-group outline>
-        <q-btn outline color="brown" label="全部状态" />
-        <q-btn outline color="brown" label="已发布"/>
-        <q-btn outline color="brown" label="待发布" />
-      </q-btn-group>
+
+      <q-chip clickable  color="brown" label="全部" @click="onStatus(-1)" />
+      <q-chip clickable color="brown" label="已发布" @click="onStatus(1)"/>
+      <q-chip clickable color="brown" label="待发布"  @click="onStatus(2)"/>
     </div>
-    <q-list bordered class="rounded-borders" >
-      <q-item-label header>Google Inbox style</q-item-label>
 
-      <q-item v-for="index in 10" :key="index">
-        <q-item-section avatar top>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-          </q-avatar>
-        </q-item-section>
+    <div class="q-pa-md q-gutter-md">
+      <q-list bordered padding class="rounded-borders">
+        <div v-for="(value,index) in valueList" :key="index">
+          <admin-item-component :value="value"> </admin-item-component>
+        </div>
 
-        <q-item-section  top side >
-          <q-item-label class="q-mt-sm text-h6">这是评论标题，这是评论标题，这是评论标题，这是评论标题，这是评论标题</q-item-label>
-          <q-item-label class="q-mt-sm text-subtitle2">作者：这是作者，这是作者</q-item-label>
-          <q-item-label class="q-mt-sm text-subtitle2">创建时间：2024-11-23 11:12:43</q-item-label>
-          <q-item-label lines="2">这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容，这是一个内容</q-item-label>
-        </q-item-section>
-        <q-item-section top side>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">查看：</span>
-            <span class="text-grey-8">1000</span>
-          </q-item-label>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">点赞：</span>
-            <span class="text-grey-8">100</span>
-          </q-item-label>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">反对：</span>
-            <span class="text-grey-8">1</span>
-          </q-item-label>
-        </q-item-section>
+        <q-separator spaced />
 
-        <q-item-section top side >
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="lock" />
-            <!--            <q-btn class="gt-xs" size="12px" flat dense round icon="done" />-->
-            <!--            <q-btn size="12px" flat dense round icon="more_vert" />-->
-          </div>
-        </q-item-section>
-      </q-item>
-      <q-separator spaced />
-    </q-list>
+      </q-list>
+      <div class="q-pa-lg flex flex-center">
+        <q-pagination
+          v-model="current"
+          color="purple"
+          :max="maxPage"
+          :max-pages="6"
+          boundary-numbers
+          @update:model-value="getList"
+        />
+      </div>
+    </div>
+
   </q-page>
 </template>
 

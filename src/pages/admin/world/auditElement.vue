@@ -17,7 +17,7 @@ const data = reactive({
     pageNum: 1,
     pageSize: 20,
     title: "",
-    types: undefined,
+    types: -1,
     status:-1,
     wid:wid.value
   }

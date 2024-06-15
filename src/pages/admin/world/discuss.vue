@@ -13,8 +13,8 @@ const data = reactive({
     pageNum: 1,
     pageSize: 20,
     wid:wid.value,
-    status:-1,
     source:1,
+    status:-1,
     title: "",
   }
 });

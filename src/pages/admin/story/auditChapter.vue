@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import Head from 'components/story/headComponent.vue';
-import { ref } from 'vue';
-const  current= ref(6);
-const seach=ref("");
-const prompt = ref(false);
-const address = ref('');
-const shape= ref('line');
+import headComponent from 'components/story/headComponent.vue';
+import { reactive, ref, toRefs } from 'vue';
+import { useRoute } from 'vue-router';
+import { api, tansParams } from 'boot/axios';
+const route = useRoute();
+const sid = ref(route.query.sid);
+const sname = ref(route.query.sname);
+const id = ref(route.query.id);
+
 </script>
 
 <template>
   <q-page>
-    <Head></Head>
+    <head-component :sid="sid" :sname="sname" :id="id"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />

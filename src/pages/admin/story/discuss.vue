@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const sid = ref(route.query.sid);
 const sname = ref(route.query.sname);
+const id = ref(route.query.id);
 import adminElementItemComponent from 'components/discuss/adminItemComponent.vue';
 import { api, tansParams } from 'boot/axios';
 
@@ -12,6 +13,8 @@ const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 20,
+    sid:sid.value,
+    source:2,
     status:-1,
     title: "",
   }
@@ -53,7 +56,7 @@ function  onStatus(status:number){
 
 <template>
   <q-page>
-    <head-component :sid="sid" :wname="sname" :types="9"></head-component>
+    <head-component :sid="sid" :sname="sname" :id="id"></head-component>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />

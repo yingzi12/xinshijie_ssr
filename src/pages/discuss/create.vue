@@ -96,7 +96,7 @@ async function onSubmit() {
       },
     }).onOk(async () => {
       router.go(-1);
-      // router.push('/users/album'); // Redirect to login page
+      // router.go(-1)// Redirect to login page
     }).onCancel(async () => {
       router.go(-1)
     });

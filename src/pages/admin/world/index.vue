@@ -2,6 +2,7 @@
 import { reactive, ref, toRefs } from 'vue';
 import adminItemCardComponent from 'components/world/adminItemCardComponent.vue';
 import { api, tansParams } from 'boot/axios';
+import { storyStatusSelection, worldStatus } from 'boot/consts';
 
 const selected = ref(null);
 const seach=ref("");
@@ -33,7 +34,7 @@ async function getWorldList() {
   queryParams.value.pageNum=current.value
 
   try {
-    const response = await api.get('/wiki/world/list?' + tansParams(queryParams.value));
+    const response = await api.get('/admin/world/list?' + tansParams(queryParams.value));
     const data=response.data;
     if (data.code == 200) {
       worldList.value=data.data;
@@ -73,9 +74,8 @@ getWorldList();
         class="bg-orange text-white shadow-2"
         @update:modelValue="getWorldList"
       >
-        <q-tab outline color="brown" name="0" label="全部" co/>
-        <q-tab outline color="brown" name="1" label="已发布"/>
-        <q-tab outline color="brown" name="2" label="待发布" />
+        <q-tab  outline color="brown" :name="-1" label="全部" />
+        <q-tab  v-for="(status,index) in worldStatus" :key="index" outline color="brown" :name="status.id" :label="status.value" />
       </q-tabs>
     </div>
     <div class="row" style="background-color: orange">
@@ -88,7 +88,7 @@ getWorldList();
         class="bg-orange text-white shadow-2"
         @update:modelValue="getWorldList"
       >
-        <q-tab outline color="brown" name="0" label="全部"/>
+        <q-tab outline color="brown" name="-1" label="全部"/>
         <q-tab outline color="brown" name="1" label="武侠"/>
         <q-tab outline color="brown" name="2" label="仙侠" />
         <q-tab outline color="brown" name="3" label="魔幻" />

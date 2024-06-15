@@ -33,7 +33,10 @@
       <q-scroll-area style="height: calc(100% - 150px);  border-right: 1px solid #ddd">
         <div class="bg-grey-2 text-center  q-ma-md">
           <q-avatar  class="q-mb-sm" size="56px">
-            <img :src="getImageUrl('23234')">
+            <q-img
+              :src="getImageUrl(circleUrl)"
+              @error.once="() => { $event.target.src = '/empty.jpg'; }"
+            />
           </q-avatar>
           <div class="text-weight-bold">'待登录' </div>
           <div>
@@ -281,6 +284,8 @@ import {api} from "boot/axios";
 import { onMounted, ref } from 'vue';
 import {useRouter} from "vue-router";
 import { useI18n } from 'vue-i18n';
+import { getImageUrl } from 'boot/tools';
+const circleUrl=Cookies.get("avatar");
 
 const metaData = {
   // sets document title
@@ -363,12 +368,6 @@ function toggleLeftDrawer() {
   console.log("------------------------")
   console.log(leftDrawerOpen.value)
 }
-function getImageUrl(url) {
-  if (url != null) {
-    return `${$q.config.sourceWeb}${url}`;
-  }
-  return "/favicon.ico";
-}
 const setDefaultLanguage = () => {
   const userLang = navigator.language || navigator.userLanguage;
   const availableLanguages = ['en', 'zh-CN']; // 示例语言列表
@@ -390,10 +389,8 @@ onMounted(() => {
   const language = Cookies.get("language");
   console.log(language);
   if( language == null ){
-    console.log("----1--------------");
     setDefaultLanguage();
   }else{
-    console.log("----2--------------");
     locale.value = language;
   }
 });

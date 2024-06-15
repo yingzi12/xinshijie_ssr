@@ -36,7 +36,7 @@
         <div class="bg-grey-2 text-center q-ma-md">
             <q-avatar  class="q-mb-sm" size="56px">
               <q-img
-                :src="getImageUrl(value.circleUrl)"
+                :src="getImageUrl(circleUrl)"
                 @error.once="() => { $event.target.src = '/empty.jpg'; }"
               />
             </q-avatar>
@@ -199,7 +199,10 @@ import { onMounted, ref } from 'vue';
 import {useRouter} from "vue-router";
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
 const $q = useQuasar();
+const circleUrl=Cookies.get("avatar");
+
 import { useI18n } from 'vue-i18n';
+import { getImageUrl } from 'boot/tools';
 const metaData = {
   // sets document title
   title: '心世界网',
@@ -260,12 +263,6 @@ function toggleLeftDrawer() {
 }
 const link = ref('detail')
 
-function getImageUrl(url) {
-  if (url != null) {
-    return `${$q.config.sourceWeb}${url}`;
-  }
-  return "/favicon.ico";
-}
 // // 在组件挂载后调用设置默认语言的方法
 // onMounted(() => {
 //   setDefaultLanguage();
@@ -291,10 +288,8 @@ onMounted(() => {
   const language = Cookies.get("language");
   console.log(language);
   if( language == null ){
-    console.log("----1--------------");
     setDefaultLanguage();
   }else{
-    console.log("----2--------------");
     locale.value = language;
   }
 });

@@ -7,7 +7,7 @@ import { ref } from 'vue';
 const router = useRouter()
 const $q = useQuasar();
 
-interface World {
+interface Story {
   imgUrl: string;
   id: string;
   name: string;
@@ -23,7 +23,7 @@ interface World {
   ranks:number;
   scores:number;
 }
-const props = defineProps<{ value: World }>();
+const props = defineProps<{ value: Story }>();
 const tagList=ref([]);
 if(props.value.tags != null){
   tagList.value=props.value.tags.split(";");
@@ -34,7 +34,7 @@ function imageUrl(imgUrl) {
 </script>
 
 <template>
-  <q-item  :to="{ path: '/admin/world/info', query: { wid: value.id,wname: value.name }}">
+  <q-item  :to="{ path: '/admin/story/info', query: { sid: value.id,sname: value.name }}">
     <q-item-section avatar>
       <img
         class="small-head-image"

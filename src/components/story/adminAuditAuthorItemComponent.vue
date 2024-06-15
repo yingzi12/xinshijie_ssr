@@ -8,7 +8,7 @@ import { api } from 'boot/axios';
 const $q = useQuasar();
 const router = useRouter()
 
-interface Manage {
+interface Author {
   imageUrls: string;
   id: string;
   wid: string;
@@ -32,13 +32,10 @@ interface Manage {
   idLabels:string;
 }
 
-const props = defineProps<{ value: Manage }>();
+const props = defineProps<{ value: Author }>();
 
 function imageUrl(imgUrl) {
   return `${$q.config.sourceWeb}${imgUrl}`;
-}
-function handleSee(id:number,wid:number,softtype:number){
-  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
 }
 const dialog=ref(false);
 const data = reactive({
@@ -56,7 +53,7 @@ const { addForm } = toRefs(data);
 
 async function onSubmit() {
 
-  const response = await api.post("/admin/manage/audit", JSON.stringify(addForm.value), {
+  const response = await api.post("/admin/author/audit", JSON.stringify(addForm.value), {
     headers: {
       'Content-Type': 'application/json', },
   });
@@ -120,9 +117,9 @@ async function onSubmit() {
     <!--          </q-item-section>-->
     <q-item-section side top>
       <q-item-label >
-                <span class="text-weight-medium">申请理由：</span>
-                <span class="text-grey-8"> - {{value.application}}</span>
-                <q-separator spaced />
+        <span class="text-weight-medium">申请理由：</span>
+        <span class="text-grey-8"> - {{value.application}}</span>
+        <q-separator spaced />
         <span class="text-weight-medium" v-if="value.status==4" >拒绝理由：</span>
         <span class="text-grey-8"  v-if="value.status==4">{{value.auditContent}}</span>
         <div>

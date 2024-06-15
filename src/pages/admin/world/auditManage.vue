@@ -34,7 +34,7 @@ const  total= ref(0);
 const  maxPage=ref(0);
 async  function getList(){
   queryParams.value.title=title.value;
-  const response =await api.get("/admin/draftChapter/list?"+ tansParams(queryParams.value));
+  const response =await api.get("/admin/manage/list?"+ tansParams(queryParams.value));
   valueList.value = response.data.data;
   total.value = response.data.total;
   if(total.value % queryParams.value.pageSize == 0){

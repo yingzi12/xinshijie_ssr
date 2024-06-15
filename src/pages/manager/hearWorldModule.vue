@@ -51,9 +51,9 @@ async function onAddWorld() {
         push: true
       },
     }).onOk(async () => {
-      // router.push('/users/album'); // Redirect to login page
+      // router.go(-1)// Redirect to login page
     }).onCancel(async () => {
-      // router.push('/users/album'); // Redirect to login page
+      // router.go(-1)// Redirect to login page
     });
   } else {
     $q.notify({

@@ -121,13 +121,13 @@ async function onSubmit() {
     <q-item-section side top>
       <q-item-label >
         <span class="text-weight-medium">申请理由：</span>
-        <span class="text-grey-8"> - GitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repository</span>
+        <span class="text-grey-8"> - {{value.application}}</span>
         <q-separator spaced />
-        <span class="text-weight-medium">拒绝理由：</span>
-        <span class="text-grey-8"> - GitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repositoryGitHub repository</span>
+        <span class="text-weight-medium" v-if="value.status==4" >拒绝理由：</span>
+        <span class="text-grey-8"  v-if="value.status==4">{{value.auditContent}}</span>
         <div>
-          <div class="text-grey-8">审核人：这是名称，这是名称，这是名称，这是名称</div>
-          <div class="text-grey-8">审核时间：2025-11-11 11:34:54</div>
+          <div class="text-grey-8" v-if="value.status==3 || value.status==4">审核人：{{value.auditName}}</div>
+          <div class="text-grey-8" v-if="value.status==3 || value.status==4">审核时间：{{ value.auditTime }}</div>
         </div>
       </q-item-label>
 

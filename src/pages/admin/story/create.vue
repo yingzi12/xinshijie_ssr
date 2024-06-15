@@ -5,6 +5,7 @@ import { Cookies } from 'quasar'
 import { useRoute, useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import {compressIfNeeded} from "boot/tools";
+
 const token = Cookies.get('token');
 const $q = useQuasar();
 const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
@@ -20,6 +21,7 @@ const data = reactive({
     wname:wname.value,
     types:"",
     isPrivate:1,
+    isEdit:1,
     kind:1,
     intro:"",
     descriptionZip:"",
@@ -83,9 +85,9 @@ async function onSubmit() {
         push: true
       },
     }).onOk(async () => {
-      router.push('/users/album'); // Redirect to login page
+      router.go(-1)// Redirect to login page
     }).onCancel(async () => {
-      router.push('/users/album'); // Redirect to login page
+      router.go(-1)// Redirect to login page
     });
   } else {
     Dialog.create({
@@ -241,7 +243,14 @@ function handleSurce(){
                 </div>
               </q-card-actions>
             </q-card>
-
+            <div class="q-gutter-sm">
+              <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="允许公开编辑" />
+              <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="禁止公开编辑" />
+            </div>
+            <div class="q-gutter-sm">
+              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
+              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
+            </div>
             <q-input
               v-model="addForm.tags"
               :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度2-100']"
@@ -265,6 +274,12 @@ function handleSurce(){
               label="描述 *"
               lazy-rules
               type="textarea"
+            />
+
+            <q-editor
+              v-model="addForm.descriptionZip"
+                      :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-500']"
+                      min-height="5rem"
             />
 
             <div>
@@ -310,7 +325,7 @@ function handleSurce(){
             </div>
             <div>
               <q-btn color="primary" label="提交" type="submit"/>
-              <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset"/>
+              <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset" @click="router.go(-1)"/>
             </div>
           </q-form>
         </div>
