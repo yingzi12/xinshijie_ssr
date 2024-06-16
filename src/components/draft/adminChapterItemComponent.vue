@@ -3,6 +3,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { getImageUrl } from 'boot/tools';
+import { draftElementStatusMap, moduleOptionsMap } from 'boot/consts';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -12,7 +13,10 @@ interface Chapter {
   id: string;
   wid: string;
   wname: string;
-  softtype: string;
+  sid: string;
+  sname: string;
+  pid: string;
+  pname: string;
   countEdit: string;
   userName: string;
   createName: string;
@@ -22,15 +26,11 @@ interface Chapter {
   countDiscuss: string;
   countLike: string;
   countSee: string;
-  intro:string;
+  createTime:string;
   title:string;
-  cnameList:string;
   pageHtml:string;
   status:string;
-
   tags:string;
-  idLabels:string;
-
 }
 
 const props = defineProps<{ value: Chapter }>();
@@ -40,7 +40,7 @@ function handleSee(id:number,wid:number,softtype:number){
 </script>
 
 <template>
-  <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
+  <q-item  :to="{ path: '/admin/draft/chapter/detail', query: { sid: props.value.sid, dcid: props.value.id }}">
     <q-item-section avatar>
       <q-img
         class="small-head-image"
@@ -51,27 +51,19 @@ function handleSee(id:number,wid:number,softtype:number){
 
     <q-item-section>
       <q-item-label class="one-line-clamp">{{props.value.title}}</q-item-label>
-      <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.createName}}</q-item-label>
+      <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.sname}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">
-        <q-chip
-          v-for="(item,index) in props.value.idLabels.split(',')"
-          :key="index"
-          class="q-ma-xs"
-          :label="item.split('$$')[1]"
-          size="sm"
-          color="red"
-          text-color="black"
-          square
-        />
-      </q-item-label>
+        <q-chip size="sm" >{{ draftElementStatusMap.get(Number(props.value.status)) }}</q-chip>
+        <q-chip size="sm" >{{props.value.wname }}</q-chip>
+        <q-chip size="sm" >{{props.value.pname }}</q-chip>
 
-      <q-item-label class="one-line-clamp text-weight-thin text-overline">更新人：{{props.value.updateName}}</q-item-label>
-<!--      <q-item-label class="one-line-clamp text-weight-thin text-overline">更新时间：{{props.value.updateTime}}</q-item-label>-->
-      <q-item-label class="three-line-clamp" caption>{{props.value.intro}}</q-item-label>
+      </q-item-label>
     </q-item-section>
     <q-item-section side top>
-      <q-item-label caption>{{props.value.updateTime}}</q-item-label>
-      <q-icon name="star" color="yellow" />
+        <q-item-label caption>{{props.value.createTime}}</q-item-label>
+        <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path: '/admin/draft/chapter/edit', query: { sid: props.value.sid, dcid: props.value.id }}"></q-btn></q-item-label>
+        <q-item-label caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
+        <q-item-label caption><q-btn icon="publish" label="发布" size="xs"></q-btn></q-item-label>
     </q-item-section>
   </q-item>
 </template>

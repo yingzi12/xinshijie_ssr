@@ -1,30 +1,58 @@
 <script lang="ts" setup>
-import { useQuasar } from 'quasar';
-import pica from "pica";
+import { Dialog,  useQuasar } from 'quasar';
 import { api } from "boot/axios";
-import { compressAccurately } from 'image-conversion';
 import { Cookies } from 'quasar'
-import {useRouter} from "vue-router";
-import {ref} from "vue";
-import {compressIfNeeded} from "boot/tools";
-import { addObject, insertObjectAfterId, MyObject, myObjectArray, removeObjectById } from 'boot/ArrayUtils';
+import { useRoute, useRouter } from 'vue-router';
+import { reactive, ref, toRefs } from 'vue';
+import { compressIfNeeded } from 'boot/tools';
+import chooseCategoryComponent from 'components/category/chooseCategoryComponent.vue';
 const token = Cookies.get('token');
+const route = useRoute();
+import editorTextComponent from 'components/common/editorTextComponent.vue';
+import { moduleOptions } from 'boot/consts';
+
+const wid = ref(route.query.wid);
+const deid = ref(route.query.deid);
+const wname = ref(route.query.wname);
 const $q = useQuasar();
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
-const title = ref(null);
-const wname = ref("");
-const wid = ref(0);
-const intro = ref(null);
-const payIntro = ref(null);
-const tags = ref(null);
 const imgUrl = ref(null);
-const vipPrice = ref(0.0);
-const price = ref(0.0);
-const accept = ref(false);
-const charge = ref(1);
 const previewImage = ref("/favicon.ico");
 const selectedImage = ref<File | null>(null);
-
+const data = reactive({
+  addForm: {
+    title: "",
+    id:deid.value,
+    wid:wid.value,
+    wname:wname.value,
+    intro:"",
+    tags:"",
+    softtype:1,
+    categoryList:[],
+    contentList:[
+      {
+        contentZip:"",
+        serial:0,
+        title:""
+      }
+    ]
+  }
+});
+const cidTagList=ref([]);
+const { addForm } = toRefs(data);
+const isContentLoaded = ref(false); // 用于控制子组件的渲染
+async function handValue() {
+  const response = await api.get(`/admin/draftElement/getInfo?deid=${deid.value}&wid=${wid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    addForm.value=data.data;
+    isContentLoaded.value=true;
+    for(var i=0;i<addForm.value.categoryList.length;i++){
+      cidTagList.value.push(addForm.value.categoryList[i].value);
+    }
+  }
+}
+handValue();
 function notify(message: string, color: string) {
   $q.notify({
     color: color,
@@ -34,30 +62,23 @@ function notify(message: string, color: string) {
   });
 }
 
-function onReset() {
-  title.value = null;
-  wname.value = "";
-  intro.value = null;
-  tags.value = null;
-  imgUrl.value = null;
-  charge.value = 1;
-  accept.value = false;
-  payIntro.value = null;
-
-}
-
 async function onSubmit() {
-  const response = await api.post("/admin/userAlbum/add", JSON.stringify({
-    title: title.value,
-    intro: intro.value,
-    payIntro: payIntro.value,
-    wname: wname.value,
-    imgUrl: imgUrl.value,
-    tags: tags.value,
-    charge: charge.value,
-    price: price.value,
-    vipPrice: vipPrice.value,
-  }), {
+  if(cidTagList.value.length==0){
+    Dialog.create({
+      title: '提示',
+      message: '请选择分类',
+      ok: {
+        push: true
+      },
+    })
+    return;
+  }
+  addForm.value.categoryList=[];
+  for(var i=0;cidTagList.value.length>i;i++){
+    console.log(cidTagList.value[i])
+    addForm.value.categoryList.push(cidTagList.value[i].split("$$")[0]);
+  }
+  const response = await api.post("/admin/draftElement/edit", JSON.stringify(addForm.value), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -66,43 +87,42 @@ async function onSubmit() {
   const data = response.data;
   //console.log(data)
   if (data.code == 200) {
-    $q.dialog({
+    Dialog.create({
       title: '通知',
-      message: '添加成功.',
+      message: '修改成功.',
       ok: {
         push: true
       },
     }).onOk(async () => {
-      router.go(-1)// Redirect to login page
+      router.push(`/admin/draft/element`); // Redirect to login page
     }).onCancel(async () => {
-      router.go(-1)// Redirect to login page
+      router.push(`/admin/draft/element`); // Redirect to login page
     });
   } else {
-    $q.notify({
+    Dialog.create({
       color: 'green-4',
-      textColor: 'white',
-      icon: 'cloud_done',
-      message: '创建成功'
+      message: `修改失败${data.msg}`
     });
   }
 }
 
 async function handleImageUpload(event: Event) {
   try {
-    console.log("----------handleImageUpload---------------")
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) {
       throw new Error("No file selected");
     }
-    console.log("----------handleImageUpload----2-----------")
     selectedImage.value = file;
     const compressedFile = await compressIfNeeded(file);
     const formData = new FormData();
     formData.append('file', compressedFile);
-    console.log("----------handleImageUpload----3-----------")
-    const response = await api.post( '/admin/userAlbum/upload',  formData);
+    const response = await api.put( '/admin/file/upload',  formData,{
+      headers: {
+        'Content-Type': 'multipart/form-data', // 实际上通常不需要手动设置，这里仅作示例
+        'Authorization': `Bearer ${token}`
+      },
+    });
     const data = await response.data; // 确保使用 await 等待 json 解析完成
-    console.log("----------handleImageUpload----4-----------")
     if (data.code === 200) {
       previewImage.value = $q.config.sourceWeb + data.data;
       imgUrl.value = data.data;
@@ -122,147 +142,30 @@ async function handleImageUpload(event: Event) {
     notify('Error uploading image', 'red-5');
   }
 }
-// 初始的 MyObject 类型的对象数组
-const myInfoArray = ref<MyObject[]>([
-  { id: 1, title: 'Title 1', info: 'Info 1', bh: 1001 }
-]);
 
-const qeditor= ref(
-  '<pre>Check out the two different types of dropdowns' +
-  ' in each of the "Align" buttons.</pre> '
-);
-function uploadIt () {
-  $q.notify({
-    message: 'Server unavailable. Check connectivity.',
-    color: 'red-5',
-    textColor: 'white',
-    icon: 'warning'
-  })
+function delInfo(index:number){
+  addForm.value.contentList.splice(index);
 }
-const chargeList = [
-  {
-    label: '魔法',
-    value: 1
-  },
-  {
-    label: '科学',
-    value: 2
-  },
-
-  {
-    label: '克苏鲁',
-    value: 3
-  },
-  {
-    label: '诡异',
-    value: 4
-  },
-  {
-    label: '修真',
-    value: 5
-  }
-  ,
-  {
-    label: '其他',
-    value: 5
-  }
-]
-function updateCharge(charge: number) {
-  price.value = 1.0;
-  vipPrice.value = 1.0;
-}
-
-const dialogAert=ref(false)
-const selected= ref('Pleasant surroundings');
-const ticked=ref([ 'Quality ingredients', 'Good table presentation' ]);
-const expanded= ref(['Satisfied customers1', 'Satisfied customers', 'Good service (disabled node)', 'Pleasant surroundings' ]);
-
-const simple=[
-  {
-    label: 'Satisfied customers1',
-    children: [
-      {
-        label: 'Good food11',
-        children: [
-          { label: 'Quality ingredients111' },
-          {
-            label: 'Good recipe112',
-            children: [
-              { label: 'Quality ingredients1121' },
-              { label: 'Good recipe1122' ,
-                children: [
-                  { label: 'Quality ingredients11221' ,
-                    children: [
-                      { label: 'Quality ingredients112211' },
-                      { label: 'Good recipe112212' }
-                    ]
-                  },
-                  { label: 'Good recipe11222' }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Good service (disabled node)',
-        disabled: true,
-        children: [
-          {
-            label: 'Prompt attention' ,
-            children: [
-              { label: 'Quality ingredients' },
-              { label: 'Good recipe' }
-            ]
-          },
-          { label: 'Professional waiter'
-          }
-        ]
-      },
-      {
-        label: 'Pleasant surroundings',
-        children: [
-          { label: 'Happy atmosphere' },
-          { label: 'Good table presentation' },
-          { label: 'Pleasing decor' }
-        ]
-      }
-    ]
-  }
-]
-
-function addInfo(id){
-  console.log("----addInfo---")
-  const timestamp = Date.now();
-  const myObject: MyObject = {
-    id: timestamp,
-    title: 'Example Title',
-    info: 'This is some info',
-    bh: 12345
-  };
-  const updatedArrayAfterInsert =  insertObjectAfterId(myInfoArray.value,id,myObject);
-  myInfoArray.value=updatedArrayAfterInsert;
-  console.log("----addInfo--stop-")
-}
-function delInfo(id){
-  console.log("----delInfo-{id}--")
-  const updatedArrayAfterRemove = removeObjectById(myInfoArray.value, id);
-  myInfoArray.value=updatedArrayAfterRemove;
-  console.log("----delInfo--stop-")
-}
-function newInfo(){
+function addContent(){
   console.log("----newInfo-{id}--")
-  const timestamp = Date.now();
-  const myObject: MyObject = {
-    id: timestamp,
-    title: 'Example Title',
-    info: 'This is some info',
-    bh: 12345
-  };
-  const updatedArrayAfterRemove = addObject(myInfoArray.value,myObject);
-  myInfoArray.value=updatedArrayAfterRemove;
-  console.log("----newInfo--stop-")
+  // const timestamp = Date.now();
+  addForm.value.contentList.push(
+    {
+      contentZip:"",
+      serial:addForm.value.contentList.length+1,
+      title:""
+    }
+  )
 }
+const cidDialog=ref(false);
+// 定义处理函数来接收子组件传递的数据
+const handleCidList = (selectedIds) => {
+  console.log("从子组件接收到的选中ID列表:", selectedIds);
+  // 在这里您可以根据需要处理这些ID，比如更新父组件的状态、发起新的API请求等
+  cidTagList.value=selectedIds;
+};
+
+
 </script>
 
 <template>
@@ -270,7 +173,7 @@ function newInfo(){
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="keyboard_return" />
-        <q-toolbar-title>元素草稿内容</q-toolbar-title>
+        <q-toolbar-title>返回草稿详细</q-toolbar-title>
         <q-btn flat round dense icon="search" />
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
@@ -280,11 +183,29 @@ function newInfo(){
       </q-toolbar>
     </div>
 
+    <div class="bg-orange text-white">
+      <q-toolbar>
+        <!--      <q-btn flat round dense icon="menu" class="q-mr-sm" />-->
+        <q-toolbar-title>编辑元素</q-toolbar-title>
+        <!--      <q-space />-->
+        <!--      <q-btn flat round dense icon="search" class="q-mr-xs" />-->
+        <!--      <q-btn flat round dense icon="group_add" />-->
+      </q-toolbar>
+<!--      <q-toolbar inset>-->
+
+<!--        <q-toolbar-title>-->
+<!--          <q-btn flat round label="这是分卷名称" to="/admin/story/chapter"/>-->
+<!--        </q-toolbar-title>-->
+<!--        <q-space />-->
+<!--        &lt;!&ndash;      <q-btn flat round dense icon="add" label="新增章节" to="/admin/chapter/create"/>&ndash;&gt;-->
+
+<!--      </q-toolbar>-->
+    </div>
+
     <q-card class="my-card">
       <q-card-section>
-        <div class="text-h6">编辑草稿</div>
         <q-input
-          v-model="title"
+          v-model="addForm.title"
           :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入元素名称，长度2-100']"
           filled
           hint="输入元素名称"
@@ -299,7 +220,6 @@ function newInfo(){
 
         <q-form
           class="q-gutter-md"
-          @reset="onReset"
           @submit="onSubmit"
         >
           <q-card style="width: 100%" >
@@ -312,7 +232,7 @@ function newInfo(){
               <div  style="width: 100%">
                 <div  >
                   <q-input
-                    v-model="title"
+                    v-model="addForm.wname"
                     :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"
                     filled
                     hint="输入世界名称"
@@ -351,7 +271,7 @@ function newInfo(){
               <div  style="width: 100%">
                 <div>
                   <q-input
-                    v-model="intro"
+                    v-model="addForm.intro"
                     :rules="[ val => val && val.length >= 5 && val.length <= 300 || '请输入简介，长度5-300']"
                     filled
                     label="简介 *"
@@ -359,76 +279,27 @@ function newInfo(){
                   />
                 </div>
                 <div>
+                  <q-select v-model="addForm.softtype" :options="moduleOptions" emit-value hint="大类" label="大类"
+                            map-options
+                            outlined
+                  />
+                </div>
+                <div>
                   <q-input
-                    v-model="tags"
-                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-30']"
+                    v-model="addForm.tags"
+                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度2-100']"
                     filled
+                    hint="输入标签。多个使用英文;分割"
                     label="标签 *"
                     lazy-rules
-                    type="text"
                   />
                 </div>
               </div>
             </q-card-actions>
           </q-card>
-          <!--          <q-card >-->
-          <!--            <q-card-section>-->
-          <!--              <div class="text-h6">基础</div>-->
-          <!--            </q-card-section>-->
-
-          <!--            <q-separator />-->
-          <!--            <q-card-actions>-->
-          <!--              <div>-->
-          <!--                <div class="q-pa-md q-gutter-sm">-->
-          <!--                  <div>-->
-          <!--                    <q-img-->
-          <!--                      :src="previewImage"-->
-          <!--                      spinner-color="white"-->
-          <!--                      style="height: 140px; max-width: 150px"-->
-          <!--                    />-->
-          <!--                  </div>-->
-          <!--                  <input accept="image/*" type="file" @change="handleImageUpload"/>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </q-card-actions>-->
-          <!--                <q-card-actions>-->
-          <!--                  <div style="width: 100%">-->
-
-          <!--                <div>-->
-          <!--                  <q-input-->
-          <!--                    v-model="title"-->
-          <!--                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"-->
-          <!--                    filled-->
-          <!--                    hint="输入世界名称"-->
-          <!--                    label="世界名称 *"-->
-          <!--                    lazy-rules-->
-          <!--                  />-->
-          <!--                </div>-->
-          <!--                <div>-->
-          <!--                  <q-input-->
-          <!--                    v-model="intro"-->
-          <!--                    :rules="[ val => val && val.length >= 5 && val.length <= 300 || '请输入简介，长度5-300']"-->
-          <!--                    filled-->
-          <!--                    label="简介 *"-->
-          <!--                    type="textarea"-->
-          <!--                  />-->
-          <!--                </div>-->
-          <!--                <div>-->
-          <!--                  <q-input-->
-          <!--                    v-model="tags"-->
-          <!--                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-30']"-->
-          <!--                    filled-->
-          <!--                    label="标签 *"-->
-          <!--                    lazy-rules-->
-          <!--                    type="text"-->
-          <!--                  />-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </q-card-actions>-->
-          <!--          </q-card>-->
           <q-card >
             <q-card-section>
-              <div class="text-h6">分类(<q-btn flat label="点击选择分类" color="primary" @click="dialogAert = true" />)</div>
+              <div class="text-h6">分类(<q-btn flat label="点选择更多" color="primary" @click="cidDialog = true" size="xs" />)</div>
             </q-card-section>
 
             <q-separator />
@@ -437,12 +308,9 @@ function newInfo(){
                 <!--              <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="dialogAert = true" size="xs" />)</div>-->
                 <div class="q-pa-md q-gutter-sm">
                   已选择分类：
-                  <q-btn  color="brown" label="全部" size="xs"/>
-                  <q-btn  color="brown" label="魔法" size="xs"/>
-                  <q-btn  color="brown" label="科学" size="xs"/>
-                  <q-btn  color="brown" label="远古" size="xs"/>
-                  <q-btn  color="brown" label="修真" size="xs"/>
-                  <q-btn  color="brown" label="仙侠" size="xs"/>
+                  <q-chip clickable v-for="(tag,index) in cidTagList" :key="index" :color="'yellow' "  >
+                    {{tag.split("$$")[1]}}
+                  </q-chip>
                 </div>
               </div>
             </q-card-actions>
@@ -450,17 +318,17 @@ function newInfo(){
           <q-card >
             <q-card-section>
               <span class="text-h6 ">小节</span>
-              <span class="text-h6 float-right" @click="newInfo()">添加小节</span>
+              <span class="text-h6 float-right" @click="addContent()">添加小节</span>
             </q-card-section>
             <q-separator />
             <q-card-actions>
-              <q-card v-for="(info,index ) in myInfoArray" :key="index" >
+              <q-card v-for="(content,index ) in addForm.contentList" :key="index" >
                 <q-card-section>
-                  <div class="q-pa-md">
-                    <div class="row no-wrap shadow-1">
-                      <q-toolbar class="col-8" :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-grey-3'">
+                  <div class="q-pa-md" style="width: 100%">
+                    <div class="row no-wrap bg-primary  shadow-1">
+                      <q-toolbar class="col" :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-grey-3'">
                         <q-btn flat round dense icon="menu" />
-                        <q-input v-model="info.title"
+                        <q-input v-model="content.title"
                                  label="Standard"
                                  :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入小节名称，长度2-100']"
                                  lazy-rules
@@ -468,114 +336,15 @@ function newInfo(){
                         />
                         <q-btn flat round dense icon="save" />
                       </q-toolbar>
-                      <q-toolbar class="col-4 bg-primary text-white">
+                      <q-toolbar class="col  text-white">
                         <q-space />
-                        <q-btn flat round dense icon="add" class="q-mr-sm" @click="addInfo(info.id)" />
-                        <q-btn flat round dense icon="delete"  @click="delInfo(info.id)" />
+                        <q-btn flat round dense icon="delete"  @click="delInfo(index)" />
                       </q-toolbar>
                     </div>
                   </div>
                 </q-card-section>
                 <q-card-actions>
-                  <div class="q-pa-md q-gutter-sm">
-                    <q-editor
-                      v-model="info.info"
-                      :dense="$q.screen.lt.md"
-                      :definitions="{
-        upload: {
-          tip: 'Upload to cloud',
-          icon: 'cloud_upload',
-          label: 'Upload',
-          handler: uploadIt
-        }
-      }"
-                      :toolbar="[
-        [
-          {
-            label: $q.lang.editor.align,
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            list: 'only-icons',
-            options: ['left', 'center', 'right', 'justify']
-          },
-          {
-            label: $q.lang.editor.align,
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            options: ['left', 'center', 'right', 'justify']
-          }
-        ],
-        ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
-        ['token', 'hr', 'link', 'custom_btn'],
-        ['print', 'fullscreen','upload', ],
-        [
-          {
-            label: $q.lang.editor.formatting,
-            icon: $q.iconSet.editor.formatting,
-            list: 'no-icons',
-            options: [
-              'p',
-              'h1',
-              'h2',
-              'h3',
-              'h4',
-              'h5',
-              'h6',
-              'code'
-            ]
-          },
-          {
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-          },
-          {
-            label: $q.lang.editor.defaultFont,
-            icon: $q.iconSet.editor.font,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'default_font',
-              'arial',
-              'arial_black',
-              'comic_sans',
-              'courier_new',
-              'impact',
-              'lucida_grande',
-              'times_new_roman',
-              'verdana'
-            ]
-          },
-          'removeFormat'
-        ],
-        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
-
-        ['undo', 'redo'],
-        ['viewsource']
-      ]"
-                      :fonts="{
-        arial: 'Arial',
-        arial_black: 'Arial Black',
-        comic_sans: 'Comic Sans MS',
-        courier_new: 'Courier New',
-        impact: 'Impact',
-        lucida_grande: 'Lucida Grande',
-        times_new_roman: 'Times New Roman',
-        verdana: 'Verdana'
-      }"
-                    />
-                  </div>
+                  <editor-text-component      v-if="isContentLoaded"  :content="content.contentZip" @editor="args => content.contentZip=args"></editor-text-component>
                 </q-card-actions>
               </q-card>
             </q-card-actions>
@@ -589,54 +358,19 @@ function newInfo(){
       </q-card-actions>
     </q-card>
   </q-page>
-  <q-dialog v-model="dialogAert">
+  <q-dialog v-model="cidDialog">
     <q-card>
       <q-card-section>
         <div class="text-h6">Alert</div>
       </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        <div class="q-pa-md row q-col-gutter-sm">
-          <q-tree class="col-12 col-sm-6"
-                  :nodes="simple"
-                  node-key="label"
-                  tick-strategy="leaf"
-                  v-model:selected="selected"
-                  v-model:ticked="ticked"
-                  v-model:expanded="expanded"
-          />
-          <div class="col-12 col-sm-6 q-gutter-sm">
-            <div class="text-h6">Selected</div>
-            <div>{{ selected }}</div>
-
-            <q-separator spaced />
-
-            <div class="text-h6">Ticked</div>
-            <div>
-              <div v-for="tick in ticked" :key="`ticked-${tick}`">
-                {{ tick }}
-              </div>
-            </div>
-
-            <q-separator spaced />
-
-            <div class="text-h6">Expanded</div>
-            <div>
-              <div v-for="expand in expanded" :key="`expanded-${expand}`">
-                {{ expand }}
-              </div>
-            </div>
-          </div>
-        </div>
+      <q-card-section>
+        <choose-category-component :wid="wid" :cid-list="cidTagList" @cid-list="handleCidList" ></choose-category-component>
       </q-card-section>
-
       <q-card-actions align="right">
-        <q-btn flat label="Cancel" color="primary" v-close-popup />
-        <q-btn flat label="Turn on Wifi" color="primary" v-close-popup />
+        <q-btn flat label="确认" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
-
 
 </template>
 

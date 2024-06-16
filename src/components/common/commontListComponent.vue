@@ -71,8 +71,6 @@
     </div>
   </div>
    <div>
-     <q-btn color="primary" @click="diaLog">{{$t('login.login')}}</q-btn>
-
      <login-component :show-login="showLoginDialog" @update:showLogin="handleLoginDialogUpdate" ></login-component>
    </div>
   <div>
@@ -128,9 +126,7 @@ const props = defineProps({
   },
   source: Number,
 });
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
+
 //当前页
 const  current= ref(1);
 //总数
@@ -142,19 +138,21 @@ const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 20,
-    wid:0,
-    sid:0,
-    source:1
+    wid:props.wid,
+    sid:props.sid,
+    source:props.source
   }
 });
 const { queryParams } = toRefs(data);
-async function getAllWorldComment() {
+
+async function getCommentList() {
   queryParams.value.wid = props.wid;
   if (props.source == 2 ){
     queryParams.value.sid = props.sid;
   }
   queryParams.value.source=props.source;
   queryParams.value.pageNum=current;
+
   const response = await api.get('/wiki/comment/list?'+ tansParams(queryParams.value));
   const data=response.data;
   if (data.code == 200) {
@@ -167,7 +165,7 @@ async function getAllWorldComment() {
     }
   }
 }
-getAllWorldComment();
+getCommentList();
 
 async function onSubmit(){
   if(!commentText.value){
@@ -194,7 +192,7 @@ async function onSubmit(){
   });
   const data=response.data;
   if (data.code == 200) {
-    getAllWorldComment();
+    getCommentList();
   }
 }
 

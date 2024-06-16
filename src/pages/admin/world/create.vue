@@ -223,13 +223,20 @@ function handleSurce(){
             type="textarea"
           />
           <!--      </div>-->
-          <q-input
+<!--          <q-input-->
+<!--            v-model="addForm.descriptionZip"-->
+<!--            :rules="[ val => val && val.length >= 3 && val.length <= 500 || '请输入标签，长度3-500']"-->
+<!--            filled-->
+<!--            label="描述 *"-->
+<!--            lazy-rules-->
+<!--            type="textarea"-->
+<!--          />-->
+          <q-editor
             v-model="addForm.descriptionZip"
-            :rules="[ val => val && val.length >= 3 && val.length <= 500 || '请输入标签，长度3-500']"
-            filled
-            label="描述 *"
-            lazy-rules
-            type="textarea"
+            :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入描述，长度3-500']"
+            :definitions="{
+        bold: {label: 'Bold', icon: null, tip: 'My bold tooltip'}
+      }"
           />
           <div>
             <q-select v-model="addForm.types" :options="chargeList" emit-value hint="分类" label="分类"

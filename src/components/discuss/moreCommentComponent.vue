@@ -19,7 +19,6 @@ const props = defineProps({
   }
 });
 const total =ref(0);
-const scrollTargetRef = ref(null)
 
 const data = reactive({
   queryParams: {

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
-import adminElementItemComponent from 'components/draft/adminChapterItemComponent.vue';
+import AdminChapterItemComponent from 'components/draft/adminChapterItemComponent.vue';
+import { draftChapterStatus, draftElementStatus } from 'boot/consts';
 
 const data = reactive({
   queryParams: {
@@ -29,12 +30,14 @@ const  maxPage=ref(0);
 async  function getList(){
   queryParams.value.title=title.value;
   const response =await api.get("/admin/draftChapter/list?"+ tansParams(queryParams.value));
-  valueList.value = response.data.data;
-  total.value = response.data.total;
-  if(total.value % queryParams.value.pageSize == 0){
-    maxPage.value=total.value/queryParams.value.pageSize;
-  }else{
-    maxPage.value=total.value/queryParams.value.pageSize+1;
+  if(response.data.code==200) {
+    valueList.value = response.data.data;
+    total.value = response.data.total;
+    if (total.value % queryParams.value.pageSize == 0) {
+      maxPage.value = total.value / queryParams.value.pageSize;
+    } else {
+      maxPage.value = total.value / queryParams.value.pageSize + 1;
+    }
   }
 }
 getList();
@@ -60,8 +63,7 @@ function  onStatus(status:number){
     <div class="row" style="background-color: orange">
 
       <q-chip clickable  color="brown" label="全部" @click="onStatus(-1)" />
-      <q-chip clickable color="brown" label="已发布" @click="onStatus(1)"/>
-      <q-chip clickable color="brown" label="待发布"  @click="onStatus(2)"/>
+      <q-chip clickable v-for="(status,index) in draftChapterStatus" :key="index"  color="brown" :label="status.name" @click="onStatus(status.id)"/>
     </div>
 
     <div class="q-pa-md">
@@ -84,7 +86,7 @@ function  onStatus(status:number){
     <div class="q-pa-md q-gutter-md">
       <q-list bordered padding class="rounded-borders">
         <div v-for="(value,index) in valueList" :key="index">
-          <admin-item-card-component :value="value"> </admin-item-card-component>
+          <admin-chapter-item-component :value="value"></admin-chapter-item-component>
         </div>
 
         <q-separator spaced />

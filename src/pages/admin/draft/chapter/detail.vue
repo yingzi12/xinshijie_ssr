@@ -1,9 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Head from 'components/story/headComponent.vue';
+import { api } from 'boot/axios';
+import { useRoute, useRouter } from 'vue-router';
 
-const alert=ref(false);
-const expanded= ref(true);
+const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
+const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
+const sid = ref(route.query.sid);
+const sname = ref(route.query.sname);
+
+const dcid = ref(route.query.dcid);
+const value=ref({});
+async function handValue() {
+  const response = await api.get(`/admin/draftChapter/getInfo?dcid=${dcid.value}&sid=${sid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    value.value=data.data;
+  }
+}
+handValue();
 </script>
 
 <template>
@@ -23,43 +38,28 @@ const expanded= ref(true);
   </div>
 
   <div class="q-ma-md">
-    <div class="text-h6 text-center">这是章节名称<q-chip size="xs" icon="bookmark">
-      编辑
+    <div class="text-h6 text-center">{{ value.title }}<q-chip size="xs" icon="bookmark">
+      {{value.pname}}
     </q-chip></div>
-    <div class="text-subtitle2 text-center">这是小说名称</div>
+    <div class="text-subtitle2 text-center">{{ value.sname }}</div>
 
     <div class="text-subtitle1 text-center">
       <div class="q-pa-md q-gutter-sm">
-        <span class="text-overline">创建者:我是创建人</span>
-        <span class="text-overline">创建:2022-11-11 11:23:34</span>
-        <span class="text-overline">更新者:我是创建人</span>
-        <span class="text-overline">更新时间:2022-11-11 11:23:34</span>
+<!--        <span class="text-overline">创建者:我是创建人</span>-->
+<!--        <span class="text-overline">创建:2022-11-11 11:23:34</span>-->
+        <span class="text-overline">创建者:{{ value.createName }}</span>
+        <span class="text-overline">创建时间:{{ value.createTime }}</span>
       </div>
     </div>
     <div>
-
-            <pre>
-        这里是小说内容
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-      </pre>
+      <div v-html="value.contentZip"></div>
     </div>
 
   </div>
   <div class="q-pa-md">
     <q-btn-group spread>
-      <q-btn color="purple" label="编辑" icon="edit" to="/admin/draft/chapter/edit"/>
-      <q-btn color="purple" label="发布" icon="send" @click="alert = true" />
+      <q-btn color="purple" label="编辑" icon="edit" :to="{ path: '/admin/draft/chapter/edit', query: { sid: value.sid, dcid: value.id }}"/>
+      <q-btn color="purple" label="发布" icon="send" />
       <q-btn color="purple" label="比对" icon="visibility" />
     </q-btn-group>
   </div>

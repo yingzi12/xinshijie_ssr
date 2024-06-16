@@ -13,10 +13,9 @@ const data = reactive({
   form: {},
   queryParams: {
     pageNum: 1,
-    pageSize: 1,
+    pageSize: 20,
     title: "",
     sid:sid.value,
-    pid:0,
     level:0
   },
   rules: {

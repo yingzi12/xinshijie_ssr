@@ -250,13 +250,12 @@ function handleSurce(){
                 </div>
               </q-card-actions>
             </q-card>
-            <div class="q-gutter-sm">
-              <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="允许公开编辑" />
-              <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="禁止公开编辑" />
-            </div>
-            <div class="q-gutter-sm">
-              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
-              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
+
+            <div>
+              <q-select v-model="addForm.types" :options="chargeList" emit-value hint="分类" label="分类"
+                        map-options
+                        outlined
+              />
             </div>
             <q-input
               v-model="addForm.tags"
@@ -274,34 +273,33 @@ function handleSurce(){
               type="textarea"
             />
             <!--      </div>-->
-            <q-input
-              v-model="addForm.descriptionZip"
-              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-500']"
-              filled
-              label="描述 *"
-              lazy-rules
-              type="textarea"
-            />
-
+<!--            <q-input-->
+<!--              v-model="addForm.descriptionZip"-->
+<!--              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-500']"-->
+<!--              filled-->
+<!--              label="描述 *"-->
+<!--              lazy-rules-->
+<!--              type="textarea"-->
+<!--            />-->
+            <div class="text-subtitle1">描述：</div>
             <q-editor
               v-model="addForm.descriptionZip"
-              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入标签，长度3-500']"
-              min-height="5rem"
+              :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入描述，长度3-500']"
+              :definitions="{
+        bold: {label: 'Bold', icon: null, tip: 'My bold tooltip'}
+      }"
             />
 
-            <div>
-              <q-select v-model="addForm.types" :options="chargeList" emit-value hint="分类" label="分类"
-                        map-options
-                        outlined
-              />
-            </div>
-            <div>
-              <div class="text-subtitle1">是否公开：</div>
 
-              <div class="q-gutter-sm">
-                <q-radio v-model="addForm.isPrivate" :val="1" label="公开" />
-                <q-radio v-model="addForm.isPrivate" :val="2" label="私有" />
-              </div>
+            <div class="q-gutter-sm">
+              <div class="text-subtitle1">是否公开编辑：</div>
+              <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="允许公开编辑" />
+              <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="禁止公开编辑" />
+            </div>
+            <div class="q-gutter-sm">
+              <div class="text-subtitle1">是否公开阅读：</div>
+              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
+              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
             </div>
             <div>
               <div>

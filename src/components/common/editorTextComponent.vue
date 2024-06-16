@@ -8,7 +8,6 @@ import { compressIfNeededBatch } from 'boot/tools';
 const emit = defineEmits(['editor']); // 定义自定义事件
 const $q = useQuasar();
 
-// const selected = ref("");
 const editor = ref<string>();
 const props = defineProps({
   content: {
@@ -16,9 +15,10 @@ const props = defineProps({
     required: true
   }
 });
+console.log("---------------33------");
 
 editor.value=props.content;
-
+console.log(editor.value)
 const fileInput = ref(null);
 
 // 模拟上传图片的方法，现在接受一个FileList作为参数

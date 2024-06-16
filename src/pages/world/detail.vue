@@ -175,19 +175,21 @@ const auditIntro=ref("");
 const prompt=ref(false);
 
 const world=ref({});
+const tagList=ref([]);
+
 /** 查询世界详细 */
 async function getDetail() {
   const response = await api.get(`/wiki/world/getInfo/${wid.value}`);
   const data=response.data;
   if (data.code == 200) {
     world.value=data.data;
-
     scores.value= world.value.scores;
+    if(world.value.tags != undefined && world.value.tags !=null && world.value.tags !=""){
+      tagList.value=world.value.tags.split(";");
+    }
   }
 }
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
+
 getDetail();
 onMounted(() => {
   getDetail();

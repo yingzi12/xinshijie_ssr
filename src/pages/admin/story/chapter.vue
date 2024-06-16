@@ -71,7 +71,7 @@ getValueList();
           <q-btn flat round label="" to="/admin/story/reel">合计{{total}}</q-btn>
         </q-toolbar-title>
         <q-space />
-        <q-btn flat round dense icon="add" label="新增章节" :to="{ path: '/admin/chapter/add', query: { sid: sid,rid:rid,sname:sname,rname:rname}}"/>
+        <q-btn flat round dense icon="add" label="新增章节" :to="{ path: '/admin/chapter/add', query: { sid: sid,rid:rid,sname:sname,rname:rname,id:4}}"/>
 
       </q-toolbar>
     </div>

@@ -51,7 +51,7 @@ function imageUrl(imgUrl) {
       <q-item-label class="three-line-clamp" caption>{{value.intro}}</q-item-label>
     </q-item-section>
     <q-item-section side top>
-      <q-item-label caption><q-btn icon="edit" label="修改" size="xs"></q-btn></q-item-label>
+      <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path:'/admin/world/edit', query: { wid: value.id,wname: value.name  }}"></q-btn></q-item-label>
       <q-item-label caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
       <q-item-label caption><q-btn icon="publish" label="发布" size="xs"></q-btn></q-item-label>
       <q-item-label caption><q-btn icon="unpublished" label="下架" size="xs"></q-btn></q-item-label>

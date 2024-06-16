@@ -2,6 +2,7 @@
 import { reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
 import adminElementItemComponent from 'components/draft/adminElementItemComponent.vue';
+import { draftElementStatus, draftElementStatusMap } from 'boot/consts';
 
 const data = reactive({
   queryParams: {
@@ -59,9 +60,9 @@ function  onStatus(status:number){
   <q-separator dark inset />
   <div class="row" style="background-color: orange">
 
-      <q-chip clickable  color="brown" label="全部" @click="onStatus(-1)" />
-      <q-chip clickable color="brown" label="已发布" @click="onStatus(1)"/>
-      <q-chip clickable color="brown" label="待发布"  @click="onStatus(2)"/>
+      <q-chip  clickable  color="brown" label="全部" @click="onStatus(-1)" />
+      <q-chip v-for="(status,index) in draftElementStatus" :key="index" clickable color="brown" :label="status.name" @click="onStatus(status.id)"/>
+<!--      <q-chip clickable color="brown" label="待发布"  @click="onStatus(2)"/>-->
   </div>
 
   <div class="q-pa-md">
@@ -84,7 +85,7 @@ function  onStatus(status:number){
   <div class="q-pa-md q-gutter-md">
     <q-list bordered padding class="rounded-borders">
       <div v-for="(value,index) in elementList" :key="index">
-        <admin-item-card-component :value="value"> </admin-item-card-component>
+        <admin-element-item-component :value="value"> </admin-element-item-component>
       </div>
 
       <q-separator spaced />

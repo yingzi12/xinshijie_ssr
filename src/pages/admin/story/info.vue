@@ -28,9 +28,6 @@ async function handStory() {
 }
 handStory();
 
-async function updateImage(imgUrl:string){
-  const response = await api.post(`/admin/story/updateImage`,JSON.stringify({sid:sid.value,imgUrl:imgUrl}));
-}
 </script>
 
 <template>

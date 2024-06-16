@@ -3,6 +3,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { getImageUrl } from 'boot/tools';
+import { draftElementStatusMap, moduleOptionsMap } from 'boot/consts';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -36,16 +37,13 @@ interface Element {
 const props = defineProps<{ value: Element }>();
 
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 function handleSee(id:number,wid:number,softtype:number){
   router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
 }
 </script>
 
 <template>
-  <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
+  <q-item :to="{ path: '/admin/draft/element/detail', query: { wid: props.value.wid, deid: props.value.id }}">
     <q-item-section avatar>
       <q-img
         class="small-head-image"
@@ -56,8 +54,12 @@ function handleSee(id:number,wid:number,softtype:number){
 
     <q-item-section>
       <q-item-label class="one-line-clamp">{{props.value.title}}</q-item-label>
-      <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.createName}}</q-item-label>
+      <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.wname}}</q-item-label>
+<!--      <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.createName}}</q-item-label>-->
       <q-item-label class="one-line-clamp text-weight-thin text-overline">
+        <q-chip size="sm">{{ draftElementStatusMap.get(Number(props.value.status)) }}</q-chip>
+
+        <q-chip size="sm">{{ moduleOptionsMap.get(Number(props.value.softtype)) }}</q-chip>
         <q-chip
           v-for="(item,index) in props.value.idLabels.split(',')"
           :key="index"
@@ -70,13 +72,14 @@ function handleSee(id:number,wid:number,softtype:number){
         />
       </q-item-label>
 
-      <q-item-label class="one-line-clamp text-weight-thin text-overline">更新人：{{props.value.updateName}}</q-item-label>
-<!--      <q-item-label class="one-line-clamp text-weight-thin text-overline">更新时间：{{props.value.updateTime}}</q-item-label>-->
+<!--      <q-item-label class="one-line-clamp text-weight-thin text-overline">更新人：{{props.value.updateName}}</q-item-label>-->
       <q-item-label class="three-line-clamp" caption>{{props.value.intro}}</q-item-label>
     </q-item-section>
     <q-item-section side top>
       <q-item-label caption>{{props.value.updateTime}}</q-item-label>
-      <q-icon name="star" color="yellow" />
+      <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path: '/admin/draft/element/edit', query: { wid: props.value.wid, deid: props.value.id }}"></q-btn></q-item-label>
+      <q-item-label caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
+      <q-item-label caption><q-btn icon="publish" label="发布" size="xs"></q-btn></q-item-label>
     </q-item-section>
   </q-item>
 </template>

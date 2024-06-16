@@ -13,69 +13,7 @@ import { moduleOptions } from 'boot/consts';
 
 const wid = ref(route.query.wid);
 const eid = ref(route.query.eid);
-
 const wname = ref(route.query.wname);
-// const moduleOptions = [
-//   {
-//     value: 1,
-//     label: '通用',
-//   },
-//   {
-//     value: 2,
-//     label:'角色/人物' ,
-//   },
-//   {
-//     value: 3,
-//     label:'组织/势力',
-//     disabled: true,
-//   },
-//   {
-//     value: 4,
-//     label: '动物/植物',
-//     disabled: true,
-//   },
-//   {
-//     value:5 ,
-//     label: '种族',
-//     disabled: true,
-//   },
-//   {
-//     value:6 ,
-//     label: '宗教/党派',
-//     disabled: true,
-//   },
-//   {
-//     value:7 ,
-//     label: '习俗',
-//     disabled: true,
-//   },
-//   {
-//     value:8,
-//     label: '矿物',
-//     disabled: true,
-//   },
-//   {
-//     value:9 ,
-//     label: '武器',
-//     disabled: true,
-//   },
-//   {
-//     value:10 ,
-//     label: '药品',
-//     disabled: true,
-//   },
-//   {
-//     value:10 ,
-//     label: '城市/港口',
-//     disabled: true,
-//   },
-//   {
-//     value:10 ,
-//     label: '物品',
-//     disabled: true,
-//   },
-// ]
-
 const $q = useQuasar();
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
 const imgUrl = ref(null);

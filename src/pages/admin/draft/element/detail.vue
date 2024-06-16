@@ -1,22 +1,30 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Head from 'components/world/headComponent.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { api } from 'boot/axios';
+import { getImageUrl } from 'boot/tools';
 
-const fabPos = ref([ 18, 18 ]);
-const draggingFab = ref(false);
+const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
+const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
 
-function onClick () {
-  // console.log('Clicked on a fab action')
-};
+const deid = ref(route.query.deid);
+const cidTagList=ref([]);
 
-function moveFab (ev) {
-  draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
-
-  fabPos.value = [
-    fabPos.value[ 0 ] - ev.delta.x,
-    fabPos.value[ 1 ] - ev.delta.y
-  ]
-};
+const value=ref({});
+async function handValue() {
+  const response = await api.get(`/admin/draftElement/getInfo?deid=${deid.value}&wid=${wid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    value.value=data.data;
+    for(var i=0;i<value.value.categoryList.length;i++){
+      cidTagList.value.push(value.value.categoryList[i].value);
+    }
+  }
+}
+handValue();
 const alert=ref(false);
 const expanded= ref(true);
 
@@ -38,37 +46,60 @@ const expanded= ref(true);
       </q-toolbar>
     </div>
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是元素名称</div>
-      <div class="text-subtitle2 text-center">这是世界名称</div>
-      <div class="text-subtitle1 text-center">
-        <div class="q-pa-md q-gutter-sm">
-          <span class="text-overline">创建者:我是创建人</span>
-          <span class="text-overline">创建:2022-11-11 11:23:34</span>
-          <span class="text-overline">更新者:我是创建人</span>
-          <span class="text-overline">更新时间:2022-11-11 11:23:34</span>
-        </div>
-      </div>
-      <q-card  bordered class="bg-grey-9">
+      <q-card class="my-card" flat bordered>
+        <q-card-section horizontal>
+          <q-card-section class="col-5 flex flex-center ">
+            <q-img
+              class="rounded-borders"
+              spinner-color="white"
+              style="width: 180px;height: 200px;"
+              :src="getImageUrl(value.imgUrl)"
+              @error.once="() => { $event.target.src = '/empty.jpg'; }"
+            />
+          </q-card-section>
+          <q-card-section class="q-pt-xs">
+<!--            <div class="text-overline">{{value.title}}</div>-->
+            <div class="text-h5 q-mt-sm q-mb-xs">{{value.title}}</div>
+            <div class="text-subtitle1 q-mt-sm q-mb-xs">{{value.wname}}</div>
+            <div class=" q-mb-xs">
+              <div class="text-overline">创建者:{{value.createName}}</div>
+              <div class="text-overline">创建:{{value.createTime}}</div>
+            </div>
+          </q-card-section>
+
+
+        </q-card-section>
+
+        <q-separator />
+
+<!--        <q-card-actions>-->
+<!--          <q-btn flat round icon="event" />-->
+<!--          <q-btn flat>-->
+<!--            7:30PM-->
+<!--          </q-btn>-->
+<!--          <q-btn flat color="primary">-->
+<!--            Reserve-->
+<!--          </q-btn>-->
+<!--        </q-card-actions>-->
+      </q-card>
+
+<!--      <div class="text-h6 text-center">{{value.title}}</div>-->
+<!--      <div class="text-subtitle2 text-center">{{value.wname}}</div>-->
+<!--      <div class="text-subtitle1 text-center">-->
+
+<!--      </div>-->
+      <q-card  bordered class="bg-grey-2">
         <q-card-section>
           <div class="text-h6">分类</div>
-        </q-card-section>
-        <q-separator dark inset />
-        <q-card-section>
-          <div class="q-gutter-sm">
-            <span class="text-overline">其他</span>
-            <span class="text-overline">科技</span>
-            <span class="text-overline">魔法</span>
-          </div>
+          <q-chip clickable v-for="(tag,index) in cidTagList" :key="index" :color="'yellow' "  >
+            {{tag.split("$$")[1]}}
+          </q-chip>
         </q-card-section>
         <q-separator dark inset />
         <q-card-section>
           <div class="text-h6">简介</div>
-        </q-card-section>
-        <q-separator dark inset />
-        <q-card-section>
           <div class="q-pa-md">
-            这里是小说内容
-            QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+            {{value.intro}}
           </div>
         </q-card-section>
         <q-separator dark inset />
@@ -78,49 +109,14 @@ const expanded= ref(true);
         <q-separator dark inset />
         <q-card-section>
           <div>
-            <q-expansion-item
-              v-model="expanded"
+            <q-expansion-item v-for="(content,index) in value.contentList"
+                              :key="index"
+              v-model="content.isExpanded"
               icon="list"
-              label="分卷1"
-              caption="共11章"
+              :label="content.title"
             >
-            <pre>
-        这里是小说内容
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+             <div v-html="content.contentZip"></div>
 
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-      </pre>
-            </q-expansion-item>
-            <q-expansion-item
-              v-model="expanded"
-              icon="list"
-              label="分卷2"
-              caption="共13章"
-            >
-            <pre>
-        这里是小说内容
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-      </pre>
             </q-expansion-item>
           </div>
 
@@ -129,7 +125,7 @@ const expanded= ref(true);
     </div>
     <div class="q-pa-md">
       <q-btn-group spread>
-        <q-btn color="purple" label="编辑" icon="edit"  to="/admin/draft/element/edit"/>
+        <q-btn color="purple" label="编辑" icon="edit"  :to="{ path: '/admin/draft/element/edit', query: { wid: value.wid, deid: value.id }}"/>
         <q-btn color="purple" label="发布" icon="send" @click="alert = true" />
         <q-btn color="purple" label="比对" icon="visibility" />
       </q-btn-group>

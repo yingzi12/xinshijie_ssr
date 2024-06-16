@@ -22,53 +22,66 @@
     <q-card-section horizontal>
       <q-card-section class="col-5 flex flex-center" style="width: 200px">
         <q-img style="height: 240px;width: 180px"
-          class="rounded-borders"
-          src="https://cdn.quasar.dev/img/parallax2.jpg"
+               class="rounded-borders"
+               :src="getImageUrl(story.imgUrl)"
+               @error.once="() => { $event.target.src = '/empty.jpg'; }"
         />
       </q-card-section>
       <q-card-section class="q-pt-xs">
 <!--        <div class="text-overline">Overline</div>-->
         <div class="text-h5 q-mt-sm q-mb-xs">
-          这是一个标题
+          {{story.name}}
           <q-badge outline align="middle" color="teal">
-          v.17
-        </q-badge>
+          v.{{story.ranks}}
+          </q-badge>
         </div>
-        <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-        <q-item-label class="one-line-clamp   q-mb-xs">世界：我是一个世界名称</q-item-label>
-        <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">更新时间:2024-11-11 11:32:23</q-item-label>
-        <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">最新章节:第436章 第356章 捕虫大会</q-item-label>
-        <q-item-label class="q-mb-xs">连载 · 签约 · VIP · 轻小说 · 衍生同人 · 轻小说
+        <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">管理员: {{story.createName ==null ? "未知" :story.createName}}</q-item-label>
+        <!--        <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">更新时间:2024-11-11 11:32:23</q-item-label>-->
+        <!--        <q-item-label class="one-line-clamp text-weight-thin text-overline q-mb-xs">最新章节:第436章 第356章 捕虫大会</q-item-label>-->
+        <q-item-label class="q-mb-xs">
+          <q-chip class="glossy" color="orange" v-if="story.source != null" text-color="white" size="xs">
+            {{ story.source }}
+          </q-chip>
+          <q-chip class="glossy" color="yellow"  text-color="black" size="xs">
+            {{ (story.typeName != null && story.typeName != '') ? story.typeName:"其他"  }}
+          </q-chip>
+
+          <q-chip class="glossy" color="orange" v-for="(tags,index) in tagList " :key="index" text-color="white" size="xs">
+            {{ tags }}
+          </q-chip>
         </q-item-label>
-        <q-item-label class="three-line-clamp text-caption text-grey q-mb-xs" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+        <q-item-label class="three-line-clamp text-caption text-grey q-mb-xs" caption>
+          {{story.intro}}
+        </q-item-label>
         <div class="q-gutter-sm q-mb-xs">
           <span class="text-h6">
-            1000次
+            {{ story.countSee }}次
             <q-badge outline align="middle" color="teal">
               点击
             </q-badge>
           </span>
           <span class="text-h6">
-            3333次
-            <q-badge outline align="middle" color="teal">
-              观看
-            </q-badge>
-          </span>
-          <span class="text-h6">
-            3333次
+            {{ story.countLike }}次
             <q-badge outline align="middle" color="teal">
               喜欢
             </q-badge>
           </span>
+          <span class="text-h6">
+            {{ story.countFllow }}人
+            <q-badge outline align="middle" color="teal">
+              关注
+            </q-badge>
+          </span>
+        </div>
+        <div class="q-gutter-sm q-mb-xs">
+          <q-btn color="secondary" icon="favorite" label="喜欢" size="small"/>
+          <q-btn color="secondary" icon="grade" label="收藏"  size="small"/>
+          <q-btn color="red" icon="comment" :to="{ path: '/story/discuss', query: { sid: sid ,sname: story.name,source: 1 }}"   size="small" >讨论({{story.countDiscuss}})</q-btn>
         </div>
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="primary" icon="book" label="阅读" />
-          <q-btn color="secondary" icon="favorite" label="喜欢" />
-          <q-btn color="secondary" icon="grade" label="收藏" />
-          <q-btn color="red" icon="comment" label="讨论" to="/story/discuss" />
           <q-btn color="secondary" icon="add" label="新增章节"  to="/chapter/create"/>
           <q-btn color="secondary" icon="add" label="申请作者"  @click="prompt=true"/>
-
         </div>
 
       </q-card-section>
@@ -83,294 +96,82 @@
 
     </q-card-section>
   </q-card>
-  <div class="row">
-    <div style="width: 75%">
-      <div  class="q-ma-md bg-grey-2">
-        <div class="text-h6">简介</div>
-        <q-separator   />
-        <div>
-                    <pre>
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-                    </pre>
-        </div>
-      </div>
-      <div  class="q-ma-md bg-grey-2">
-        <div class="text-h6">目录</div>
-        <q-separator   />
-        <div class="text-subtitle1">分卷1</div>
-
-        <div class="row">
-          <div class="col-4" v-for="index in 22" :key="index">
-            <div class="q-ma-xs one-line-clamp">
-              <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
-            </div>
-          </div>
-        </div>
-        <div class="text-subtitle1">分卷2</div>
-
-        <div class="row">
-          <div class="col-4" v-for="index in 22" :key="index">
-            <div class="q-ma-xs one-line-clamp">
-              <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div  class="q-ma-md bg-grey-2">
-        <div class="text-h6">评论</div>
-        <div class="row">
-          <div class="q-pa-md">
-            <q-avatar>
-              <img src="https://cdn.quasar.dev/img/avatar.png">
-            </q-avatar>          </div>
-          <div style="width: 90%">
-            <div class="q-pa-md" >
-              <div >
-                <q-input
-                  v-model="text"
-                  filled
-                  type="textarea"
-                />
-              </div>
-              <div class="float-right q-ma-xs">
-                <q-btn color="red" icon="send"  label="发送评论" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="">
-          <div class="text-subtitle1">全部评论</div>
+    <div class="row">
+      <div class="col-9" >
+        <div  class="q-ma-md bg-grey-2" >
+          <div class="text-h6">简介</div>
           <q-separator   />
-          <q-list bordered>
-            <q-item clickable v-ripple v-for="index in 10 " :key="index">
-              <q-item-section avatar>
-                <q-avatar square>
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section>
-                <q-banner rounded class="bg-purple-8 text-white">
-                  We can't find your saved recipes until you sign in.
-                  <template v-slot:action>
-                    <q-btn flat color="white" label="Continue as a Guest"  icon="thumb_up"/>
-                    <q-btn flat color="white" label="Sign in"  icon="thumb_down"/>
-                  </template>
-                </q-banner>
-              </q-item-section>
-            </q-item>
-          </q-list>
+          <div>
+          <pre style="white-space: pre-wrap; word-break: break-word; width: 100%;">
+          {{story.descriptionZip}}
+          </pre>
+          </div>
         </div>
-        <div class="q-pa-lg flex flex-center">
-          <q-pagination
-            v-model="current"
-            color="purple"
-            :max="10"
-            :max-pages="6"
-            boundary-numbers
-          />
+        <chapter-component :sname="sname" :sid="sid"></chapter-component>
+        <commont-list-component :wid="story.wid" :sid="sid" :source="2"></commont-list-component>
+
+      </div>
+      <div class="col">
+        <div class="q-pa-md q-gutter-md">
+          <rendom-world-item-list size="6"></rendom-world-item-list>
         </div>
-      </div>
+        <div class="q-pa-md q-gutter-md">
+          <rendom-story-item-list size="6"></rendom-story-item-list>
+        </div>
 
+      </div>
     </div>
-    <div>
-      <div class="q-pa-md q-gutter-md">
-        <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-          <q-item-label header>随机推荐</q-item-label>
-          <q-separator spaced />
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </div>
-      <div class="q-pa-md q-gutter-md">
-        <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-          <q-item-label header>随机推荐</q-item-label>
-          <q-separator spaced />
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-
-          <q-item>
-            <q-item-section avatar>
-              <img src="/150.webp" class="small-head-image">
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label class="one-line-clamp">我是超级长的小说标题，我是超级长的小说标题，我是超级长的小说标题</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="three-line-clamp" caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elitSecondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-
-      </div>
-
-    </div>
-  </div>
   </q-page>
-  <q-dialog v-model="prompt" persistent>
-    <q-card style="min-width: 350px">
-      <q-card-section>
-        <div class="text-h6">申请管理员</div>
-      </q-card-section>
+<!--  <q-dialog v-model="prompt" persistent>-->
+<!--    <q-card style="min-width: 350px">-->
+<!--      <q-card-section>-->
+<!--        <div class="text-h6">申请管理员</div>-->
+<!--      </q-card-section>-->
 
-      <q-card-section class="q-pt-none">
-        <q-input dense v-model="auditIntro" autofocus @keyup.enter="prompt = false" label="请输入理由" />
-      </q-card-section>
-      <q-card-actions align="right" class="text-primary">
-        <q-btn flat label="取消" v-close-popup />
-        <q-btn flat label="确认" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+<!--      <q-card-section class="q-pt-none">-->
+<!--        <q-input dense v-model="auditIntro" autofocus @keyup.enter="prompt = false" label="请输入理由" />-->
+<!--      </q-card-section>-->
+<!--      <q-card-actions align="right" class="text-primary">-->
+<!--        <q-btn flat label="取消" v-close-popup />-->
+<!--        <q-btn flat label="确认" v-close-popup />-->
+<!--      </q-card-actions>-->
+<!--    </q-card>-->
+<!--  </q-dialog>-->
 
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import { api } from 'boot/axios';
+import { useRoute, useRouter } from 'vue-router';
+import { getImageUrl } from 'boot/tools';
+import rendomStoryItemList from 'components/story/rendomStoryItemListComponent.vue'; // 确保路径正确对应你的文件结构
+import rendomWorldItemList from 'components/world/rendomWorldItemListComponent.vue'; // 确保路径正确对应你的文件结构
+import chapterComponent from 'components/story/chapterComponent.vue';
+import commontListComponent from 'components/common/commontListComponent.vue';
+// 接收url里的参数
+const route = useRoute();
+const router = useRouter();
 
-const  current= ref(6);
-const auditIntro=ref("");
-const prompt=ref(false);
-const text=ref("");
+const sid = ref(route.query.sid);
+const sname = ref(route.query.sname);
+const scores = ref(0)
+const tagList=ref([]);
+
+const story=ref({});
+/** 查询世界详细 */
+async function handStory() {
+  const response = await api.get(`/wiki/story/getInfo/${sid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    story.value=data.data;
+    scores.value= story.value.scores;
+    if(story.value.tags != undefined && story.value.tags !=null && story.value.tags !=""){
+      tagList.value=story.value.tags.split(";");
+    }
+  }
+}
+handStory();
 </script>
 
 <style scoped>

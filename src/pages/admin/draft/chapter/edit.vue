@@ -1,9 +1,71 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import Head from 'components/story/headComponent.vue';
+import { reactive, ref, toRefs } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { api } from 'boot/axios';
+import { Dialog } from 'quasar';
 
-const title=ref("");
-const editor = ref('What you see is <b>what</b> you get.');
+const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
+const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
+const imgUrl = ref(null);
+const sid = ref(route.query.sid);
+const sname = ref(route.query.sname);
+
+const dcid = ref(route.query.dcid);
+const id = ref(route.query.id);
+
+const data = reactive({
+  addForm: {
+    sid:sid.value,
+    id:dcid.value,
+    level:1,
+    isEdit:1,
+    isPrivate:1,
+    title:"",
+    contentZip:"",
+    isNew:1,
+  }
+});
+const { addForm } = toRefs(data);
+const previewImage = ref("/favicon.ico");
+const selectedImage = ref<File | null>(null);
+
+async function handValue() {
+  const response = await api.get(`/admin/draftChapter/getInfo?dcid=${dcid.value}&sid=${sid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    addForm.value=data.data;
+  }
+}
+handValue();
+async function onSubmit() {
+  const response = await api.post("/admin/draftChapter/edit", JSON.stringify(addForm.value), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    Dialog.create({
+      title: '通知',
+      message: '修改成功.',
+      ok: {
+        push: true
+      },
+    }).onOk(async () => {
+      router.go(-1)// Redirect to login page
+    }).onCancel(async () => {
+      router.go(-1)// Redirect to login page
+    });
+  } else {
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
 
 </script>
 
@@ -40,33 +102,50 @@ const editor = ref('What you see is <b>what</b> you get.');
 
     </q-toolbar>
   </div>
+
   <div style="height: 100%">
-    <q-card style="height: 100%">
-      <q-card-section>
-<!--        <div class="text-h6">创建章节</div>-->
-        <q-input
-          v-model="title"
-          :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入章节名称，长度2-100']"
-          filled
-          hint="输入章节名称"
-          label="章节名称 *"
-          lazy-rules
-        />
-      </q-card-section>
+    <q-form
+      class="q-gutter-md"
+      @submit="onSubmit"
+    >
+      <q-card style="height: 100%">
+        <q-card-section>
+          <!--        <div class="text-h6">创建章节</div>-->
+          <q-input
+            v-model="addForm.title"
+            :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入章节名称，长度2-100']"
+            filled
+            hint="输入章节名称"
+            label="章节名称 *"
+            lazy-rules
+          />
+        </q-card-section>
 
-      <q-separator />
-      <q-card-actions  >
-        <q-editor v-model="editor" style="width: 100%" />
-
-      </q-card-actions>
-      <q-card-actions >
-        <div>
-          <q-btn color="primary" label="提交" type="submit"  to="/admin/draft/chapter/detail" />
-          <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset"  to="/admin/draft/chapter/detail" />
+        <q-separator />
+        <div class="q-gutter-sm">
+          <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="允许公开编辑" />
+          <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="禁止公开编辑" />
         </div>
-      </q-card-actions>
-    </q-card>
+        <div class="q-gutter-sm">
+          <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
+          <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
+        </div>
+        <q-separator />
+
+        <q-card-actions  >
+          <q-editor v-model="addForm.contentZip" style="width: 100%" />
+
+        </q-card-actions>
+        <q-card-actions >
+          <div>
+            <q-btn color="primary" label="提交" type="submit"/>
+            <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset"/>
+          </div>
+        </q-card-actions>
+      </q-card>
+    </q-form>
   </div>
+
 
 </q-page>
 </template>
