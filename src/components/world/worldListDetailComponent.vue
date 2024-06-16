@@ -16,7 +16,6 @@ interface World {
   updateTime: string;
   userName: string;
   createName: string;
-  numberPhotos: string;
   countDiscuss: string;
   countLike: string;
   countSee: string;

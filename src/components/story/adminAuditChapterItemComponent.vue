@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { Dialog, useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
@@ -8,12 +7,13 @@ import { api } from 'boot/axios';
 const $q = useQuasar();
 const router = useRouter()
 
-interface Author {
+interface Chapter {
   imageUrls: string;
   id: string;
   wid: string;
   wname: string;
-  softtype: string;
+  sid: string;
+  sname: string;
   countEdit: string;
   userName: string;
   createName: string;
@@ -24,17 +24,17 @@ interface Author {
   countSee: string;
   intro:string;
   title:string;
-  cnameList:string;
   pageHtml:string;
   status:string;
-  tags:string;
-  idLabels:string;
 }
 
-const props = defineProps<{ value: Author }>();
+const props = defineProps<{ value: Chapter }>();
 
 function imageUrl(imgUrl) {
   return `${$q.config.sourceWeb}${imgUrl}`;
+}
+function handleSee(id:number,wid:number,softtype:number){
+  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
 }
 const dialog=ref(false);
 const data = reactive({
@@ -52,7 +52,7 @@ const { addForm } = toRefs(data);
 
 async function onSubmit() {
 
-  const response = await api.post("/admin/author/audit", JSON.stringify(addForm.value), {
+  const response = await api.post("/admin/draftElement/audit", JSON.stringify(addForm.value), {
     headers: {
       'Content-Type': 'application/json', },
   });
@@ -84,7 +84,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
+  <q-item :to="{ path: '/chapter/detail', query: { sid: props.value.sid, cid: props.value.id }}">
     <q-item-section avatar>
       <img :src="imageUrl(props.value.imageUrls)" class="small-head-image">
     </q-item-section>
@@ -92,19 +92,6 @@ async function onSubmit() {
     <q-item-section side>
       <q-item-label class="one-line-clamp">{{props.value.title}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.createName}}</q-item-label>
-      <q-item-label class="one-line-clamp text-weight-thin text-overline">
-        <q-chip
-          v-for="(item,index) in props.value.idLabels.split(',')"
-          :key="index"
-          class="q-ma-xs"
-          :label="item.split('$$')[1]"
-          size="sm"
-          color="red"
-          text-color="black"
-          square
-        />
-      </q-item-label>
-
       <q-item-label class="one-line-clamp text-weight-thin text-overline">更新人：{{props.value.updateName}}</q-item-label>
       <!--      <q-item-label class="one-line-clamp text-weight-thin text-overline">更新时间：{{props.value.updateTime}}</q-item-label>-->
       <q-item-label class="three-line-clamp" caption>{{props.value.intro}}</q-item-label>

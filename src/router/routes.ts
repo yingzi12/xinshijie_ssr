@@ -198,7 +198,7 @@ const routes: RouteRecordRaw[] = [
           { path: 'chapter', component: () => import('pages/admin/story/chapter.vue') },
           { path: 'auditChapter', component: () => import('pages/admin/story/auditChapter.vue') },
           { path: 'discuss', component: () => import('pages/admin/story/discuss.vue') },
-          { path: 'comment', component: () => import('pages/admin/story/comment.vue') },
+          { path: 'comment', component: () => import('pages/admin/story/commentlist.vue') },
           { path: 'edit', component: () => import('pages/admin/story/edit.vue') },
           { path: 'create', component: () => import('pages/admin/story/create.vue') },
         ]

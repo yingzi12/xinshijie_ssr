@@ -23,7 +23,7 @@ const  headList= reactive([
   {id:3, value:"作者审核" ,to:"/admin/story/auditAuthor"},
   {id:4, value:"分卷/目录" ,to:"/admin/story/reel"},
   {id:5, value:"章节审核" ,to:"/admin/story/auditChapter"},
-  {id:6, value:"评论" ,to:"/admin/story/auditChapter"},
+  {id:6, value:"评论" ,to:"/admin/story/comment"},
   {id:7, value:"讨论" ,to:"/admin/story/discuss"}
 ]);
 

@@ -19,7 +19,6 @@ interface Element {
   createName: string;
   updateName: string;
   updateTime:string;
-  numberPhotos: string;
   countDiscuss: string;
   countLike: string;
   countSee: string;
