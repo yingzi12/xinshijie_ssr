@@ -37,11 +37,11 @@ export  const worldStatusMap = new Map([
   [5, "正常"]
 ]);
 export  const worldStatus= reactive([
-  {id:1, name:"待发布"},
-  {id:2, name:"锁定"},
-  {id:3, name:"隐藏"},
-  {id:4, name:"删除"},
-  {id:5, name:"正常"}
+  {id:1, value:"待发布"},
+  {id:2, value:"锁定"},
+  {id:3, value:"隐藏"},
+  {id:4, value:"删除"},
+  {id:5, value:"正常"}
 ]);
 export  const applyStatusMap=new Map([
   [1, "待审核"],
@@ -162,6 +162,17 @@ export const draftElementStatusMap = new Map([
   [6, "超时审核自动通过"],
 ]);
 
+export const draftChapterStatusMap = new Map([
+  [7, "草稿"],
+  [1, "待审核"],
+  [3, "不通过"],
+  [2, "通过"],
+  [4, "删除"],
+  [5, "超时发布自动拒绝"],
+  [6, "超时审核自动通过"],
+]);
+
+
 export const draftElementStatus =reactive([
   {id:7,name: "草稿"},
   {id:1, name:"待审核"},
@@ -171,6 +182,17 @@ export const draftElementStatus =reactive([
   {id:5, name:"超时发布自动拒绝"},
   {id:6,name: "超时审核自动通过"},
 ]);
+
+export const draftChapterStatus =reactive([
+  {id:7,name: "草稿"},
+  {id:1, name:"待审核"},
+  {id:3,name: "不通过"},
+  {id:2,name: "通过"},
+  {id:4, name:"删除"},
+  {id:5, name:"超时发布自动拒绝"},
+  {id:6,name: "超时审核自动通过"},
+]);
+
 export const elementStatusMap = new Map([
   [1, "正常"],
   [3, "待审核"],
@@ -449,13 +471,27 @@ export const moduleOptions = [
     disabled: true,
   },
   {
-    value:10 ,
+    value:11 ,
     label: '城市/港口',
     disabled: true,
   },
   {
-    value:10 ,
+    value:12 ,
     label: '物品',
     disabled: true,
   },
 ]
+export const moduleOptionsMap = new Map([
+  [1, "通用"],
+  [2, "角色/人物"],
+  [3, "组织/势力"],
+  [4, "动物/植物"],
+  [5, "种族"],
+  [6, "宗教/党派"],
+  [7, "习俗"],
+  [8, "矿物"],
+  [9, "武器"],
+  [10, "药品"],
+  [11, "城市/港口"], // 注意：这里的value重复了，可能是个笔误，Map中键必须唯一
+  [12, "物品"], // 同样，value重复，以及被disabled
+]);
