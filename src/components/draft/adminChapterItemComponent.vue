@@ -1,12 +1,7 @@
 <script setup lang="ts">
-
-import { useQuasar } from 'quasar';
-import { useRouter } from 'vue-router';
 import { getImageUrl } from 'boot/tools';
-import { draftElementStatusMap, moduleOptionsMap } from 'boot/consts';
+import { draftElementStatusMap } from 'boot/consts';
 
-const $q = useQuasar();
-const router = useRouter()
 
 interface Chapter {
   imageUrls: string;
@@ -33,9 +28,6 @@ interface Chapter {
 }
 
 const props = defineProps<{ value: Chapter }>();
-function handleSee(id:number,wid:number,softtype:number){
-  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
-}
 </script>
 
 <template>

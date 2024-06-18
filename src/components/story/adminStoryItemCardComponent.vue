@@ -3,6 +3,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { imageUrl } from 'src/utils/imageUtil';
 
 const router = useRouter()
 const $q = useQuasar();
@@ -27,9 +28,7 @@ const tagList=ref([]);
 if(props.value.tags != null){
   tagList.value=props.value.tags.split(";");
 }
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
+
 </script>
 
 <template>

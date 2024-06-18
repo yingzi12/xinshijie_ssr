@@ -492,7 +492,6 @@ async function getRondomWorldList() {
   try {
     queryParams.value.recType = null;
     queryParams.value.pageSize = 4;
-
     const response = await api.get('/wiki/world/random?' + tansParams(queryParams.value));
     if (response.data.code == 200) {
       // total.value = response.data.total;

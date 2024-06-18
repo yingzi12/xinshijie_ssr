@@ -35,9 +35,6 @@ interface Element {
 const props = defineProps<{ value: Element }>();
 
 
-function handleSee(id:number,wid:number,softtype:number){
-  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
-}
 </script>
 
 <template>

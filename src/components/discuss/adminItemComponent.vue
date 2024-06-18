@@ -31,13 +31,6 @@ interface Discuss {
 
 const props = defineProps<{ value: Discuss }>();
 
-
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
-function handleSee(id:number,wid:number,softtype:number){
-  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
-}
 </script>
 
 <template>

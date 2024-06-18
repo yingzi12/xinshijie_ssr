@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Dialog, useQuasar } from 'quasar';
+import { Dialog } from 'quasar';
 import { useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
+import { imageUrl } from 'src/utils/imageUtil';
 
-const $q = useQuasar();
 const router = useRouter()
 
 interface Chapter {
@@ -30,12 +30,7 @@ interface Chapter {
 
 const props = defineProps<{ value: Chapter }>();
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
-function handleSee(id:number,wid:number,softtype:number){
-  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
-}
+
 const dialog=ref(false);
 const data = reactive({
   addForm: {

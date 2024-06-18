@@ -2,7 +2,7 @@
 import { defineEmits, defineProps, ref, watch } from 'vue';
 import { compressIfNeeded, getImageUrl } from 'boot/tools';
 import { api } from 'boot/axios';
-import { Cookies, Dialog, Notify } from 'quasar';
+import { Cookies, Dialog } from 'quasar';
 const previewImage = ref<string>();
 const token=Cookies.get("token");
 const props = defineProps({
@@ -55,10 +55,6 @@ async function handleImageUpload(event: Event) {
       console.log("ok");
     });
   }
-}
-function imageUrl() {
-  console.log(previewImage.value)
-  return `https://image.51x.uk/blackwhite${previewImage.value}`;
 }
 const emit = defineEmits(['imgUrl']); // 定义自定义事件
 watch(

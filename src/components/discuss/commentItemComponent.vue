@@ -6,7 +6,6 @@ import replyCommonItemComponent from 'components/discuss/replyCommentItemCompone
 import moreCommentComponent from 'components/discuss/moreCommentComponent.vue';
 import { getImageUrl } from 'boot/tools';
 
-const $q = useQuasar();
 
 interface Comment {
   did: string;

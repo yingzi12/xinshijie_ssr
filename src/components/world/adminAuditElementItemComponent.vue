@@ -4,6 +4,7 @@ import { Dialog, useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
+import { imageUrl } from 'src/utils/imageUtil';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -34,12 +35,7 @@ interface Element {
 
 const props = defineProps<{ value: Element }>();
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
-function handleSee(id:number,wid:number,softtype:number){
-  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
-}
+
 const dialog=ref(false);
 const data = reactive({
   addForm: {
@@ -90,7 +86,10 @@ async function onSubmit() {
 <template>
   <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
     <q-item-section avatar>
-      <img :src="imageUrl(props.value.imageUrls)" class="small-head-image">
+      <img
+        class="small-head-image"
+        :src="imageUrl(props.value.imageUrls) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+      />
     </q-item-section>
 
     <q-item-section side>

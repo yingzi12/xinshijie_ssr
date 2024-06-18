@@ -116,9 +116,9 @@
 <script lang="ts" setup>
 import {  reactive, ref, toRefs} from 'vue'
 import { useRoute, useRouter} from "vue-router";
-import { listElement } from 'src/api/wiki/element';
 import elementItemComponent from 'components/world/elementItemComponent.vue';
 import chooseCategoryComponent from 'components/category/chooseCategoryComponent.vue';
+import { api, tansParams } from 'boot/axios';
 
 const splitterModel= ref(200); // start at 150px
 const seach=ref("");
@@ -223,7 +223,7 @@ const  maxPage=ref(0);
 async  function getList(){
   queryParams.value.wid=wid.value;
   queryParams.value.title=title.value;
-  const response =await listElement(queryParams.value);
+  const response =await api.get("/wiki/element/list?"+ tansParams(queryParams.value));
    elementList.value = response.data.data;
   total.value = response.data.total;
   if(total.value % queryParams.value.pageSize == 0){

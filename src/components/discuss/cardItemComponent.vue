@@ -32,9 +32,7 @@ const props = defineProps<{ value: Discuss }>();
 
 const dialogComm=ref(false);
 const dialogReplay=ref(false);
-//评论列表
-const commentActive = ref('allComm')
-const commentList = ref<Comment[]>([])
+//评论列
 const commentHide=ref(false);
 
 const loading = ref(true);
@@ -48,9 +46,6 @@ function onLoad (index, done) {
   }, 2000)
 }
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 function routerDetail() {
   if (props.value.source == 1) {
   router.push(`/discuss/detail?did=${props.value.id}&wid=${props.value.wid}&wname=${props.value.wname}&source=${props.value.source}`)

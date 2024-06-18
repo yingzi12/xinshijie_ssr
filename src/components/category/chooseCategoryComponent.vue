@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, defineEmits, defineProps, PropType, watch } from 'vue';
-import { getTree } from 'src/api/wiki/category';
+import { api } from 'boot/axios';
 
 const emit = defineEmits(['cidList']); // 定义自定义事件
 
@@ -40,20 +40,17 @@ const props = defineProps({
 });
 
 tickedList.value=props.cidList;
-console.log("-----------tickedList")
 
-console.log(tickedList)
+getCategoryTree();
 const dataStree=ref([]);
-function getCategoryTree() {
-  getTree(props.wid).then(response => {
-    console.log(response)
+async function getCategoryTree() {
+  const response =await api.get(`/wiki/category/getTree?wid=${props.wid}`);
+  if(response.data.code ==200) {
     dataStree.value = response.data.data
-  });
+  }
 }
 getCategoryTree();
 function onTickedChange() {
-  console.log("-------onTickedChange---------")
-  console.log(tickedList.value);
   // 确保只有叶子节点的ID被收集
   emit('cidList', tickedList.value);
 }
@@ -61,9 +58,7 @@ watch(
   () => props.cidList,
   (newCidList) => {
     tickedList.value = newCidList;
-    console.log("-------2----tickedList")
 
-    console.log(tickedList)
     // 如果需要在此处执行额外的逻辑，比如过滤或排序数据，可以在这里添加
   },
   { immediate: true } // 添加immediate选项以立即触发watcher

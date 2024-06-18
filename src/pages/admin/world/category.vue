@@ -5,7 +5,6 @@ import addCategoryComponenet from "components/category/addCategoryComponenet.vue
 import editCategoryComponenet from "components/category/editCategoryComponenet.vue";
 import { useRoute, useRouter } from 'vue-router';
 
-import { getTree } from 'src/api/wiki/category';
 import { Dialog } from 'quasar';
 import { api } from 'boot/axios';
 const route = useRoute();
@@ -15,9 +14,7 @@ const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
 
 const selected = ref(null);
 
-function imageUrl(pic:string) {
-  return `https://image.51x.uk/blackwhite${pic}`;
-}
+
 const queryData = reactive({
   addForm: {
     pid: 0,
@@ -39,10 +36,11 @@ const queryData = reactive({
 const {addForm,editForm, rules} = toRefs(queryData);
 
 const dataStree=ref([]);
-function getCategoryTree() {
-  getTree(wid.value).then(response => {
-    dataStree.value = response.data.data
-  });
+async function getCategoryTree() {
+ const response =await api.get(`/wiki/category/getTree?wid=${wid.value}`);
+ if(response.data.code ==200) {
+   dataStree.value = response.data.data
+ }
 }
 getCategoryTree();
 

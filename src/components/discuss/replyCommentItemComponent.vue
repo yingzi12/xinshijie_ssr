@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useQuasar } from 'quasar';
 import { ref } from 'vue';
 import addReplyCommonComponent from 'components/discuss/addReplyCommentComponent.vue';
 import { getImageUrl } from 'boot/tools';
 
-const $q = useQuasar();
 
 interface Comment {
   did: string;
@@ -31,9 +29,6 @@ interface Comment {
   countDisagree: number;
 }
 const props = defineProps<{ value: Comment }>();
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 const commentHide = ref(false);
 </script>
 

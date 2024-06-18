@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
-import { useQuasar } from 'quasar';
 import { defineProps, reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
 import commonItemComponent from 'components/discuss/commentItemComponent.vue';
 
-const route = useRoute();
-const router = useRouter();
-const $q = useQuasar();
+
 const props = defineProps({
   did: {
     type: String,

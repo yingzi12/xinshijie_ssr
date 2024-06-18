@@ -10,7 +10,6 @@ const token = Cookies.get('token');
 const total = ref(0);
 const maxPage = ref(0);
 
-const current=ref(1)
 const collectionSystemList = ref([]);
 const collectionUserList = ref([]);
 

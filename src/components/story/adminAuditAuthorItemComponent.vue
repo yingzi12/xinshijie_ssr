@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import { Dialog, useQuasar } from 'quasar';
+import { Dialog } from 'quasar';
 import { useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
+import { imageUrl } from 'src/utils/imageUtil';
 
-const $q = useQuasar();
 const router = useRouter()
 
 interface Author {
@@ -33,13 +33,11 @@ interface Author {
 
 const props = defineProps<{ value: Author }>();
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
+
 const dialog=ref(false);
 const data = reactive({
   addForm: {
-    auditStatus: "",
+    auditStatus: -1,
     auditContent: "",
     wid:props.value.wid,
     eid:props.value.id,

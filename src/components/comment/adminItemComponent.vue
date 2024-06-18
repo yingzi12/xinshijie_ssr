@@ -3,6 +3,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { getImageUrl } from 'boot/tools';
+import { imageUrl } from 'src/utils/imageUtil';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -29,14 +30,6 @@ interface Comment {
 }
 
 const props = defineProps<{ value: Comment }>();
-
-
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
-function handleSee(id:number,wid:number,softtype:number){
-  router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
-}
 </script>
 
 <template>
@@ -44,8 +37,8 @@ function handleSee(id:number,wid:number,softtype:number){
     <q-item-section avatar top>
       <q-avatar>
         <q-img
-                :src="getImageUrl(value.circleUrl)"
-                @error.once="() => { $event.target.src = '/empty.jpg'; }"
+          class="small-head-image"
+          :src="imageUrl(value.circleUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
         />
       </q-avatar>
     </q-item-section>
