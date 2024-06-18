@@ -1,7 +1,7 @@
 <script setup lang="ts">
-
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
+import { imageUrl } from 'src/utils/imageUtil';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -35,9 +35,6 @@ interface Element {
 const props = defineProps<{ value: Element }>();
 
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 function handleSee(id:number,wid:number,softtype:number){
   router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
 }

@@ -13,6 +13,14 @@ const props = defineProps({
   sname:  {
     type: String,
     required: true // 确保wid是必需的，避免数据为空的问题
+  },
+  wid:  {
+    type: String,
+    required: true // 确保wid是必需的，避免数据为空的问题
+  },
+  wname:  {
+    type: String,
+    required: true // 确保wid是必需的，避免数据为空的问题
   }
 });
 
@@ -75,16 +83,14 @@ getList(queryParams.value.page);
 </script>
 
 <template>
-  <div  class="q-ma-md bg-grey-2">
-    <div class="text-h6">目录</div>
-    <q-separator/>
+  <div  class="bg-grey-2">
     <div v-for="(reel,index) in reelList" :key="index" >
       <div class="text-subtitle1">{{ reel.title }}</div>
 
       <div class="row q-ma-md">
         <div class="col-4" v-for="(chapter,cindex) in reel.chapterList" :key="cindex">
           <div class="q-ma-xs one-line-clamp">
-            <a href="/story/chapter" class="background text-overline">{{chapter.title}}</a>
+            <a :href="`/story/chapter?sid=${props.sid}&sname=${props.sname}&wid=${props.wid}&wname=${props.wname}&cid=${chapter.id}`" class="background text-overline">{{ chapter.title }}</a>
           </div>
         </div>
       </div>

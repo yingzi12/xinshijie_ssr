@@ -186,7 +186,7 @@ function handleSurce(){
 
     <q-card class="my-card">
       <q-card-section>
-        <div class="text-h6">创建世界</div>
+        <div class="text-h6">创建故事</div>
       </q-card-section>
 
       <q-separator />

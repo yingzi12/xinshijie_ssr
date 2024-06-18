@@ -1,15 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { api } from 'boot/axios';
+const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
 
+const eid = ref(route.query.eid);
+const cidTagList=ref([]);
+
+const value=ref({});
+async function getDetail() {
+  const response = await api.get(`/wiki/element/getInfo?eid=${eid.value}&wid=${wid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    value.value=data.data;
+    for(var i=0;i<value.value.categoryList.length;i++){
+      cidTagList.value.push(value.value.categoryList[i].value);
+    }
+  }
+}
+getDetail();
 const fabPos = ref([ 18, 18 ]);
 const draggingFab = ref(false);
 
 function onClick () {
   // console.log('Clicked on a fab action')
 };
-
 function moveFab (ev) {
   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
 
@@ -23,6 +41,16 @@ const expanded= ref(true);
 function  toEdit(){
   router.push('/element/edit'); // Redirect to login page
 }
+
+watch(() => route.query.eid, async (newEid, oldEid) => {
+  if (newEid !== oldEid) {
+    // 当wid变化时，重新加载数据
+    eid.value = newEid;
+    await getDetail(); // 重新获取世界详细信息
+    // await getAllWorldComment(); // 重新获取评论列表
+  }
+}, { immediate: true }); // immediate: true 确保在初始渲染时也触发watcher
+
 </script>
 
 <template>
@@ -45,15 +73,15 @@ function  toEdit(){
 
     </q-breadcrumbs>
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是元素名称<q-chip size="xs" icon="bookmark" @click="toEdit()">
+      <div class="text-h6 text-center">{{ value.title }}<q-chip size="xs" icon="bookmark" @click="toEdit()">
         编辑
       </q-chip></div>
       <div class="text-subtitle1 text-center">
         <div class="q-pa-md q-gutter-sm">
-          <span class="text-overline">创建者:我是创建人</span>
-          <span class="text-overline">创建:2022-11-11 11:23:34</span>
-          <span class="text-overline">更新者:我是创建人</span>
-          <span class="text-overline">更新时间:2022-11-11 11:23:34</span>
+          <span class="text-overline">创建者:{{ value.createName }}</span>
+          <span class="text-overline">创建时间:{{ value.createTime }}</span>
+          <span class="text-overline">更新者:{{ value.updateName }}</span>
+          <span class="text-overline">更新时间:{{ value.updateTime }}</span>
         </div>
       </div>
       <q-card dark bordered class="bg-grey-9">
@@ -63,10 +91,9 @@ function  toEdit(){
         <q-separator dark inset />
         <q-card-section>
           <div class="q-pa-md q-gutter-sm">
-            <span class="text-overline">分类：</span>
-            <span class="text-overline">其他</span>
-            <span class="text-overline">科技</span>
-            <span class="text-overline">魔法</span>
+            <q-chip clickable v-for="(tag,index) in cidTagList" :key="index" :color="'yellow' "  >
+              {{tag.split("$$")[1]}}
+            </q-chip>
           </div>
         </q-card-section>
         <q-separator dark inset />
@@ -76,8 +103,7 @@ function  toEdit(){
         <q-separator dark inset />
         <q-card-section>
           <div class="q-pa-md">
-            这里是小说内容
-            QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+            {{value.intro}}
           </div>
         </q-card-section>
         <q-separator dark inset />
@@ -87,49 +113,14 @@ function  toEdit(){
         <q-separator dark inset />
         <q-card-section>
           <div>
-            <q-expansion-item
-              v-model="expanded"
-              icon="list"
-              label="分卷1"
-              caption="共11章"
+            <q-expansion-item v-for="(content,index) in value.contentList"
+                              :key="index"
+                              v-model="content.isExpanded"
+                              icon="list"
+                              :label="content.title"
             >
-            <pre>
-        这里是小说内容
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
+              <div v-html="content.contentZip"></div>
 
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-      </pre>
-            </q-expansion-item>
-            <q-expansion-item
-              v-model="expanded"
-              icon="list"
-              label="分卷2"
-              caption="共13章"
-            >
-            <pre>
-        这里是小说内容
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-      </pre>
             </q-expansion-item>
           </div>
 
@@ -139,9 +130,9 @@ function  toEdit(){
     </div>
     <div class="q-pa-md">
       <q-btn-group spread>
-        <q-btn color="purple" label="上一章" icon="timeline" />
-        <q-btn color="purple" label="元素列表" icon="visibility" @click="alert = true"/>
-        <q-btn color="purple" label="下一章" icon="visibility" />
+        <q-btn color="purple"  v-if="value.previousId != undefined && value.previousId !=null"  label="上一个" icon="arrow_back"  :to="{ path: '/element/detail', query: { wid: value.wid, eid: value.previousId }}"/>
+        <q-btn color="purple" label="元素列表" icon="reorder" :to="{ path: '/world/element', query: { wid: value.wid }}"/>
+        <q-btn color="purple" v-if="value.nextId != undefined && value.nextId !=null" label="下一个" icon="arrow_forward"  :to="{ path: '/element/detail', query: { wid: value.wid, eid: value.nextId }}"/>
 
       </q-btn-group>
     </div>

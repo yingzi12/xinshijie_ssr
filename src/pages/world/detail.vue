@@ -87,8 +87,8 @@
           <q-btn color="secondary" icon="manage_accounts"  :to="{ path: '/world/manage', query: { wid: wid,wname: world.name  }}" label="管理员列表" size="small" />
         </div>
         <div class="q-gutter-sm q-mb-xs">
-          <q-btn color="secondary" icon="add_circle" label="创建元素"  :to="{ path: '/element/create', query: { wid: wid ,wname: world.name }}" size="small" />
-          <q-btn color="secondary" icon="add_circle" label="创建故事"  :to="{ path: '/story/create', query: { wid: wid ,wname: world.name }}" size="small"/>
+          <q-btn color="secondary" icon="add_circle" label="创建元素"  :to="{ path: '/admin/element/create', query: { wid: wid ,wname: world.name }}" size="small" />
+          <q-btn color="secondary" icon="add_circle" label="创建故事"  :to="{ path: '/admin/world/create', query: { wid: wid ,wname: world.name }}" size="small"/>
           <q-btn color="secondary" icon="add_circle" label="申请管理员" @click="prompt=true" size="small"/>
         </div>
       </q-card-section>

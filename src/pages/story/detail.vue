@@ -12,11 +12,10 @@
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
-      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
-      <q-breadcrumbs-el label="这个是世界名称" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="世界小说" icon="navigation"  to="/world/story"/>
-      <q-breadcrumbs-el label="这个是小说名称" icon="navigation"  to="/story/detail"/>
+      <q-breadcrumbs-el :label="story.wname" icon="navigation"  :to="{ path: '/world/detail', query: { wid: story.wid ,wname: story.wname,source: 1 }}" />
+      <q-breadcrumbs-el label="世界小说" icon="navigation" :to="{ path: '/world/story', query: { wid: story.wid ,wname: story.wname,source: 1 }}"/>
+      <q-breadcrumbs-el label="小说列表" icon="navigation" :to="{ path: '/story/order'}" />
+      <q-breadcrumbs-el :label="sname" icon="navigation" />
     </q-breadcrumbs>
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
@@ -76,7 +75,7 @@
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="secondary" icon="favorite" label="喜欢" size="small"/>
           <q-btn color="secondary" icon="grade" label="收藏"  size="small"/>
-          <q-btn color="red" icon="comment" :to="{ path: '/story/discuss', query: { sid: sid ,sname: story.name,source: 1 }}"   size="small" >讨论({{story.countDiscuss}})</q-btn>
+          <q-btn color="red" icon="comment" :to="{ path: '/story/discuss', query: {wid: story.wid ,wname: story.wname, sid: sid ,sname: story.name,source: 2 }}"   size="small" >讨论({{story.countDiscuss}})</q-btn>
         </div>
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="primary" icon="book" label="阅读" />
@@ -85,14 +84,14 @@
         </div>
 
       </q-card-section>
-      <q-card-section class="q-pt-xs">
-        <div class="text-overline">Overline</div>
-        <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-        <div class="text-caption text-grey">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </div>
+<!--      <q-card-section class="q-pt-xs">-->
+<!--        <div class="text-overline">Overline</div>-->
+<!--        <div class="text-h5 q-mt-sm q-mb-xs">Title</div>-->
+<!--        <div class="text-caption text-grey">-->
+<!--          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.-->
+<!--        </div>-->
 
-      </q-card-section>
+<!--      </q-card-section>-->
 
     </q-card-section>
   </q-card>
@@ -107,7 +106,24 @@
           </pre>
           </div>
         </div>
-        <chapter-component :sname="sname" :sid="sid"></chapter-component>
+        <q-card flat bordered style="width: 100%" >
+          <q-card-section class="row items-center q-pb-none ">
+            <div class="text-h6">目录</div>
+            <q-space />
+<!--            <q-btn icon="close" flat round dense v-close-popup />-->
+          </q-card-section>
+          <q-separator inset />
+
+          <q-card-section style="max-height: 50vh" class="scroll">
+            <div>
+              <chapter-component :sname="story.name" :sid="sid" :wid="story.wid" :wname="story.wname"></chapter-component>
+            </div>
+          </q-card-section>
+
+          <q-separator />
+
+        </q-card>
+
         <commont-list-component :wid="story.wid" :sid="sid" :source="2"></commont-list-component>
 
       </div>
@@ -141,7 +157,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue';
+import { reactive, ref, toRefs, watch } from 'vue';
 import { api } from 'boot/axios';
 import { useRoute, useRouter } from 'vue-router';
 import { getImageUrl } from 'boot/tools';
@@ -160,7 +176,7 @@ const tagList=ref([]);
 
 const story=ref({});
 /** 查询世界详细 */
-async function handStory() {
+async function getDetail() {
   const response = await api.get(`/wiki/story/getInfo/${sid.value}`);
   const data=response.data;
   if (data.code == 200) {
@@ -171,7 +187,18 @@ async function handStory() {
     }
   }
 }
-handStory();
+getDetail();
+
+// 添加watch来监听wid的变化
+watch(() => route.query.sid, async (newSid, oldSid) => {
+  if (newSid !== oldSid) {
+    // 当wid变化时，重新加载数据
+    sid.value = newSid;
+    await getDetail(); // 重新获取世界详细信息
+    // await getAllWorldComment(); // 重新获取评论列表
+  }
+}, { immediate: true }); // immediate: true 确保在初始渲染时也触发watcher
+
 </script>
 
 <style scoped>

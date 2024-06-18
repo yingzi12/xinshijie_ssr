@@ -10,6 +10,8 @@ const $q = useQuasar();
 interface Story {
   imgUrl: string;
   id: string;
+  wid: string;
+  wname: string;
   name: string;
   intro: string;
   tags: string;
@@ -33,7 +35,7 @@ function imageUrl(imgUrl) {
 </script>
 
 <template>
-  <q-item  :to="{ path: '/world/detail', query: { wid: value.id }}">
+  <q-item  :to="{ path: '/story/detail', query: { wid: value.wid,sid: value.id }}">
     <q-item-section avatar>
       <img
         class="small-head-image"
@@ -47,6 +49,8 @@ function imageUrl(imgUrl) {
       </q-badge>
       </q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{value.createName ==null ? "未知" :value.createName }}</q-item-label>
+      <q-item-label class="one-line-clamp text-weight-thin text-overline"><q-chip color="yellow" size="xs">{{value.wname}}</q-chip></q-item-label>
+
       <q-item-label class="three-line-clamp" caption>{{value.intro}}</q-item-label>
     </q-item-section>
     <q-item-section side top>

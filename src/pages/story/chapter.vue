@@ -1,9 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import chapterComponent from 'components/story/chapterComponent.vue';
+import { api } from 'boot/axios';
+
+const route = useRoute();
+
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
+const sid = ref(route.query.sid);
+const sname = ref(route.query.sname);
+const cid = ref(route.query.cid);
+
+const chapter = ref({});
+
+async function getDetail() {
+  const response = await api.get(`/wiki/chapter/getInfo?cid=${cid.value}&sid=${sid.value}&wid=${wid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    chapter.value=data.data;
+  }
+}
+getDetail();
+
+// 添加watch来监听wid的变化
+watch(() => route.query.wid, async (newSid, oldSid) => {
+  if (newSid !== oldSid) {
+    // 当wid变化时，重新加载数据
+    sid.value = newSid;
+    await getDetail(); // 重新获取世界详细信息
+    // await getAllWorldComment(); // 重新获取评论列表
+  }
+}, { immediate: true }); // immediate: true 确保在初始渲染时也触发watcher
 
 const fabPos = ref([ 18, 18 ]);
 const draggingFab = ref(false);
-
 function onClick () {
   // console.log('Clicked on a fab action')
 };
@@ -21,6 +52,15 @@ const expanded= ref(true);
 function edit(){
   console.log("编辑")
 }
+watch(() => route.query.cid, async (newCid, oldCid) => {
+  if (newCid !== oldCid) {
+    // 当wid变化时，重新加载数据
+    cid.value = newCid;
+    await getDetail(); // 重新获取世界详细信息
+    // await getAllWorldComment(); // 重新获取评论列表
+  }
+}, { immediate: true }); // immediate: true 确保在初始渲染时也触发watcher
+
 </script>
 
 <template>
@@ -37,16 +77,14 @@ function edit(){
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
-      <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
-      <q-breadcrumbs-el label="这个是世界名称" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="世界小说" icon="navigation"  to="/world/story"/>
-      <q-breadcrumbs-el label="这个是小说名称" icon="navigation"  to="/story/detail"/>
-      <q-breadcrumbs-el label="章节名称" icon="navigation"  to="/story/chapter"/>
+      <q-breadcrumbs-el :label="wname" icon="navigation"  :to="{ path: '/world/detail', query: { wid: wid ,wname: wname,source: 1 }}" />
+      <q-breadcrumbs-el label="世界小说" icon="navigation" :to="{ path: '/world/story', query: { wid: wid ,wname: wname,source: 1 }}"/>
+      <q-breadcrumbs-el label="小说列表" icon="navigation" :to="{ path: '/story/order'}" />
+      <q-breadcrumbs-el :label="sname" icon="navigation" :to="{ path: '/world/story', query: { wid: wid ,wname: wname,sid: sid ,sname: sname,source: 2 }}"/>
     </q-breadcrumbs>
 
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是章节名称
+      <div class="text-h6 text-center">{{ chapter.title }}
         <q-badge transparent align="middle" color="orange" @click="edit">
           编辑
 <!--          <q-btn flat color="white" label="编辑" size="xs"/>-->
@@ -54,33 +92,21 @@ function edit(){
       </div>
       <div class="text-subtitle1 text-center">
         <div class="q-pa-md q-gutter-sm">
-          <span class="text-overline">创建:2022-11-11 11:23:34</span>
-          <span class="text-overline">创建者:我是创建人</span>
-          <span class="text-overline">更新者:我是创建人</span>
-          <span class="text-overline">更新时间:2022-11-11 11:23:34</span>
+          <span class="text-overline">创建:{{ chapter.createName }}</span>
+          <span class="text-overline">创建者:{{ chapter.createTime }}</span>
+          <span class="text-overline">更新者:{{ chapter.updateName }}</span>
+          <span class="text-overline">更新时间:{{ chapter.updateTime }}</span>
         </div>
       </div>
-      <pre>
-        这里是小说内容
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-      </pre>
+      <div>
+        <div v-html="chapter.contentZip"></div>
+      </div>
     </div>
     <div class="q-pa-md">
       <q-btn-group spread>
-        <q-btn color="purple" label="上一章" icon="timeline" to="/story/chapter" />
-        <q-btn color="purple" label="目录" icon="visibility" @click="alert = true"/>
-        <q-btn color="purple" label="下一章" icon="visibility" to="/story/chapter" />
+        <q-btn color="purple" v-if="chapter.previous != undefined && chapter.previous !=null" label="上一章" icon="arrow_back" :to="{ path: '/story/chapter', query: { wid: wid ,wname: wname,sid: sid ,sname: sname,source: 2 ,cid:chapter.previous.id}}" />
+        <q-btn color="purple" label="目录" icon="reorder" @click="alert = true"/>
+        <q-btn color="purple" v-if="chapter.next != undefined && chapter.next !=null" label="下一章" icon="arrow_forward" :to="{ path: '/story/chapter', query: { wid: wid ,wname: wname,sid: sid ,sname: sname,source: 2 ,cid:chapter.next.id }}"/>
 
       </q-btn-group>
     </div>
@@ -106,7 +132,6 @@ function edit(){
 
       <q-card-section class="row items-center q-pb-none ">
         <div class="text-h6">目录</div>
-        <div class="text-subtitle1">共119章</div>
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
@@ -114,42 +139,7 @@ function edit(){
 
       <q-card-section style="max-height: 50vh" class="scroll">
         <div>
-          <q-expansion-item
-            v-model="expanded"
-            icon="list"
-            label="分卷1"
-            caption="共11章"
-          >
-            <q-card>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-6" v-for="index in 22" :key="index">
-                    <div class="q-ma-xs one-line-clamp">
-                      <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
-                    </div>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-          <q-expansion-item
-            v-model="expanded"
-            icon="list"
-            label="分卷2"
-            caption="共13章"
-          >
-            <q-card>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-6" v-for="index in 22" :key="index">
-                    <div class="q-ma-xs one-line-clamp">
-                      <a href="/story/chapter" class="background text-overline">QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面 </a>
-                    </div>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
+        <chapter-component :sname="sname" :sid="sid"></chapter-component>
         </div>
       </q-card-section>
 
