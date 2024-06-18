@@ -26,8 +26,8 @@ const props = defineProps({
 
 const data = reactive({
   queryParams: {
-    page: 1,
-    pageSize: 500,
+    pageNum: 1,
+    pageSize: 100,
     title: "",
     types: -1,
     pid:0,
@@ -54,7 +54,7 @@ const { queryParams } = toRefs(data);
 const total = ref(0);
 /** 查询元素 */
 async function getList(page: number) {
-  queryParams.value.page = page;
+  queryParams.value.pageNum = page;
   queryParams.value.sid = props.sid;
   const response = await api.get('/wiki/chapter/list?' + tansParams(queryParams.value));
   reelList.value = response.data.data;
@@ -73,13 +73,13 @@ async function getChapterList(reelList) {
     let pageNum = Math.ceil(total.value / queryParams.value.pageSize); // 使用 Math.ceil 向上取整
 
     for (let i = 2; i <= pageNum; i++) { // 从第二页开始
-      queryParams.value.page = i;
+      queryParams.value.pageNum = i;
       const chapterResponse = await api.get('/wiki/chapter/list?' + tansParams(queryParams.value));
       reelList[reel].chapterList = reelList[reel].chapterList.concat(chapterResponse.data.data);
     }
   }
 }
-getList(queryParams.value.page);
+getList(queryParams.value.pageNum);
 </script>
 
 <template>
