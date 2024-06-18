@@ -10,15 +10,16 @@ const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
 const sid = ref(route.query.sid);
-
 const sname = ref(route.query.sname);
 const source = ref(route.query.source);
+const fcid = ref(route.query.fcid);
 
 const $q = useQuasar();
 const data = reactive({
   addForm: {
     wid:wid.value,
     sid:sid.value,
+    fcid:fcid.value,
     wname:wname.value,
     sname:sname.value,
     source:source.value,
