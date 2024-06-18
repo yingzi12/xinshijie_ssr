@@ -27,29 +27,6 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/m',
-    component: () => import('layouts/MobileLayout.vue'),
-    children: [
-      // { path: '/', component: () => import('pages/mobile/index.vue') },
-      {
-        path: '/world',
-        component: () => import('pages/mobile/world/index.vue') ,
-        children: [
-
-        ]
-      },
-      {
-        path: '/story',
-        component: () => import('pages/mobile/story/index.vue') ,
-        children: [
-
-        ]
-      },
-      { path: '', component: () => import('pages/mobile/index.vue') },
-
-    ],
-  },
-  {
     path: '/discuss',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -276,7 +253,6 @@ const routes: RouteRecordRaw[] = [
           { path: 'service', component: () => import('pages/users/service.vue') },
           { path: 'invite', component: () => import('pages/users/invite.vue') },
           { path: 'discuss', component: () => import('pages/users/discuss.vue') },
-          { path: 'comment', component: () => import('pages/users/comment.vue') },
           { path: 'message', component: () => import('pages/users/message.vue') },
           { path: 'notification', component: () => import('pages/users/notification.vue') },
           { path: 'edit', component: () => import('pages/users/userEdit.vue') },
