@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Head from 'components/story/headComponent.vue';
 
-const alert=ref(false);
-const expanded= ref(true);
 const  current= ref(6);
-const seach=ref("");
 </script>
 
 <template>

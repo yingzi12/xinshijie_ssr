@@ -27,6 +27,14 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/forum',
+    component: () => import('layouts/OrderLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/forum/column.vue') },
+      { path: 'index', component: () => import('pages/forum/column.vue') }
+    ],
+  },
+  {
     path: '/discuss',
     component: () => import('layouts/MainLayout.vue'),
     children: [

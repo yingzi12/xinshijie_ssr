@@ -1,7 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs'; // 如果还需要STOMP协议，需要安装stompjs库
+
+// 定义状态
+const message = ref('');
+const messages = ref([]);
+let stompClient = null;
+const socketUrl = 'https://your-sockjs-url'; // 替换为你的SockJS服务地址
+const stompEndpoint = '/stomp'; // STOMP端点，如果需要的话
+
+// 初始化WebSocket连接
+const initWebSocket = async () => {
+  const socket = new SockJS(socketUrl);
+  stompClient = await new Promise((resolve, reject) => {
+    Stomp.over(socket).connect({}, (frame) => {
+      console.log('Connected: ' + frame);
+      resolve(Stomp.over(socket));
+    }, (error) => reject(error));
+  });
+
+  stompClient.subscribe('/topic/messages', (msg) => {
+    const messageData = JSON.parse(msg.body);
+    messages.value.push({ id: Date.now(), text: messageData.text });
+  });
+};
+
+// 发送消息
+const sendMessage = () => {
+  if (message.value.trim()) {
+    stompClient.send('/app/chat', {}, JSON.stringify({ text: message.value }));
+    message.value = '';
+  }
+};
+
+// 生命周期钩子
+onMounted(() => {
+  initWebSocket().catch(error => console.error('WebSocket initialization failed:', error));
+});
+
+onUnmounted(() => {
+  if (stompClient) {
+    stompClient.disconnect();
+  }
+});
 const  current= ref(6);
-const seach=ref("");
 const text=ref("");
 const splitterModel= ref(200) ;// start at 150px
 const tab = ref('mails');
@@ -42,6 +85,12 @@ const offline = [ {
 
 <template>
   <q-page>
+    <div>
+      <input v-model="message" @keyup.enter="sendMessage" placeholder="Type your message and press Enter to send"/>
+      <ul>
+        <li v-for="msg in messages" :key="msg.id">{{ msg.text }}</li>
+      </ul>
+    </div>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />

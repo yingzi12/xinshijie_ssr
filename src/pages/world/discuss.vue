@@ -7,15 +7,10 @@ import  cardItemComponent  from 'components/discuss/cardItemComponent.vue';
 const route = useRoute();
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
+
 const source = ref(route.query.source);
 
-const $q = useQuasar();
-const router = useRouter()
-
-const splitterModel= ref(200); // start at 150px
 const  current= ref(1);
-const seach=ref("");
-// const dateRange = ref([]);
 const total = ref(0);
 const data = reactive({
   form: {

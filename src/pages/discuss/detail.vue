@@ -45,7 +45,6 @@ const router = useRouter();
 const $q = useQuasar();
 const did = ref(route.query.did);
 const total =ref(0);
-const dialogMore=ref(false);
 const data = reactive({
   queryParams: {
     pageNum: 0, // 初始化 pageNum 为 1

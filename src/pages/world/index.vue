@@ -198,7 +198,8 @@ import { api,tansParams } from 'boot/axios'
 import { useMeta, useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { RecommendEnums } from 'boot/consts';
-import worldTypeItemList from 'components/world/worldTypeItemListComponent.vue'; // 确保路径正确对应你的文件结构
+import worldTypeItemList from 'components/world/worldTypeItemListComponent.vue';
+import { imageUrl } from 'src/utils/imageUtil'; // 确保路径正确对应你的文件结构
 
 const $q = useQuasar();
 const router = useRouter()
@@ -285,7 +286,6 @@ const data = reactive({
   }
 });
 const { queryParams } = toRefs(data);
-const image=ref("")
 
 async function getWorldList(nowTecType: number) {
   if(nowTecType != -1){
@@ -357,9 +357,6 @@ async function getTypeRecommendWorldList() {
   }
 }
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 getWorldList(2);
 getWorldList(4);
 getWorldList(17);

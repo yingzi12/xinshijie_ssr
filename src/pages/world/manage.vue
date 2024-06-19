@@ -112,8 +112,7 @@
 import { ref } from 'vue';
 
 const splitterModel= ref(200); // start at 150px
-const  current= ref(6);
-const seach=ref("");
+
 </script>
 
 <style scoped>

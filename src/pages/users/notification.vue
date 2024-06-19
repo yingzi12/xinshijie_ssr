@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 const  current= ref(6);
-const seach=ref("");
 </script>
 
 <template>

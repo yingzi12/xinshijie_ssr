@@ -64,8 +64,8 @@
               <q-btn flat round dense icon="menu" />
               <q-toolbar-title>{{ wname }} </q-toolbar-title>
               <q-toolbar-title>元素列表 </q-toolbar-title>
-              <q-input rounded outlined v-model="seach" label="搜索..." />
-              <q-btn flat round dense icon="search" />
+              <q-input rounded outlined v-model="queryParams.title" label="搜索..." @click="getList"/>
+              <q-btn flat round dense icon="search" @click="getList" />
             </q-toolbar>
             <q-toolbar class="col-4 bg-primary text-white">
               <q-space />
@@ -121,7 +121,6 @@ import chooseCategoryComponent from 'components/category/chooseCategoryComponent
 import { api, tansParams } from 'boot/axios';
 
 const splitterModel= ref(200); // start at 150px
-const seach=ref("");
 const alert=ref(false);
 
 
@@ -145,67 +144,67 @@ const data = reactive({
 });
 
 // 弹出框
-const temType = ref(1)
-const options = [
-  {
-    value: 1,
-    label: '通用',
-  },
-  {
-    value: 2,
-    label:'角色/人物' ,
-  },
-  {
-    value: 3,
-    label:'组织/势力',
-    disabled: true,
-  },
-  {
-    value: 4,
-    label: '动物/植物',
-    disabled: true,
-  },
-  {
-    value:5 ,
-    label: '种族',
-    disabled: true,
-  },
-  {
-    value:6 ,
-    label: '宗教/党派',
-    disabled: true,
-  },
-  {
-    value:7 ,
-    label: '习俗',
-    disabled: true,
-  },
-  {
-    value:8,
-    label: '矿物',
-    disabled: true,
-  },
-  {
-    value:9 ,
-    label: '武器',
-    disabled: true,
-  },
-  {
-    value:10 ,
-    label: '药品',
-    disabled: true,
-  },
-  {
-    value:10 ,
-    label: '城市/港口',
-    disabled: true,
-  },
-  {
-    value:10 ,
-    label: '物品',
-    disabled: true,
-  },
-]
+// const temType = ref(1)
+// const options = [
+//   {
+//     value: 1,
+//     label: '通用',
+//   },
+//   {
+//     value: 2,
+//     label:'角色/人物' ,
+//   },
+//   {
+//     value: 3,
+//     label:'组织/势力',
+//     disabled: true,
+//   },
+//   {
+//     value: 4,
+//     label: '动物/植物',
+//     disabled: true,
+//   },
+//   {
+//     value:5 ,
+//     label: '种族',
+//     disabled: true,
+//   },
+//   {
+//     value:6 ,
+//     label: '宗教/党派',
+//     disabled: true,
+//   },
+//   {
+//     value:7 ,
+//     label: '习俗',
+//     disabled: true,
+//   },
+//   {
+//     value:8,
+//     label: '矿物',
+//     disabled: true,
+//   },
+//   {
+//     value:9 ,
+//     label: '武器',
+//     disabled: true,
+//   },
+//   {
+//     value:10 ,
+//     label: '药品',
+//     disabled: true,
+//   },
+//   {
+//     value:10 ,
+//     label: '城市/港口',
+//     disabled: true,
+//   },
+//   {
+//     value:10 ,
+//     label: '物品',
+//     disabled: true,
+//   },
+// ]
 
 const { queryParams } = toRefs(data);
 

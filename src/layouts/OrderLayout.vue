@@ -60,7 +60,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import {useMeta} from "quasar";
 import HeadComponent from 'components/HeadComponent.vue';
 import HeadTableComponent from 'components/HeadTableComponent.vue';
 

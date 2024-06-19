@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, toRefs, watch } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { api, tansParams } from 'boot/axios';
@@ -19,10 +19,6 @@ const data = reactive({
     comment:undefined,
     upid:undefined,
   },
-  replyForm: {
-    comment:undefined,
-    upid:undefined,
-  },
   queryParams: {
     pageNum: 1,
     pageSize: 20,
@@ -36,17 +32,11 @@ const data = reactive({
     ranks:0,
     // wid:wid.value,
   },
-  queryReplyParams: {
-    pageNum: 1,
-    pageSize: 3,
-    title:"",
-    pid:null,
-  },
   rules: {
     // userName: [{ required: true, message: "用户名称不能为空", trigger: "blur" }, { min: 2, max: 20, message: "用户名称长度必须介于 2 和 20 之间", trigger: "blur" }],
   }
 });
-const { queryParams,queryReplyParams, form,replyForm, rules } = toRefs(data);
+const { queryParams, form, rules } = toRefs(data);
 
 const  maxPage=ref(0);
 const valueList=ref([]);

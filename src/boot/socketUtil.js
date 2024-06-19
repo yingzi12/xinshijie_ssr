@@ -2,7 +2,7 @@ import { Client } from '@stomp/stompjs';
 
 // 创建 Stomp 客户端
 const stompClient = new Client({
-  brokerURL: 'ws://localhost:8080/gs-guide-websocket',
+  brokerURL: 'ws://localhost:8098/gs-guide-websocket',
   debug: (str) => {
     console.log(str);
   },

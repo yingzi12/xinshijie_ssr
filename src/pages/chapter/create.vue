@@ -15,10 +15,7 @@ const chargeList = [
     value: 2
   },
 ]
-function updateCharge(charge: number) {
-  // price.value = 1.0;
-  // vipPrice.value = 1.0;
-}
+
 </script>
 
 <template>
@@ -59,7 +56,7 @@ function updateCharge(charge: number) {
             <q-select v-model="charge" :options="chargeList" emit-value hint="分类" label="分类"
                       map-options
                       outlined
-                      @update:modelValue="updateCharge"/>
+                      />
           </div>
         </q-card-section>
         <q-card-section>

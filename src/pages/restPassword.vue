@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue';
+import {ref} from 'vue';
 import {useQuasar} from 'quasar';
 import {useRouter} from "vue-router";
 import {api} from "boot/axios";

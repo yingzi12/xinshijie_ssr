@@ -167,10 +167,7 @@ const route = useRoute();
 const wid = ref(route.query.wid);
 const scores = ref(0)
 //
-const  current= ref(6);
-const token = Cookies.get("token");
 
-const  text= ref("");
 const auditIntro=ref("");
 const prompt=ref(false);
 
