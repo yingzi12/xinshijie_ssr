@@ -114,7 +114,7 @@ async function handleImageUpload(event: Event) {
     const compressedFile = await compressIfNeeded(file);
     const formData = new FormData();
     formData.append('file', compressedFile);
-    const response = await api.put( '/admin/file/upload',  formData,{
+    const response = await api.put( '/admin/image/upload',  formData,{
       headers: {
         'Content-Type': 'multipart/form-data', // 实际上通常不需要手动设置，这里仅作示例
         'Authorization': `Bearer ${token}`

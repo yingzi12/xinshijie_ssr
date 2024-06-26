@@ -21,14 +21,13 @@ editor.value=props.content;
 console.log(editor.value)
 const fileInput = ref(null);
 
-// 模拟上传图片的方法，现在接受一个FileList作为参数
 async function simulateUpload(files: FileList) {
   const compressedFile = await compressIfNeededBatch(files);
   const formData = new FormData();
   for (let i = 0; i < compressedFile.length; i++) {
     formData.append('files', compressedFile[i]);
   }
-  const response = await api.put( '/admin/file/uploadBatch',  formData,{
+  const response = await api.put( '/admin/image/uploadBatch',  formData,{
     headers: {
       'Content-Type': 'multipart/form-data' // 实际上通常不需要手动设置，这里仅作示例
     }

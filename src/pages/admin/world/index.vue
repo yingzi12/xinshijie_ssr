@@ -39,10 +39,11 @@ async function getWorldList() {
     if (data.code == 200) {
       worldList.value=data.data;
       total.value=data.total;
-      if(data.total % 20 == 0){
-        maxPage.value=data.total/20;
+      total.value = response.data.total;
+      if(total.value % queryParams.value.pageSize == 0){
+        maxPage.value=total.value/queryParams.value.pageSize;
       }else{
-        maxPage.value=data.total/20+1;
+        maxPage.value=total.value/queryParams.value.pageSize+1;
       }
     }
   } catch (error) {

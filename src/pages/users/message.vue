@@ -1,50 +1,46 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs'; // 如果还需要STOMP协议，需要安装stompjs库
+import { reactive, ref, toRefs } from 'vue';
+import { api, tansParams } from 'boot/axios';
+import { getImageUrl } from 'boot/tools';
 
-// 定义状态
-const message = ref('');
-const messages = ref([]);
-let stompClient = null;
-const socketUrl = 'https://your-sockjs-url'; // 替换为你的SockJS服务地址
-const stompEndpoint = '/stomp'; // STOMP端点，如果需要的话
-
-// 初始化WebSocket连接
-const initWebSocket = async () => {
-  const socket = new SockJS(socketUrl);
-  stompClient = await new Promise((resolve, reject) => {
-    Stomp.over(socket).connect({}, (frame) => {
-      console.log('Connected: ' + frame);
-      resolve(Stomp.over(socket));
-    }, (error) => reject(error));
-  });
-
-  stompClient.subscribe('/topic/messages', (msg) => {
-    const messageData = JSON.parse(msg.body);
-    messages.value.push({ id: Date.now(), text: messageData.text });
-  });
-};
-
-// 发送消息
-const sendMessage = () => {
-  if (message.value.trim()) {
-    stompClient.send('/app/chat', {}, JSON.stringify({ text: message.value }));
-    message.value = '';
-  }
-};
-
-// 生命周期钩子
-onMounted(() => {
-  initWebSocket().catch(error => console.error('WebSocket initialization failed:', error));
-});
-
-onUnmounted(() => {
-  if (stompClient) {
-    stompClient.disconnect();
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
+    receiverUserId:""
   }
 });
-const  current= ref(6);
+
+const { queryParams } = toRefs(data);
+const friend = ref({});
+
+const valueList = ref([]);
+async  function getList(){
+  const response =await api.get("/admin/userChatPartner/list");
+  valueList.value = response.data.data;
+  if(valueList.value.length>0){
+    friend.value = valueList.value[0];
+    getChatList(friend.value.receiverUserId);
+  }
+}
+getList();
+const chatList = ref([]);
+//总数
+const  total= ref(0);
+//有多少页
+const  maxPage=ref(0);
+async  function getChatList(receiverUserId:number){
+  queryParams.value.receiverUserId=receiverUserId;
+  const response =await api.get("/admin/userChatContent/select?"+tansParams(queryParams.value));
+  chatList.value = response.data.data.records;
+  total.value = response.data.total;
+  if(total.value % queryParams.value.pageSize == 0){
+    maxPage.value=total.value/queryParams.value.pageSize;
+  }else{
+    maxPage.value=total.value/queryParams.value.pageSize+1;
+  }
+}
+const current= ref(6);
 const text=ref("");
 const splitterModel= ref(200) ;// start at 150px
 const tab = ref('mails');
@@ -85,12 +81,6 @@ const offline = [ {
 
 <template>
   <q-page>
-    <div>
-      <input v-model="message" @keyup.enter="sendMessage" placeholder="Type your message and press Enter to send"/>
-      <ul>
-        <li v-for="msg in messages" :key="msg.id">{{ msg.text }}</li>
-      </ul>
-    </div>
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
@@ -118,7 +108,6 @@ const offline = [ {
               class="bg-teal text-yellow shadow-2"
             >
               <q-tab name="mails" icon="mail" />
-              <q-tab name="alarms" icon="mail" />
             </q-tabs>
           </div>
           <div  style="max-width: 200px">
@@ -127,37 +116,22 @@ const offline = [ {
 <!--            </q-toolbar>-->
 
             <q-list bordered>
-              <q-item v-for="contact in contacts" :key="contact.id" class="q-my-sm" clickable v-ripple>
-                <q-item-section avatar>
-                  <q-avatar color="primary" text-color="white">
-                    {{ contact.letter }}
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label lines="1"><span>{{ contact.name }}      <q-badge color="red" floating>4</q-badge></span>
-                  </q-item-label>
-<!--                  <q-item-label caption lines="1">{{ contact.email }}</q-item-label>-->
-                </q-item-section>
-
-<!--                <q-item-section side>-->
-<!--                  <q-icon name="chat_bubble" color="green" />-->
-<!--                </q-item-section>-->
-              </q-item>
 
               <q-separator />
 <!--              <q-item-label header>Offline</q-item-label>-->
 
-              <q-item v-for="contact in offline" :key="contact.id" class="q-mb-sm" clickable v-ripple>
+              <q-item v-for="contact in valueList" :key="contact.id" class="q-mb-sm" clickable v-ripple>
                 <q-item-section avatar>
                   <q-avatar>
-                    <img :src="`https://cdn.quasar.dev/img/${contact.avatar}`">
+                      <q-img  :src="getImageUrl(contact.avatar)"
+                              @error.once="() => { $event.target.src = '/empty.jpg'; }"
+                      />
                   </q-avatar>
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label>{{ contact.name }}</q-item-label>
-                  <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
+                  <q-item-label>{{ contact.nickname }}</q-item-label>
+                  <q-item-label caption lines="1">{{ contact.lastTime }}</q-item-label>
                 </q-item-section>
 
                 <q-item-section side>
@@ -188,57 +162,50 @@ const offline = [ {
                     <q-chat-message
                       label="Sunday, 19th"
                     />
+                    <q-chat-message
+                      name="me"
+                      avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+                      stamp="7 minutes ago"
+                      sent
+                      text-color="white"
+                      bg-color="primary"
+                    >
+                      <div>
+                        Hey there!
+                      </div>
+
+                      <div>
+                        Have you seen Quasar?
+                        <img src="https://cdn.quasar.dev/img/discord-omq.png" class="my-emoticon">
+                      </div>
+                    </q-chat-message>
 
                     <q-chat-message
-                      avatar="https://cdn.quasar.dev/img/avatar4.jpg"
-                      :text="['hey, how are you?']"
-                      stamp="7 minutes ago"
-                      bg-color="grey-2"
-                    />
-                    <q-chat-message
-                      sent
-                      avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-                      :text="['doing fine, how r you?']"
-                      stamp="4 minutes ago"
-                      bg-color="green"
-                    />
-                    <q-chat-message
-                      avatar="https://cdn.quasar.dev/img/avatar4.jpg"
-                      :text="['hey, how are you?']"
-                      stamp="7 minutes ago"
-                      bg-color="grey-2"
-                    />
-                    <q-chat-message
-                      sent
-                      avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-                      :text="['doing fine, how r you?']"
-                      stamp="4 minutes ago"
-                      bg-color="green"
-                    />
-                    <q-chat-message
-                      avatar="https://cdn.quasar.dev/img/avatar4.jpg"
-                      :text="['hey, how are you?']"
-                      stamp="7 minutes ago"
-                      bg-color="grey-2"
-                    />
-                    <q-chat-message
-                      avatar="https://cdn.quasar.dev/img/avatar4.jpg"
-                      :text="['hey, how are you?']"
-                      stamp="7 minutes ago"
-                      bg-color="grey-2"
-                    /><q-chat-message
-                    avatar="https://cdn.quasar.dev/img/avatar4.jpg"
-                    :text="['hey, how are you?']"
-                    stamp="7 minutes ago"
-                    bg-color="grey-2"
-                  />
-                    <q-chat-message
-                      sent
-                      avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-                      :text="['doing fine, how r you?']"
-                      stamp="4 minutes ago"
-                      bg-color="green"
-                    />
+                      name="Jane"
+                      avatar="https://cdn.quasar.dev/img/avatar5.jpg"
+                      bg-color="amber"
+                    >
+                      <q-spinner-dots size="2rem" />
+                    </q-chat-message>
+                    <div v-for="(chat, index) in chatList" :key="index">
+                    <div v-if="chat.isSend == 1">
+                      <q-chat-message
+                                      avatar="https://cdn.quasar.dev/img/avatar4.jpg"
+                                      :text="[`${chat.content}`]"
+                                      stamp="7 minutes ago"
+                                      bg-color="grey-2"
+                      />
+                    </div>
+                    <div v-if="chat.isSend == 2">
+                      <q-chat-message
+                                      sent
+                                      avatar="https://cdn.quasar.dev/img/avatar4.jpg"
+                                      :text="[`${chat.content}`]"
+                                      stamp="7 minutes ago"
+                                      bg-color="grey-2"
+                      />
+                    </div>
+                    </div>
                   </div>
                 </div>
 

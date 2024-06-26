@@ -2,6 +2,9 @@
 import { onMounted, ref } from 'vue';
 import { Cookies, useMeta } from 'quasar';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
+
 const metaData = {
   // sets document title
   title: '心世界网',
@@ -76,15 +79,14 @@ onMounted(() => {
 <template>
 <!--  <q-header elevated class="bg-purple">-->
     <q-toolbar>
-      <q-avatar>
-        <img src="/logo.ico">
+      <q-avatar avatar @click="router.push('/')">
+        <img src="/logo.ico" alt="首页" />
       </q-avatar>
 
+
       <q-toolbar-title>心世界</q-toolbar-title>
-      <q-btn flat round dense icon="manage_accounts" to="/admin/index"/>
-
       <q-btn flat round dense icon="whatshot" to="/users/index" />
-
+      <q-btn flat round dense icon="manage_accounts" to="/admin/index"/>
       <q-select
         filled
         v-model="locale"

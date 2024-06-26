@@ -67,9 +67,9 @@ watch(() => route.query.eid, async (newEid, oldEid) => {
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="我的世界" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="元素列表" icon="navigation"  to="/world/element"/>
-      <q-breadcrumbs-el label="这是元素名称" icon="navigation"  to="/element/detail"/>
+      <q-breadcrumbs-el :label="wname" icon="navigation"   :to="{ path: '/world/detail', query: { wid: wid ,wname: wname,source: 1 }}"/>
+      <q-breadcrumbs-el label="元素列表" icon="navigation"   :to="{ path: '/world/element', query: { wid: wid ,wname: wname,source: 1 }}"/>
+      <q-breadcrumbs-el :label="value.title" icon="navigation"   :to="{ path: '/element/detail', query: { wid: wid ,wname: wname,eid: eid ,title: title,source: 1 }}"/>
 
     </q-breadcrumbs>
     <div class="q-ma-md">

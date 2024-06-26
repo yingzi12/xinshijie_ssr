@@ -15,6 +15,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'findImagePage', component: () => import('pages/findImagePage.vue') },
       { path: 'register', component: () => import('pages/register.vue') },
       { path: 'login', component: () => import('pages/login.vue') },
+      { path: 'socket', component: () => import('pages/socket.vue') },
 
     ],
   },
@@ -28,10 +29,18 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/forum',
-    component: () => import('layouts/OrderLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/forum/column.vue') },
       { path: 'index', component: () => import('pages/forum/column.vue') }
+    ],
+  },
+  {
+    path: '/say',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/say/index.vue') },
+      { path: 'index', component: () => import('pages/say/index.vue') }
     ],
   },
   {

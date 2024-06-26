@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useQuasar } from 'quasar';
 import { defineEmits, ref } from 'vue';
 import addReplyCommonComponent from 'components/discuss/addReplyCommentComponent.vue';
 import replyCommonItemComponent from 'components/discuss/replyCommentItemComponent.vue';
@@ -113,7 +114,7 @@ function onMore(){
       </q-item-label>
     </q-item-section>
   </q-item>
-  <q-dialog v-model="dialogMore" style="max-width: 500px;min-width: 300px;min-height: 400px">
+  <q-dialog v-model="dialogMore" style="max-width: 500px;max-width: 300px;min-height: 400px">
     <q-card>
       <q-card-section>
         <div class="text-h6">更多评论</div>

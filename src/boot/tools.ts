@@ -1,5 +1,4 @@
 import pica from "pica";
-import { compressAccurately } from 'image-conversion';
 import { useQuasar } from 'quasar';
 
 export function tansParams(params: { [x: string]: any; }) {

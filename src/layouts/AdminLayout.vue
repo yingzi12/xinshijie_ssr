@@ -4,14 +4,15 @@
     <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-avatar avatar >
-<!--          <img src="/logo.ico" />-->
-          <a href="/"> <img src="/logo.ico" alt="首页" /> </a>
+        <q-avatar avatar @click="router.push('/')">
+          <img src="/logo.ico" alt="首页" />
         </q-avatar>
+
 
         <q-toolbar-title>心世界</q-toolbar-title>
 
-        <q-btn flat round dense icon="whatshot" />
+        <q-btn flat round dense icon="whatshot" to="/users/index" />
+        <q-btn flat round dense icon="manage_accounts" to="/admin/index"/>
 
         <q-select
           filled
@@ -114,6 +115,22 @@
              章节管理
             </q-item-section>
           </q-item>
+          <q-item
+            v-ripple
+            :active="link === 'drafts'"
+            active-class="my-menu-link"
+            clickable
+            @click="logout"
+          >
+            <q-item-section avatar>
+              <q-icon name="exit_to_app"/>
+            </q-item-section>
+
+            <q-item-section>
+              {{ $t(`user.logOut`) }}
+            </q-item-section>
+          </q-item>
+
           <q-separator/>
 
         </q-list>
@@ -283,6 +300,26 @@ function updateLanguage(language){
   Cookies.set("language",language);
 
 }
+const logout = async () => {
+  try {
+    const response = await api.get(`/admin/systemUser/logout`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    Cookies.remove("token");
+    Cookies.remove("id");
+    Cookies.remove("userInfo");
+    router.push('/login'); // 假设登录页面的路由为 '/login'
+  }catch (error){
+    Cookies.remove("token");
+    Cookies.remove("id");
+    Cookies.remove("userInfo");
+    router.push('/login'); // 假设登录页面的路由为 '/login'
+  }
+};
+
 // 在组件挂载后调用设置默认语言的方法
 onMounted(() => {
   const language = Cookies.get("language");

@@ -11,8 +11,6 @@ const router = useRouter()
 
 const splitterModel= ref(200); // start at 150px
 const  current= ref(1);
-const seach=ref("");
-// const dateRange = ref([]);
 const total = ref(0);
 const data = reactive({
   form: {
@@ -182,8 +180,8 @@ function onChange(type) {
         <q-pagination
           v-model="current"
           color="purple"
-          :max="10"
-          :max-pages="maxPage"
+          :max="maxPage"
+          :max-pages="6"
           boundary-numbers
         />
       </div>

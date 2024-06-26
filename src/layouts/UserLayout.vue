@@ -9,8 +9,9 @@
         </q-avatar>
 
         <q-toolbar-title  @click="router.push('/')">心世界</q-toolbar-title>
+        <q-btn flat round dense icon="whatshot" to="/users/index" />
+        <q-btn flat round dense icon="manage_accounts" to="/admin/index"/>
 
-        <q-btn flat round dense icon="whatshot" />
 
         <q-select
           filled
@@ -30,7 +31,7 @@
       show-if-above
       bordered
     >
-      <q-scroll-area style="height: calc(100% - 150px);  border-right: 1px solid #ddd">
+      <q-scroll-area style="height: calc(100%);  border-right: 1px solid #ddd">
         <div class="bg-grey-2 text-center  q-ma-md">
           <q-avatar  class="q-mb-sm" size="56px">
             <q-img
@@ -206,25 +207,6 @@
         </q-list>
 
       </q-scroll-area>
-
-<!--      <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">-->
-<!--        <div class="absolute-bottom bg-transparent">-->
-<!--          <q-avatar  class="q-mb-sm" size="56px">-->
-<!--            <img :src="getImageUrl('23234')">-->
-<!--          </q-avatar>-->
-<!--          <div class="text-weight-bold">'待登录' </div>-->
-<!--          <div>-->
-<!--            xun3357234@24.com-->
-<!--            <q-icon  name="warning" style="color: red"/>-->
-<!--          </div>-->
-<!--          <div >-->
-<!--            ( 发送验证邮件)-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <q-btn to="/admin/index">管理中心</q-btn>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </q-img>-->
     </q-drawer>
 
     <q-page-container>
@@ -233,11 +215,6 @@
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
-<!--        <q-toolbar-title>-->
-<!--          <q-avatar>-->
-<!--            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
-<!--          </q-avatar>-->
-<!--          <div>Title</div>-->
           <div class="row">
             <div class="col-2"></div>
             <div class="col-auto" style="margin: 0px">
