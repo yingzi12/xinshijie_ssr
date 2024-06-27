@@ -79,19 +79,11 @@
         </div>
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="primary" icon="book" label="阅读" />
-          <q-btn color="secondary" icon="add" label="新增章节"  to="/chapter/create"/>
+<!--          <q-btn color="secondary" icon="add" label="新增章节"  :to="{ path: '/admin/chapter/add', query: { sid: sid,rid:rid,sname:sname,rname:rname,id:4}}"/>-->
           <q-btn color="secondary" icon="add" label="申请作者"  @click="prompt=true"/>
         </div>
 
       </q-card-section>
-<!--      <q-card-section class="q-pt-xs">-->
-<!--        <div class="text-overline">Overline</div>-->
-<!--        <div class="text-h5 q-mt-sm q-mb-xs">Title</div>-->
-<!--        <div class="text-caption text-grey">-->
-<!--          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.-->
-<!--        </div>-->
-
-<!--      </q-card-section>-->
 
     </q-card-section>
   </q-card>
@@ -138,22 +130,6 @@
       </div>
     </div>
   </q-page>
-<!--  <q-dialog v-model="prompt" persistent>-->
-<!--    <q-card style="min-width: 350px">-->
-<!--      <q-card-section>-->
-<!--        <div class="text-h6">申请管理员</div>-->
-<!--      </q-card-section>-->
-
-<!--      <q-card-section class="q-pt-none">-->
-<!--        <q-input dense v-model="auditIntro" autofocus @keyup.enter="prompt = false" label="请输入理由" />-->
-<!--      </q-card-section>-->
-<!--      <q-card-actions align="right" class="text-primary">-->
-<!--        <q-btn flat label="取消" v-close-popup />-->
-<!--        <q-btn flat label="确认" v-close-popup />-->
-<!--      </q-card-actions>-->
-<!--    </q-card>-->
-<!--  </q-dialog>-->
-
 </template>
 
 <script lang="ts" setup>

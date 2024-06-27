@@ -126,7 +126,7 @@ const expanded= ref(true);
     <div class="q-pa-md">
       <q-btn-group spread>
         <q-btn color="purple" label="编辑" icon="edit"  :to="{ path: '/admin/draft/element/edit', query: { wid: value.wid, deid: value.id }}"/>
-        <q-btn color="purple" label="发布" icon="send" @click="alert = true" />
+        <q-btn  v-if="value.status == 7"  color="purple" label="发布" icon="send" @click="alert = true" />
         <q-btn color="purple" label="比对" icon="visibility" />
       </q-btn-group>
     </div>

@@ -5,6 +5,7 @@ import { Cookies } from 'quasar'
 import { useRoute, useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import { compressIfNeeded, getImageUrl } from 'boot/tools';
+import { worldTypeMap } from 'boot/consts';
 const token = Cookies.get('token');
 const route = useRoute();
 const wid = ref(route.query.wid);
@@ -21,6 +22,7 @@ const data = reactive({
     status: 0,
     source: "",
     imgUrl:"",
+    isPrivate:1,
     checkList:[],
   }
 });
@@ -35,7 +37,7 @@ async function handWorld() {
   const data=response.data;
   if (data.code == 200) {
     addForm.value=data.data;
-    addForm.value.checkList=addForm.value.source.split(";");
+    // addForm.value.checkList=addForm.value.source.split(";");
   }
 }
 handWorld();
@@ -81,7 +83,7 @@ async function onSubmit() {
   if (data.code == 200) {
     Dialog.create({
       title: '通知',
-      message: '添加成功.',
+      message: '修改成功.',
       ok: {
         push: true
       },
@@ -138,38 +140,6 @@ async function handleImageUpload(event: Event) {
 }
 
 
-const chargeList = [
-  {
-    label: '未知',
-    value: 0
-  },
-  {
-    label: '魔法',
-    value: 1
-  },
-  {
-    label: '科学',
-    value: 2
-  },
-
-  {
-    label: '克苏鲁',
-    value: 3
-  },
-  {
-    label: '诡异',
-    value: 4
-  },
-  {
-    label: '修真',
-    value: 5
-  }
-  ,
-  {
-    label: '其他',
-    value: 5
-  }
-]
 const ischeck=ref(0)
 function handleSurce(){
   if(addForm.value.checkList.length==0){
@@ -252,10 +222,15 @@ function handleSurce(){
       }"
             />
             <div>
-              <q-select v-model="addForm.types" :options="chargeList" emit-value hint="分类" label="分类"
+              <q-select v-model="addForm.types" :options="worldTypeMap" emit-value hint="分类" label="分类"
                         map-options
                         outlined
               />
+            </div>
+            <div class="q-gutter-sm">
+              <div class="text-subtitle1">是否公开阅读：</div>
+              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
+              <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
             </div>
             <div>
               <q class="text-subtitle1">世界来源：</q>

@@ -5,6 +5,7 @@ import { Cookies } from 'quasar'
 import {useRouter} from "vue-router";
 import { reactive, ref, toRefs } from 'vue';
 import {compressIfNeeded} from "boot/tools";
+import { worldTypeMap } from 'boot/consts';
 const token = Cookies.get('token');
 const $q = useQuasar();
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
@@ -19,6 +20,7 @@ const data = reactive({
     status: 0,
     source: "",
     imgUrl:"",
+    isPrivate:1,
     checkList:[],
   }
 });
@@ -127,34 +129,6 @@ async function handleImageUpload(event: Event) {
 }
 
 
-const chargeList = [
-  {
-    label: '魔法',
-    value: 1
-  },
-  {
-    label: '科学',
-    value: 2
-  },
-
-  {
-    label: '克苏鲁',
-    value: 3
-  },
-  {
-    label: '诡异',
-    value: 4
-  },
-  {
-    label: '修真',
-    value: 5
-  }
-  ,
-  {
-    label: '其他',
-    value: 5
-  }
-]
 const ischeck=ref(0)
 function handleSurce(){
   if(addForm.value.checkList.length==0){
@@ -237,10 +211,15 @@ function handleSurce(){
       }"
           />
           <div>
-            <q-select v-model="addForm.types" :options="chargeList" emit-value hint="分类" label="分类"
+            <q-select v-model="addForm.types" :options="worldTypeMap" emit-value hint="分类" label="分类"
                       map-options
                       outlined
             />
+          </div>
+          <div class="q-gutter-sm">
+            <div class="text-subtitle1">是否公开阅读：</div>
+            <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
+            <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
           </div>
           <div>
             <q class="text-subtitle1">世界来源：</q>

@@ -6,7 +6,7 @@ import { ref } from 'vue';
 import { Dialog, useQuasar } from 'quasar';
 import { useRoute, useRouter } from 'vue-router';
 import { api } from 'boot/axios';
-import { storyStatusMap } from '../../../boot/consts';
+import { storyStatusMap } from 'boot/consts';
 const $q = useQuasar();
 
 // 接收url里的参数

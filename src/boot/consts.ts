@@ -503,3 +503,36 @@ export const moduleOptionsMap = new Map([
   [11, "城市/港口"], // 注意：这里的value重复了，可能是个笔误，Map中键必须唯一
   [12, "物品"], // 同样，value重复，以及被disabled
 ]);
+
+export const worldTypeMap = [
+  {
+    label: '未知',
+    value: 0
+  },
+  {
+    label: '魔法',
+    value: 1
+  },
+  {
+    label: '科学',
+    value: 2
+  },
+
+  {
+    label: '克苏鲁',
+    value: 3
+  },
+  {
+    label: '诡异',
+    value: 4
+  },
+  {
+    label: '修真',
+    value: 5
+  }
+  ,
+  {
+    label: '其他',
+    value: 5
+  }
+]
