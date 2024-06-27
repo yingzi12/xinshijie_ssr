@@ -135,7 +135,7 @@ async function onSerialNumber(value) {
 
           <q-item-section  side>
             <q-item-label class="q-mt-sm text-h6" lines="1">
-              <q-btn flat color="blue"  :to="{ path: '/admin/story/chapter', query: { sid: sid,sname:sname,rid:value.id,rname:value.title}}" >{{ value.title }}</q-btn>
+              <q-btn flat color="blue"  :to="{ path: '/story/chapter', query: { wid: value.wid,wname:value.wname,sid: value.sid,sname:value.sname,cid:value.id,rname:value.title}}" >{{ value.title }}</q-btn>
             </q-item-label>
             <q-item-label class="q-mt-sm text-subtitle2">作者：{{value.createName}}</q-item-label>
           </q-item-section>

@@ -41,7 +41,7 @@ async function handIssue() {
   if (data.code == 200) {
     //提示发布成功
     Dialog.create({
-      title: '发布成功',
+      title: '信息',
       message: '发布成功',
       ok: {
         label: '确定',
@@ -59,6 +59,51 @@ async function handIssue() {
     })
   }
 }
+
+async function handDel() {
+  //增加删除前的弹出确定，只有确定之后才删除
+  Dialog.create({
+    title: '删除',
+    message: '确定删除该世界吗？',
+    ok: {
+      label: '确定',
+      color: 'primary'
+    },
+    cancel: {
+      label: '取消',
+      color: 'primary'
+    }
+  }).onOk(() => {
+    handDelOption();
+  });
+
+}
+async function  handDelOption() {
+  const response = await api.get(`/admin/draftChapter/delById?sid=${props.value.sid}&dcid=${props.value.id}`);
+  const data=response.data;
+  if (data.code == 200) {
+    router.go(0);
+    //提示发布成功
+    Dialog.create({
+      title: '信息',
+      message: '删除成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '删除失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
+
 
 async function handDelist() {
   const response = await api.get(`/admin/draftChapter/delist??sid=${props.value.sid}&dcid=${props.value.id}`);
@@ -101,7 +146,7 @@ const { editForm} = toRefs(addData);
 
 async function onSerialNumber(value) {
   editForm.value=value;
-  const response = await api.post("/admin/chapter/updateSerialNumber", JSON.stringify(editForm.value), {
+  const response = await api.post("/admin/draftChapter/updateSerialNumber", JSON.stringify(editForm.value), {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -110,7 +155,7 @@ async function onSerialNumber(value) {
   if (data.code == 200) {
     Dialog.create({
       title: '通知',
-      message: '添加成功.',
+      message: '修改成功.',
       ok: {
         push: true
       },
@@ -149,8 +194,8 @@ async function onSerialNumber(value) {
 
         <div class="text-weight-bold text-primary"><span class="text-weight-medium">序号：</span>
           <span class="text-grey-8">{{props.value.serialNumber}}</span>
-          <q-popup-edit v-model="serialNumber" auto-save>
-            <q-input v-model="serialNumber" dense autofocus counter @keyup.enter="onSerialNumber" />
+          <q-popup-edit v-model="editForm.serialNumber" auto-save>
+            <q-input v-model="editForm.serialNumber" dense autofocus counter @keyup.enter="onSerialNumber" />
           </q-popup-edit>
         </div>
       </q-item-label>
@@ -164,7 +209,7 @@ async function onSerialNumber(value) {
     <q-item-section side top>
         <q-item-label caption>{{props.value.createTime}}</q-item-label>
         <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path: '/admin/draft/chapter/edit', query: { sid: props.value.sid, dcid: props.value.id }}"></q-btn></q-item-label>
-      <q-item-label   v-if="value.status == 7"  caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
+      <q-item-label   v-if="value.status == 7"  caption><q-btn icon="delete" label="删除" size="xs" @click="handDel"></q-btn></q-item-label>
       <q-item-label  v-if="value.status == 7"   caption><q-btn icon="publish" label="发布" size="xs" @click="handIssue"></q-btn></q-item-label>
           <q-item-label  v-if="value.status == 1"  caption><q-btn icon="unpublished" label="下架" size="xs" @click="handDelist"></q-btn></q-item-label>
     </q-item-section>

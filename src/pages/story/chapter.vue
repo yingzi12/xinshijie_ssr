@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import pako from 'pako'; // 引入pako库
 import chapterComponent from 'components/story/chapterComponent.vue';
 import { api } from 'boot/axios';
 

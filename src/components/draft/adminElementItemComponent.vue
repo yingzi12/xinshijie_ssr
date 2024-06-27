@@ -83,6 +83,50 @@ async function handDelist() {
   }
 }
 
+async function handDel() {
+  //增加删除前的弹出确定，只有确定之后才删除
+  Dialog.create({
+    title: '删除',
+    message: '确定删除该世界吗？',
+    ok: {
+      label: '确定',
+      color: 'primary'
+    },
+    cancel: {
+      label: '取消',
+      color: 'primary'
+    }
+  }).onOk(() => {
+    handDelOption();
+  });
+
+}
+async function  handDelOption() {
+  const response = await api.get(`/admin/draftElement/delById?wid=${props.value.wid}&deid=${props.value.id}`);
+  const data=response.data;
+  if (data.code == 200) {
+    router.go(0);
+    //提示发布成功
+    Dialog.create({
+      title: '信息',
+      message: '删除成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '删除失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
+
 </script>
 
 <template>
@@ -121,7 +165,7 @@ async function handDelist() {
     <q-item-section side top>
       <q-item-label caption>{{props.value.updateTime}}</q-item-label>
       <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path: '/admin/draft/element/edit', query: { wid: props.value.wid, deid: props.value.id }}"></q-btn></q-item-label>
-      <q-item-label   v-if="value.status == 7"  caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
+      <q-item-label   v-if="value.status == 7"  caption><q-btn icon="delete" label="删除" size="xs" @click="handDel"></q-btn></q-item-label>
       <q-item-label  v-if="value.status == 7"   caption><q-btn icon="publish" label="发布" size="xs" @click="handIssue"></q-btn></q-item-label>
       <q-item-label  v-if="value.status == 1"  caption><q-btn icon="unpublished" label="下架" size="xs" @click="handDelist"></q-btn></q-item-label>
 
