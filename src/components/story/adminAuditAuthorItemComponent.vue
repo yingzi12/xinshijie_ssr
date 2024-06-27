@@ -92,7 +92,7 @@ async function onSubmit() {
     <q-item-section side>
       <q-item-label class="one-line-clamp">{{props.value.title}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.createName}}</q-item-label>
-      <q-item-label class="one-line-clamp text-weight-thin text-overline">
+      <q-item-label v-if=" props.value.idLabels !=null && props.value.idLabels != undefined" class="one-line-clamp text-weight-thin text-overline">
         <q-chip
           v-for="(item,index) in props.value.idLabels.split(',')"
           :key="index"

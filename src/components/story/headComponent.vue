@@ -40,7 +40,14 @@ const  headList= reactive([
   </q-toolbar>
   <q-separator dark inset />
   <div class="q-pa-md q-gutter-sm">
-    <q-btn clickable v-for="(item, index) in headList" :key="index" :color=" props.id == item.id ?'yellow':'orange'" class="text-subtitle1" @click="router.push(`${item.to}?sid=${props.sid}&sname=${props.sname}&id=${item.id}`)">{{item.value}}</q-btn>
+    <q-btn clickable
+           v-for="(item, index) in headList"
+           :key="index" :color=" props.id == item.id ?'yellow':'orange'"
+           class="text-subtitle1"
+           @click="router.push(`${item.to}?sid=${props.sid}&sname=${props.sname}&id=${item.id}`)"
+    >
+      {{item.value}}
+    </q-btn>
 
   </div>
 </template>
