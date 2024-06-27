@@ -3,7 +3,7 @@ import headComponent from 'components/story/headComponent.vue';
 import uploadImageComponent from 'components/common/uploadImageComponent.vue';
 
 import { ref } from 'vue';
-import { useQuasar } from 'quasar';
+import { Dialog, useQuasar } from 'quasar';
 import { useRoute, useRouter } from 'vue-router';
 import { api } from 'boot/axios';
 import { storyStatusMap } from '../../../boot/consts';
@@ -27,7 +27,55 @@ async function handStory() {
   }
 }
 handStory();
-
+async function handIssue() {
+  const response = await api.get(`/admin/story/issue?sid=${sid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    handStory();
+    //提示发布成功
+    Dialog.create({
+      title: '发布成功',
+      message: '发布成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '发布失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
+async function handDelist() {
+  const response = await api.get(`/admin/story/delist?sid=${sid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    //提示发布成功
+    Dialog.create({
+      title: '下架成功',
+      message: '下架成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '下架失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
 </script>
 
 <template>
@@ -36,7 +84,8 @@ handStory();
     <q-card dark bordered class="bg-grey-9 my-card">
       <q-card-section>
         <div class="float-right q-ma-xs">
-          <q-btn color="orange" icon="send"  label="发布" />
+          <q-btn  v-if="story.status == 1" color="orange" icon="send"  label="发布" @click="handIssue"/>
+          <q-btn  v-if="story.status == 5" color="orange" icon="send"  label="下架" @click="handDelist"/>
           <q-btn color="red" icon="edit"  label="编辑"   :to="{ path:'/admin/story/edit', query: { sid: sid,sname: sname  }}" />
         </div>
         <div class="text-h4">

@@ -15,7 +15,7 @@ const wname = ref(route.query.wname);
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
 <!--        <q-btn flat round dense icon="menu" />-->
-        <q-toolbar-title>统计（11）</q-toolbar-title>
+        <q-toolbar-title>统计（{{ total }}）</q-toolbar-title>
 <!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
 <!--      <q-toolbar class="col-4 bg-primary text-white">-->

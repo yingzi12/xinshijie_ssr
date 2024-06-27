@@ -25,7 +25,7 @@ async function handWorld() {
   }
 }
 handWorld();
-async function handIssueWorld() {
+async function handIssue() {
   const response = await api.get(`/admin/world/issue?wid=${wid.value}`);
   const data=response.data;
   if (data.code == 200) {
@@ -50,7 +50,7 @@ async function handIssueWorld() {
     })
   }
 }
-async function handDelistWorld() {
+async function handDelist() {
   const response = await api.get(`/admin/world/delist?wid=${wid.value}`);
   const data=response.data;
   if (data.code == 200) {
@@ -86,8 +86,8 @@ async function updateImage(imgUrl:string){
     <q-card dark bordered class="bg-grey-9 my-card">
       <q-card-section>
         <div class="float-right q-ma-xs">
-          <q-btn  v-if="world.status == 1" color="orange" icon="send"  label="发布" @click="handIssueWorld"/>
-          <q-btn  v-if="world.status == 5" color="orange" icon="send"  label="下架" @click="handDelistWorld"/>
+          <q-btn  v-if="world.status == 1" color="orange" icon="send"  label="发布" @click="handIssue"/>
+          <q-btn  v-if="world.status == 5" color="orange" icon="send"  label="下架" @click="handDelist"/>
 
           <q-btn color="red" icon="edit"  label="编辑"   :to="{ path:'/admin/world/edit', query: { wid: wid,wname: wname  }}" />
         </div>

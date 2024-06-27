@@ -2,9 +2,7 @@
 import { reactive, ref, toRefs } from 'vue';
 import adminItemCardComponent from 'components/story/adminStoryItemCardComponent.vue';
 import { api, tansParams } from 'boot/axios';
-import { storyStatusSelection, storyStatus } from 'boot/consts';
-
-const selected = ref(null);
+import { storyStatusSelection } from 'boot/consts';
 
 const data = reactive({
   queryParams: {

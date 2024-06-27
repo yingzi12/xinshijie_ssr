@@ -2,11 +2,12 @@
 import headComponent from 'components/world/headComponent.vue';
 import { reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
+import adminItemComponent from 'components/world/adminAuditManageItemComponent.vue';
+import { api, tansParams } from 'boot/axios';
 const route = useRoute();
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
-import adminItemComponent from 'components/world/adminAuditManageItemComponent.vue';
-import { api, tansParams } from 'boot/axios';
+
 
 const data = reactive({
   queryParams: {
@@ -58,7 +59,7 @@ function  onStatus(status:number){
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
 <!--        <q-btn flat round dense icon="menu" />-->
-        <q-toolbar-title>统计（11）</q-toolbar-title>
+        <q-toolbar-title>统计（{{ total }}）</q-toolbar-title>
 <!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
 <!--      <q-toolbar class="col-4 bg-primary text-white">-->

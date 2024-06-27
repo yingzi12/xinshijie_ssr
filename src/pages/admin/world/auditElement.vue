@@ -77,7 +77,7 @@ function  onStatus(status:number){
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
 <!--        <q-btn flat round dense icon="menu" />-->
-        <q-toolbar-title>统计（11)
+        <q-toolbar-title>统计（{{ total }})
 <!--          <div class="text-h6">分类(<q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />)</div>-->
 <!--          <q-btn flat label="点击筛选更多" color="primary" @click="alert = true" size="xs" />-->
         </q-toolbar-title>

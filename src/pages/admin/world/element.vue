@@ -7,7 +7,6 @@ import { reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import { api, tansParams } from 'boot/axios';
 import { moduleOptions } from 'boot/consts';
-import { Dialog } from 'quasar';
 const route = useRoute();
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);

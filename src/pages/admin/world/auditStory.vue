@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import headComponent from 'components/world/headComponent.vue';
-import { reactive, ref, toRefs } from 'vue';
-import { useRoute } from 'vue-router';
-const route = useRoute();
-const wid = ref(route.query.wid);
-const wname = ref(route.query.wname);
 import adminItemComponent from 'components/world/adminAuditStorytemComponent.vue';
 import { api, tansParams } from 'boot/axios';
+import { reactive, ref, toRefs } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+const route = useRoute();
+const router = useRouter();
+
+const wid = ref(route.query.wid);
+const wname = ref(route.query.wname);
+
 
 const data = reactive({
   queryParams: {
@@ -50,6 +53,10 @@ function  onStatus(status:number){
     getList();
   }
 }
+
+function routerAddStory(){
+  router.push(`/story/create?wid=${wid.value}&wname=${wname.value}`);
+}
 </script>
 
 <template>
@@ -58,14 +65,14 @@ function  onStatus(status:number){
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
 <!--        <q-btn flat round dense icon="menu" />-->
-        <q-toolbar-title>统计（11）</q-toolbar-title>
+        <q-toolbar-title>统计（{{ total }}）</q-toolbar-title>
 <!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
-<!--      <q-toolbar class="col-4 bg-primary text-white">-->
-<!--        <q-space />-->
+      <q-toolbar class="col-4 bg-primary text-white">
+        <q-space />
 <!--        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
-<!--        <q-btn flat round dense icon="more_vert" />-->
-<!--      </q-toolbar>-->
+        <q-btn flat round dense icon="add" @click="routerAddStory" />
+      </q-toolbar>
     </div>
     <div class="row" style="background-color: orange">
 
@@ -73,11 +80,11 @@ function  onStatus(status:number){
       <q-chip clickable color="brown" label="待审核" @click="onStatus(1)"/>
       <q-chip clickable color="brown" label="审核成功"  @click="onStatus(2)"/>
       <q-chip clickable color="brown" label="审核失败"  @click="onStatus(2)"/>
-      <q-btn outline color="brown" label="锁定中"/>
-      <q-btn outline color="brown" label="发布成功"/>
-      <q-btn outline color="brown" label="拒绝发布"/>
-      <q-btn outline color="brown" label="待审核"/>
-      <q-btn outline color="brown" label="待发布" />
+<!--      <q-btn outline color="brown" label="锁定中"/>-->
+<!--      <q-btn outline color="brown" label="发布成功"/>-->
+<!--      <q-btn outline color="brown" label="拒绝发布"/>-->
+<!--      <q-btn outline color="brown" label="待审核"/>-->
+<!--      <q-btn outline color="brown" label="待发布" />-->
     </div>
     <div class="row" style="background-color: orange">
         <q-btn outline color="brown" label="全部分类" />

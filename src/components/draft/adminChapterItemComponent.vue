@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { getImageUrl } from 'boot/tools';
-import { draftElementStatusMap } from 'boot/consts';
+import { draftChapterStatusMap, draftElementStatusMap } from 'boot/consts';
 import { api } from 'boot/axios';
 import { Dialog } from 'quasar';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 
 interface Chapter {
   imageUrls: string;
@@ -38,7 +40,7 @@ async function handIssue() {
     //提示发布成功
     Dialog.create({
       title: '发布成功',
-      message: '世界发布成功',
+      message: '发布成功',
       ok: {
         label: '确定',
         color: 'primary'
@@ -84,20 +86,20 @@ async function handDelist() {
 </script>
 
 <template>
-  <q-item  :to="{ path: '/admin/draft/chapter/detail', query: { sid: props.value.sid, dcid: props.value.id }}">
+  <q-item  >
     <q-item-section avatar>
-      <q-img
+      <q-img @click="router.push(`/admin/draft/chapter/detail?sid=${props.value.sid}&dcid=${props.value.id}`)"
         class="small-head-image"
         :src="getImageUrl(props.value.imageUrls)"
         @error.once="() => { $event.target.src = '/empty.jpg'; }"
       />
     </q-item-section>
 
-    <q-item-section>
+    <q-item-section @click="router.push(`/admin/draft/chapter/detail?sid=${props.value.sid}&dcid=${props.value.id}`)">
       <q-item-label class="one-line-clamp">{{props.value.title}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.sname}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">
-        <q-chip size="sm" >{{ draftElementStatusMap.get(Number(props.value.status)) }}</q-chip>
+        <q-chip size="sm" color="yellow">{{ draftChapterStatusMap.get(Number(props.value.status)) }}</q-chip>
         <q-chip size="sm" >{{props.value.wname }}</q-chip>
         <q-chip size="sm" >{{props.value.pname }}</q-chip>
 
@@ -106,9 +108,9 @@ async function handDelist() {
     <q-item-section side top>
         <q-item-label caption>{{props.value.createTime}}</q-item-label>
         <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path: '/admin/draft/chapter/edit', query: { sid: props.value.sid, dcid: props.value.id }}"></q-btn></q-item-label>
-      <q-item-label   v-if="value.status == 1"  caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
-      <q-item-label  v-if="value.status == 1"   caption><q-btn icon="publish" label="发布" size="xs" @click="handIssue"></q-btn></q-item-label>
-          <q-item-label  v-if="value.status == 5"  caption><q-btn icon="unpublished" label="下架" size="xs" @click="handDelist"></q-btn></q-item-label>
+      <q-item-label   v-if="value.status == 7"  caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
+      <q-item-label  v-if="value.status == 7"   caption><q-btn icon="publish" label="发布" size="xs" @click="handIssue"></q-btn></q-item-label>
+          <q-item-label  v-if="value.status == 1"  caption><q-btn icon="unpublished" label="下架" size="xs" @click="handDelist"></q-btn></q-item-label>
     </q-item-section>
   </q-item>
 </template>
