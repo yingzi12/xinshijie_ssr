@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { Dialog, useQuasar } from 'quasar';
-import pica from "pica";
 import { api } from "boot/axios";
-import { compressAccurately } from 'image-conversion';
 import { Cookies } from 'quasar'
 import {useRouter} from "vue-router";
 import { reactive, ref, toRefs } from 'vue';

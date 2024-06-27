@@ -3,7 +3,7 @@ import headComponent from 'components/world/headComponent.vue';
 import uploadImageComponent from 'components/common/uploadImageComponent.vue';
 
 import { ref } from 'vue';
-import { useQuasar } from 'quasar';
+import { Dialog, useQuasar } from 'quasar';
 import { useRoute } from 'vue-router';
 import { api } from 'boot/axios';
 import { worldStatusMap } from '../../../boot/consts';
@@ -25,6 +25,55 @@ async function handWorld() {
   }
 }
 handWorld();
+async function handIssueWorld() {
+  const response = await api.get(`/admin/world/issue?wid=${wid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    handWorld();
+    //提示发布成功
+    Dialog.create({
+      title: '发布成功',
+      message: '世界发布成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '发布失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
+async function handDelistWorld() {
+  const response = await api.get(`/admin/world/delist?wid=${wid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    //提示发布成功
+    Dialog.create({
+      title: '下架成功',
+      message: '世界下架成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '下架失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
 
 async function updateImage(imgUrl:string){
   const response = await api.post(`/admin/world/updateImage`,JSON.stringify({wid:wid.value,imgUrl:imgUrl}));
@@ -37,7 +86,9 @@ async function updateImage(imgUrl:string){
     <q-card dark bordered class="bg-grey-9 my-card">
       <q-card-section>
         <div class="float-right q-ma-xs">
-          <q-btn color="orange" icon="send"  label="发布" />
+          <q-btn  v-if="world.status == 1" color="orange" icon="send"  label="发布" @click="handIssueWorld"/>
+          <q-btn  v-if="world.status == 5" color="orange" icon="send"  label="下架" @click="handDelistWorld"/>
+
           <q-btn color="red" icon="edit"  label="编辑"   :to="{ path:'/admin/world/edit', query: { wid: wid,wname: wname  }}" />
         </div>
         <div class="text-h4">

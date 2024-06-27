@@ -196,7 +196,7 @@ import { useMeta, useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { RecommendEnums } from 'boot/consts';
 import worldTypeItemList from 'components/world/worldTypeItemListComponent.vue';
-import { imageUrl } from 'src/utils/imageUtil';
+
 import { getImageUrl } from 'boot/tools'; // 确保路径正确对应你的文件结构
 
 const $q = useQuasar();

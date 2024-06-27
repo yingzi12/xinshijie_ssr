@@ -134,6 +134,7 @@ module.exports = configure(function (/* ctx */) {
         sourceWeb: 'https://image.51x.uk/xinshijie',
         // baseUrl:"http://192.168.68.100:8098",
         baseUrl:"https://admin.aiavr.uk",
+        wsUrl:"ws://127.0.0.1:8099/ws",
         notify: { /* look at QuasarConfOptions from the API card */ }
       },
       // iconSet: 'material-icons', // Quasar icon set

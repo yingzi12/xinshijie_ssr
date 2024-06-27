@@ -6,7 +6,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { Dialog } from 'quasar';
 import { api } from 'boot/axios';
-import { imageUrl } from 'src/utils/imageUtil';
+
 import { getImageUrl } from 'boot/tools';
 const route = useRoute();
 const wid = ref(route.query.wid);

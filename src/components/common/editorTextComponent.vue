@@ -37,7 +37,9 @@ async function simulateUpload(files: FileList) {
   if (data.code === 200) {
     for(let i = 0; i < data.data.length; i++){
       editor.value=editor.value+ "<img src=\""+ $q.config.sourceWeb + data.data[i]+"\" style=\"max-width:100vw\"/>"
+      console.log(editor.value)
     }
+    onTickedChange();
   } else {
     Dialog.create({
       title: '错误',
@@ -86,6 +88,7 @@ async function uploadSelectedFiles(event: Event) {
 
 function onTickedChange() {
   console.log("-------onTickedChange---------")
+  console.log(editor.value)
   // console.log(tickedList.value);
   // 确保只有叶子节点的ID被收集
   emit('editor', editor.value);

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { Dialog, Notify, useQuasar } from 'quasar';
+import { Dialog, useQuasar } from 'quasar';
 import { api } from "boot/axios";
 import { Cookies } from 'quasar'
 import { useRoute, useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
-import { compressIfNeeded, compressIfNeededBatch } from 'boot/tools';
+import { compressIfNeeded } from 'boot/tools';
 import chooseCategoryComponent from 'components/category/chooseCategoryComponent.vue';
 const token = Cookies.get('token');
 const route = useRoute();
@@ -13,66 +13,6 @@ import { moduleOptions } from 'boot/consts';
 
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
-// const moduleOptions = [
-//   {
-//     value: 1,
-//     label: '通用',
-//   },
-//   {
-//     value: 2,
-//     label:'角色/人物' ,
-//   },
-//   {
-//     value: 3,
-//     label:'组织/势力',
-//     disabled: true,
-//   },
-//   {
-//     value: 4,
-//     label: '动物/植物',
-//     disabled: true,
-//   },
-//   {
-//     value:5 ,
-//     label: '种族',
-//     disabled: true,
-//   },
-//   {
-//     value:6 ,
-//     label: '宗教/党派',
-//     disabled: true,
-//   },
-//   {
-//     value:7 ,
-//     label: '习俗',
-//     disabled: true,
-//   },
-//   {
-//     value:8,
-//     label: '矿物',
-//     disabled: true,
-//   },
-//   {
-//     value:9 ,
-//     label: '武器',
-//     disabled: true,
-//   },
-//   {
-//     value:10 ,
-//     label: '药品',
-//     disabled: true,
-//   },
-//   {
-//     value:10 ,
-//     label: '城市/港口',
-//     disabled: true,
-//   },
-//   {
-//     value:10 ,
-//     label: '物品',
-//     disabled: true,
-//   },
-// ]
 
 const $q = useQuasar();
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
@@ -123,6 +63,8 @@ async function onSubmit() {
     console.log(cidTagList.value[i])
     addForm.value.categoryList.push(cidTagList.value[i].split("$$")[0]);
   }
+  addForm.value.wname=wname;
+  addForm.value.wid=wid;
   const response = await api.post("/admin/element/add", JSON.stringify(addForm.value), {
     headers: {
       'Content-Type': 'application/json',
@@ -139,9 +81,9 @@ async function onSubmit() {
         push: true
       },
     }).onOk(async () => {
-      router.push(`/world/element?wid=${wid.value}`); // Redirect to login page
+      router.push(`/admin/draft/element?wid=${wid.value}`); // Redirect to login page
     }).onCancel(async () => {
-      router.push(`/world/element?wid=${wid.value}`); // Redirect to login page
+      router.push(`/admin/draft/element?wid=${wid.value}`); // Redirect to login page
     });
   } else {
     Dialog.create({
@@ -212,7 +154,16 @@ const handleCidList = (selectedIds) => {
   // 在这里您可以根据需要处理这些ID，比如更新父组件的状态、发起新的API请求等
   cidTagList.value=selectedIds;
 };
-
+const world=ref({});
+/** 查询世界详细 */
+async function handWorld() {
+  const response = await api.get(`/admin/world/getInfo/${wid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    world.value=data.data;
+  }
+}
+handWorld();
 
 </script>
 
@@ -263,18 +214,11 @@ const handleCidList = (selectedIds) => {
             <q-card-actions >
               <div  style="width: 100%">
                 <div  >
-                  <q-input
-                    v-model="addForm.wname"
-                    :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"
-                    filled
-                    hint="输入世界名称"
-                    label="世界名称 *"
-                    lazy-rules
-                  />
+                  <div class="text-h6">{{ world.name}}</div>
                 </div>
-                <div>
-                  <p class="text-body1 q-ma-md">这是世界简介，这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介
-                    这是世界简介这是世界简介这是世界简介这是世界简介</p>
+                <q-separator></q-separator>
+                <div class="text-subtitle1">
+                  <div  v-html="world.intro"></div>
 
                 </div>
               </div>
@@ -393,7 +337,7 @@ const handleCidList = (selectedIds) => {
   <q-dialog v-model="cidDialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Alert</div>
+        <div class="text-h6">选择分类</div>
       </q-card-section>
       <q-card-section>
         <choose-category-component :wid="wid" :cid-list="cidTagList" @cid-list="handleCidList" ></choose-category-component>

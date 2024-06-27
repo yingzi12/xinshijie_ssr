@@ -52,12 +52,12 @@ function  onStatus(status:number){
 <template>
   <q-page>
     <q-toolbar class="bg-purple text-white">
-      <q-btn flat round dense icon="assignment_ind" />
+<!--      <q-btn flat round dense icon="assignment_ind" />-->
       <q-toolbar-title>
         章节草稿
       </q-toolbar-title>
-      <q-btn flat round dense icon="apps" class="q-mr-xs" />
-      <q-btn flat round dense icon="more_vert" />
+<!--      <q-btn flat round dense icon="apps" class="q-mr-xs" />-->
+<!--      <q-btn flat round dense icon="more_vert" />-->
     </q-toolbar>
     <q-separator dark inset />
     <div class="row" style="background-color: orange">
@@ -66,7 +66,7 @@ function  onStatus(status:number){
       <q-chip clickable v-for="(status,index) in draftChapterStatus" :key="index"  color="brown" :label="status.name" @click="onStatus(status.id)"/>
     </div>
 
-    <div class="q-pa-md">
+<!--    <div class="q-pa-md">-->
       <div class="row no-wrap shadow-1">
         <q-toolbar class="col-8 bg-grey-3">
           <q-btn flat round dense icon="menu" />
@@ -76,11 +76,11 @@ function  onStatus(status:number){
         </q-toolbar>
         <q-toolbar class="col-4 bg-primary text-white">
           <q-space />
-          <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-          <q-btn flat round dense icon="more_vert" />
+<!--          <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
+<!--          <q-btn flat round dense icon="more_vert" />-->
         </q-toolbar>
       </div>
-    </div>
+<!--    </div>-->
 
 
     <div class="q-pa-md q-gutter-md">

@@ -55,7 +55,6 @@ async function onAddClick (id:number,tier:number) {
 }
 
 async function onEditClick (cetory) {
-  console.log(cetory);
   editForm.value.pid=cetory.pid;
   editForm.value.id= cetory.id;
   editForm.value.label=cetory.label;

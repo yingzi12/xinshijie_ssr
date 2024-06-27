@@ -7,6 +7,7 @@ import { reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import { api, tansParams } from 'boot/axios';
 import { moduleOptions } from 'boot/consts';
+import { Dialog } from 'quasar';
 const route = useRoute();
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
@@ -63,6 +64,7 @@ function onType(id:string){
   console.log(cid);
   cid.value=id;
 }
+
 </script>
 
 <template>
@@ -75,10 +77,10 @@ function onType(id:string){
         </q-toolbar-title>
 <!--        <q-btn flat round dense icon="search" />-->
       </q-toolbar>
-<!--      <q-toolbar class="col-4 bg-primary text-white">-->
-<!--        <q-space />-->
-<!--        <q-btn flat round dense icon="add" class="q-mr-sm" to="/admin/element/create" />-->
-<!--      </q-toolbar>-->
+      <q-toolbar class="col-4 bg-primary text-white">
+        <q-space />
+        <q-btn flat round dense icon="add" class="q-mr-sm"  :to="{ path:'/admin/element/create', query: { wid: wid,wname: wname  }}"/>
+      </q-toolbar>
     </div>
     <div class="row" style="background-color: orange">
       <div>

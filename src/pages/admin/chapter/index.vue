@@ -2,15 +2,6 @@
 import { ref } from 'vue';
 
 const selected = ref(null);
-function selectGoodService () {
-  if (selected.value !== 'Good service') {
-    selected.value = 'Good service'
-  }
-}
-
-function unselectNode () {
-  selected.value = null
-}
 
 const props= [
   {

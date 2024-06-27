@@ -3,7 +3,7 @@ import { defineProps, reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
 import { Dialog } from 'quasar';
 import { useRouter } from 'vue-router';
-import { imageUrl } from 'src/utils/imageUtil';
+
 import { getImageUrl } from 'boot/tools';
 const router = useRouter();
 

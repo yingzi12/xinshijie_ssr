@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { imageUrl } from 'src/utils/imageUtil';
+
 import { reactive, ref, toRefs } from 'vue';
 import { Cookies, Dialog, Notify } from 'quasar';
 import { compressIfNeededBatch, getImageUrl } from 'boot/tools';

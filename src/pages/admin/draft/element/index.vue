@@ -54,8 +54,8 @@ function  onStatus(status:number){
     <q-toolbar-title>
       元素草稿
     </q-toolbar-title>
-    <q-btn flat round dense icon="apps" class="q-mr-xs" />
-    <q-btn flat round dense icon="more_vert" />
+<!--    <q-btn flat round dense icon="apps" class="q-mr-xs" />-->
+<!--    <q-btn flat round dense icon="more_vert" />-->
   </q-toolbar>
   <q-separator dark inset />
   <div class="row" style="background-color: orange">
@@ -65,7 +65,7 @@ function  onStatus(status:number){
 <!--      <q-chip clickable color="brown" label="待发布"  @click="onStatus(2)"/>-->
   </div>
 
-  <div class="q-pa-md">
+<!--  <div class="q-pa-md">-->
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-8 bg-grey-3">
         <q-btn flat round dense icon="menu" />
@@ -75,11 +75,11 @@ function  onStatus(status:number){
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
-        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-        <q-btn flat round dense icon="more_vert" />
+<!--        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
+<!--        <q-btn flat round dense icon="more_vert" />-->
       </q-toolbar>
     </div>
-  </div>
+<!--  </div>-->
 
 
   <div class="q-pa-md q-gutter-md">

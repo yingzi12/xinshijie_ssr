@@ -63,9 +63,9 @@ function  onStatus(status:number){
         <q-btn flat round dense icon="search" />
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
-        <q-space />
-        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-        <q-btn flat round dense icon="more_vert" />
+<!--        <q-space />-->
+<!--        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
+<!--        <q-btn flat round dense icon="more_vert" />-->
       </q-toolbar>
     </div>
     <div class="row" style="background-color: orange">

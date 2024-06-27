@@ -3,7 +3,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { getImageUrl } from 'boot/tools';
-import { imageUrl } from 'src/utils/imageUtil';
+
 
 const $q = useQuasar();
 const router = useRouter()

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useQuasar } from 'quasar';
+import { Dialog, useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
-import { imageUrl } from 'src/utils/imageUtil';
+
 import { getImageUrl } from 'boot/tools';
+import { api } from 'boot/axios';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -36,19 +37,20 @@ interface Element {
 const props = defineProps<{ value: Element }>();
 
 
+
 </script>
 
 <template>
-  <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
+  <q-item>
     <q-item-section avatar>
-      <q-img
+      <q-img @click="router.push(`/element/detail?wid=${props.value.wid}&eid=${props.value.id}`)"
         :src="getImageUrl(props.value.imageUrls)"
              class="small-head-image"
         @error.once="() => { $event.target.src = '/empty.jpg'; }"
       />
     </q-item-section>
 
-    <q-item-section>
+    <q-item-section  @click="router.push(`/element/detail?wid=${props.value.wid}&eid=${props.value.id}`)">
       <q-item-label class="one-line-clamp">{{props.value.title}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.createName}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">

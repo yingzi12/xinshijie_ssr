@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {Cookies, useQuasar} from 'quasar';
+import { Cookies, Dialog, useQuasar } from 'quasar';
 import {useRouter} from "vue-router";
 import {ref} from "vue";
 import {api} from "boot/axios";
@@ -46,12 +46,15 @@ async function onSubmit() {
   }
 
   try {
-    const response = await api.post("/systemUser/regis",
+    const response = await api.post("/register",
       JSON.stringify({
-        name: name.value,
+        username: name.value,
         email: email.value,
         password: password.value,
-        inviteCode: inviteCode.value
+        uuid: uuid.value,
+        code: captcha.value,
+        captcha: captcha.value,
+        inviteCode: inviteCode
       }), {
         headers: {
           'Content-Type': 'application/json',
@@ -69,22 +72,29 @@ async function onSubmit() {
       });
       router.push('/login'); // Redirect to login page
     } else {
+      await refreshCaptcha();
       // Handle failed registration
-      $q.notify({
-        color: 'red-5',
-        textColor: 'white',
-        icon: 'error',
-        message: data.message || 'Registration failed'
+      Dialog.create({
+        title: 'Error',
+        message: `${data.msg}`,
+        ok: {
+          label: 'OK',
+          color: 'primary'
+        }
       });
     }
   } catch (error) {
+    await refreshCaptcha();
     // Handle network or other errors
-    $q.notify({
-      color: 'red-5',
-      textColor: 'white',
-      icon: 'error',
-      message: error.message || 'An error occurred'
-    });
+    Dialog.create({
+      title: 'Error',
+      message: '注册失败',
+      ok: {
+        label: 'OK',
+        color: 'primary'
+      }
+    })
+
   }
 }
 
@@ -103,6 +113,40 @@ const passwordRules = [
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
+
+const captchaImage = ref('');
+const uuid=ref("");
+const captcha = ref('');
+async function refreshCaptcha() {
+  try {
+    const response = await api.get("/captchaImage");
+    const data = response.data;
+    if (data && data.code == 200) {
+      captchaImage.value = "data:image/png;base64," + data.img;
+      uuid.value = data.uuid;
+    } else {
+      //提示验证码获取失败
+      Dialog.create({
+        title: 'Error',
+        message: 'Failed to load captcha',
+        ok: {
+          label: 'OK',
+          color: 'primary'
+        }
+      })
+    }
+  } catch (error) {
+    Dialog.create({
+      title: 'Error',
+      message: 'Failed to load captcha',
+      ok: {
+        label: 'OK',
+        color: 'primary'
+      }
+    })
+  }
+}
+refreshCaptcha();
 </script>
 
 <template>
@@ -151,6 +195,17 @@ const togglePasswordVisibility = () => {
               </template>
             </q-input>
 
+            <!-- 验证码输入框 -->
+            <q-input
+              v-model="captcha"
+              :rules="[val => val && val.length > 0 || '请输入验证码']"
+              filled
+              :label="$t('login.code')+' *'"
+            />
+            <div class="q-mb-md">
+              <img :src="captchaImage" @click="refreshCaptcha">
+              <div>{{ $t(`login.refreshCode`) }}</div>
+            </div>
             <!-- 接受条款切换 -->
             <q-toggle v-model="accept" :label="$t(`introTerms`)"></q-toggle>
             <a href="/privacyPolicy">{{ $t(`useTerms`) }}</a><a href="/use">{{ $t(`privateTerms`) }}</a>

@@ -31,7 +31,7 @@ const selectedImage = ref<File | null>(null);
 const world=ref({});
 /** 查询世界详细 */
 async function handWorld() {
-  const response = await api.get(`/wiki/world/getInfo/${wid.value}`);
+  const response = await api.get(`/admin/world/getInfo/${wid.value}`);
   const data=response.data;
   if (data.code == 200) {
     addForm.value=data.data;

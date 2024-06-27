@@ -2,7 +2,8 @@
 
 import { getImageUrl } from 'boot/tools';
 import { draftElementStatusMap, moduleOptionsMap } from 'boot/consts';
-
+import { api } from 'boot/axios';
+import { Dialog } from 'quasar';
 
 interface Element {
   imageUrls: string;
@@ -30,6 +31,55 @@ interface Element {
 }
 
 const props = defineProps<{ value: Element }>();
+async function handIssue() {
+  const response = await api.get(`/admin/draftElement/issue?wid=${props.value.wid}&?deid=${props.value.id}`);
+  const data=response.data;
+  if (data.code == 200) {
+    //提示发布成功
+    Dialog.create({
+      title: '发布成功',
+      message: '世界发布成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '发布失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
+
+async function handDelist() {
+  const response = await api.get(`/admin/draftElement/delist?wid=${props.value.wid}&?deid=${props.value.id}`);
+  const data=response.data;
+  if (data.code == 200) {
+    //提示发布成功
+    Dialog.create({
+      title: '下架成功',
+      message: '世界下架成功',
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }else{
+    Dialog.create({
+      title: '下架失败',
+      message: `${data.msg}`,
+      ok: {
+        label: '确定',
+        color: 'primary'
+      }
+    })
+  }
+}
 
 </script>
 
@@ -69,8 +119,10 @@ const props = defineProps<{ value: Element }>();
     <q-item-section side top>
       <q-item-label caption>{{props.value.updateTime}}</q-item-label>
       <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path: '/admin/draft/element/edit', query: { wid: props.value.wid, deid: props.value.id }}"></q-btn></q-item-label>
-      <q-item-label caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
-      <q-item-label caption><q-btn icon="publish" label="发布" size="xs"></q-btn></q-item-label>
+      <q-item-label   v-if="value.status == 1"  caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
+      <q-item-label  v-if="value.status == 1"   caption><q-btn icon="publish" label="发布" size="xs" @click="handIssue"></q-btn></q-item-label>
+      <q-item-label  v-if="value.status == 5"  caption><q-btn icon="unpublished" label="下架" size="xs" @click="handDelist"></q-btn></q-item-label>
+
     </q-item-section>
   </q-item>
 </template>

@@ -4,7 +4,7 @@ import { Dialog, useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
-import { imageUrl } from 'src/utils/imageUtil';
+
 import { getImageUrl } from 'boot/tools';
 
 const $q = useQuasar();

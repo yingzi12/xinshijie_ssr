@@ -1,4 +1,5 @@
 import { Client } from '@stomp/stompjs';
+import { Dialog } from 'quasar';
 
 class StompClient {
   constructor(brokerURL) {
@@ -52,6 +53,15 @@ class StompClient {
       console.log(`Message sent to ${destination}:`, message);
     }else {
       console.warn('Client is not connected.');
+      //提示服务器连接中
+      Dialog.create({
+        title: '服务器连接中',
+        message: '请稍等...',
+        ok: {
+          label: '确定',
+          color: 'primary'
+        }
+      })
     }
   }
 

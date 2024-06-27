@@ -58,6 +58,7 @@ async function onSubmit() {
       $q.cookies.set('userInfo',data.user,{path:"/"});
       router.push('/users/'); // 或者其他页面
     } else {
+      await refreshCaptcha();
       $q.dialog({
         color: 'red-5',
         message: data.msg

@@ -6,7 +6,6 @@ import { api } from 'boot/axios';
 import { useRoute, useRouter } from 'vue-router';
 const route = useRoute(); // 使用 Vue Router 的 useRouter 函数
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
-const imgUrl = ref(null);
 const sid = ref(route.query.sid);
 const sname = ref(route.query.sname);
 
