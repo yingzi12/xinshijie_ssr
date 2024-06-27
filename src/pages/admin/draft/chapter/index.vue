@@ -2,7 +2,10 @@
 import { reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
 import AdminChapterItemComponent from 'components/draft/adminChapterItemComponent.vue';
-import { draftChapterStatus, draftElementStatus } from 'boot/consts';
+import { draftChapterStatus } from 'boot/consts';
+import { Dialog } from 'quasar';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const data = reactive({
   queryParams: {
@@ -47,6 +50,52 @@ function  onStatus(status:number){
     getList();
   }
 }
+
+const addData = reactive({
+  editForm: {
+    sid:0,
+    pid:0,
+    id:0,
+    level:0,
+    isEdit:1,
+    isPrivate:1,
+    title:"",
+    contentZip:"",
+    isNew:1,
+  }
+});
+const { editForm} = toRefs(addData);
+async function onSerialNumber(value) {
+  editForm.value=value;
+  const response = await api.post("/admin/chapter/updateSerialNumber", JSON.stringify(editForm.value), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    Dialog.create({
+      title: '通知',
+      message: '添加成功.',
+      ok: {
+        push: true
+      },
+    }).onOk(async () => {
+      router.go(0)// Redirect to login page
+    }).onCancel(async () => {
+      router.go(0)// Redirect to login page
+    });
+  } else {
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
+
 </script>
 
 <template>

@@ -57,10 +57,10 @@ const props = defineProps<{ value: Story }>();
 const dialog=ref(false);
 const data = reactive({
   addForm: {
-    auditStatus: "",
+    auditStatus: 1,
     auditContent: "",
     wid:props.value.wid,
-    eid:props.value.id,
+    sid:props.value.id,
     wname:props.value.wname,
     name:props.value.name,
 
@@ -68,9 +68,9 @@ const data = reactive({
 });
 const { addForm } = toRefs(data);
 
-async function onSubmit() {
+async function onAudit() {
 
-  const response = await api.post("/admin/draftElement/audit", JSON.stringify(addForm.value), {
+  const response = await api.post("/admin/story/audit", JSON.stringify(addForm.value), {
     headers: {
       'Content-Type': 'application/json', },
   });
@@ -78,7 +78,7 @@ async function onSubmit() {
   if (data.code == 200) {
     Dialog.create({
       title: '通知',
-      message: '添加成功.',
+      message: '审核成功.',
       ok: {
         push: true
       },
@@ -102,7 +102,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
+  <q-item>
     <q-item-section avatar>
       <q-img
         class="small-head-image"
@@ -156,10 +156,6 @@ async function onSubmit() {
     </q-item-section>
   </q-item>
   <q-dialog v-model="dialog" persistent>
-    <q-form
-      class="q-gutter-md"
-      @submit="onSubmit"
-    >
     <q-card style="min-width: 350px">
       <q-card-section>
         <div class="text-h6" >审核</div>
@@ -167,17 +163,16 @@ async function onSubmit() {
 
       <q-card-section class="q-pt-none">
         <div class="q-gutter-sm">
-          <q-radio v-model="addForm.auditStatus" val="line" label="通过申请" />
-          <q-radio v-model="addForm.auditStatus" val="rectangle" label="拒绝审核" />
+          <q-radio v-model="addForm.auditStatus" :val="1" label="通过申请" />
+          <q-radio v-model="addForm.auditStatus" :val="2" label="拒绝审核" />
         </div>
         <q-input dense v-model="addForm.auditContent" autofocus  label="理由说明" />
       </q-card-section>
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="取消" v-close-popup />
-        <q-btn flat label="确认" v-close-popup />
+        <q-btn flat label="确认" v-close-popup @click="onAudit"/>
       </q-card-actions>
     </q-card>
-    </q-form>
   </q-dialog>
 
 

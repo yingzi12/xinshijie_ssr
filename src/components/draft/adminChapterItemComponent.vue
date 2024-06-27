@@ -4,6 +4,7 @@ import { draftChapterStatusMap, draftElementStatusMap } from 'boot/consts';
 import { api } from 'boot/axios';
 import { Dialog } from 'quasar';
 import { useRouter } from 'vue-router';
+import { reactive, toRefs } from 'vue';
 
 const router = useRouter()
 
@@ -29,6 +30,7 @@ interface Chapter {
   pageHtml:string;
   status:string;
   tags:string;
+  serialNumber:string;
 }
 
 const props = defineProps<{ value: Chapter }>();
@@ -82,6 +84,51 @@ async function handDelist() {
     })
   }
 }
+const addData = reactive({
+  editForm: {
+    sid:0,
+    pid:0,
+    level:0,
+    isEdit:1,
+    isPrivate:1,
+    title:"",
+    contentZip:"",
+    isNew:1,
+    serialNumber:props.value.serialNumber,
+  }
+});
+const { editForm} = toRefs(addData);
+
+async function onSerialNumber(value) {
+  editForm.value=value;
+  const response = await api.post("/admin/chapter/updateSerialNumber", JSON.stringify(editForm.value), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    Dialog.create({
+      title: '通知',
+      message: '添加成功.',
+      ok: {
+        push: true
+      },
+    }).onOk(async () => {
+      router.go(0)// Redirect to login page
+    }).onCancel(async () => {
+      router.go(0)// Redirect to login page
+    });
+  } else {
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
 
 </script>
 
@@ -98,6 +145,15 @@ async function handDelist() {
     <q-item-section @click="router.push(`/admin/draft/chapter/detail?sid=${props.value.sid}&dcid=${props.value.id}`)">
       <q-item-label class="one-line-clamp">{{props.value.title}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.sname}}</q-item-label>
+      <q-item-label lines="1">
+
+        <div class="text-weight-bold text-primary"><span class="text-weight-medium">序号：</span>
+          <span class="text-grey-8">{{props.value.serialNumber}}</span>
+          <q-popup-edit v-model="serialNumber" auto-save>
+            <q-input v-model="serialNumber" dense autofocus counter @keyup.enter="onSerialNumber" />
+          </q-popup-edit>
+        </div>
+      </q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">
         <q-chip size="sm" color="yellow">{{ draftChapterStatusMap.get(Number(props.value.status)) }}</q-chip>
         <q-chip size="sm" >{{props.value.wname }}</q-chip>

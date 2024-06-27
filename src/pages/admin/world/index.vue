@@ -25,9 +25,6 @@ const  total= ref(0);
 //有多少页
 const  maxPage=ref(0);
 async function getWorldList() {
-  if(seach.value != null && seach.value != '' ){
-    queryParams.value.name = seach.value;
-  }
   queryParams.value.pageNum=current.value
 
   try {

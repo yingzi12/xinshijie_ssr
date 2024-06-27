@@ -4,7 +4,7 @@ import { api } from "boot/axios";
 import { Cookies } from 'quasar'
 import { useRoute, useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
-import {compressIfNeeded} from "boot/tools";
+import { compressIfNeeded, getImageUrl } from 'boot/tools';
 
 const token = Cookies.get('token');
 const $q = useQuasar();
@@ -77,7 +77,7 @@ async function onSubmit() {
     return;
   }
   addForm.value.source=addForm.value.checkList.toString();
-  const response = await api.post("/admin/story/add", JSON.stringify(addForm.value), {
+  const response = await api.post("/admin/story/edit", JSON.stringify(addForm.value), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -87,7 +87,7 @@ async function onSubmit() {
   if (data.code == 200) {
     Dialog.create({
       title: '通知',
-      message: '添加成功.',
+      message: '修改成功.',
       ok: {
         push: true
       },
@@ -193,7 +193,7 @@ function handleSurce(){
 
     <q-card class="my-card">
       <q-card-section>
-        <div class="text-h6">创建世界</div>
+        <div class="text-h6">编辑故事</div>
       </q-card-section>
 
       <q-separator />
@@ -208,7 +208,7 @@ function handleSurce(){
             <div class="q-pa-md q-gutter-sm">
               <div>
                 <q-img
-                  :src="previewImage"
+                  :src="getImageUrl(addForm.imgUrl)"
                   spinner-color="white"
                   style="height: 140px; max-width: 150px"
                 />
@@ -325,7 +325,6 @@ function handleSurce(){
                 <q-checkbox v-model="addForm.checkList" val="动漫" label="动漫"  v-if="ischeck==0 || ischeck==2"  @click="handleSurce"/>
                 <q-checkbox v-model="addForm.checkList" val="电视剧" label="电视剧"  v-if="ischeck==0 || ischeck==2" @click="handleSurce" />
                 <q-checkbox v-model="addForm.checkList" val="其他" label="其他"  v-if="ischeck==0 || ischeck==2"  @click="handleSurce"/>
-
               </div>
             </div>
             <div>

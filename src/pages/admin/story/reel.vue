@@ -3,6 +3,7 @@ import headComponent from 'components/story/headComponent.vue';
 import { reactive, ref, toRefs } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { api, tansParams } from 'boot/axios';
+import { Dialog } from 'quasar';
 const route = useRoute();
 const router = useRouter();
 
@@ -53,6 +54,127 @@ async function getValueList() {
 }
 getValueList();
 const dialogAdd=ref(false);
+const dialogEdit=ref(false);
+
+const addData = reactive({
+  addForm: {
+    sid:sid.value,
+    pid:0,
+    level:0,
+    isEdit:1,
+    isPrivate:1,
+    title:"",
+    contentZip:"",
+    isNew:1,
+  },
+  editForm: {
+    sid:sid.value,
+    pid:0,
+    level:0,
+    isEdit:1,
+    isPrivate:1,
+    title:"",
+    contentZip:"",
+    isNew:1,
+  }
+});
+const { addForm ,editForm} = toRefs(addData);
+async function onEdit() {
+  const response = await api.post("/admin/chapter/edit", JSON.stringify(editForm.value), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    Dialog.create({
+      title: '通知',
+      message: '修改成功.',
+      ok: {
+        push: true
+      },
+    }).onOk(async () => {
+      router.go(0)// Redirect to login page
+    }).onCancel(async () => {
+      router.go(0)// Redirect to login page
+    });
+  } else {
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
+
+async function onSubmit() {
+  const response = await api.post("/admin/chapter/add", JSON.stringify(addForm.value), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    Dialog.create({
+      title: '通知',
+      message: '添加成功.',
+      ok: {
+        push: true
+      },
+    }).onOk(async () => {
+      router.go(0)// Redirect to login page
+    }).onCancel(async () => {
+      router.go(0)// Redirect to login page
+    });
+  } else {
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
+
+
+async function onSerialNumber(value) {
+  editForm.value=value;
+  const response = await api.post("/admin/chapter/updateSerialNumber", JSON.stringify(editForm.value), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    Dialog.create({
+      title: '通知',
+      message: '添加成功.',
+      ok: {
+        push: true
+      },
+    }).onOk(async () => {
+      router.go(0)// Redirect to login page
+    }).onCancel(async () => {
+      router.go(0)// Redirect to login page
+    });
+  } else {
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
+
+function handleEdit(value){
+  editForm.value=value;
+  dialogEdit.value=true;
+}
 </script>
 
 <template>
@@ -67,11 +189,11 @@ const dialogAdd=ref(false);
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
 <!--        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
-        <q-btn flat round dense icon="more_vert" label="新增分卷" @click="dialogAdd"/>
+        <q-btn flat round dense icon="more_vert" label="新增分卷" @click="dialogAdd =true"/>
       </q-toolbar>
     </div>
     <q-list bordered class="rounded-borders" >
-      <q-item-label header>Google Inbox style</q-item-label>
+<!--      <q-item-label header>Google Inbox style</q-item-label>-->
        <div v-for="(value,index) in valueList" :key="index">
          <q-item >
            <q-item-section side>
@@ -93,8 +215,8 @@ const dialogAdd=ref(false);
 
                <div class="text-weight-bold text-primary"><span class="text-weight-medium">序号：</span>
                  <span class="text-grey-8">{{value.serialNumber}}</span>
-                 <q-popup-edit v-model="value.serialNumber" auto-save v-slot="scope">
-                   <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                 <q-popup-edit v-model="value.serialNumber" auto-save>
+                   <q-input v-model="value.serialNumber" dense autofocus counter @keyup.enter="onSerialNumber(value)" />
                  </q-popup-edit>
                </div>
              </q-item-label>
@@ -107,7 +229,7 @@ const dialogAdd=ref(false);
            <q-item-section top side >
              <div class="text-grey-8 q-gutter-xs">
                <q-btn class="gt-xs" size="12px" flat dense round icon="lock" />
-               <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
+               <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="handleEdit(value)"/>
                <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
              </div>
            </q-item-section>
@@ -129,7 +251,53 @@ const dialogAdd=ref(false);
     </div>
 
   </q-page>
+  <q-dialog v-model="dialogAdd" persistent>
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6">添加分卷</div>
+      </q-card-section>
 
+      <q-card-section class="q-pt-none">
+        <q-input dense v-model="addForm.title" autofocus label="请输入分卷名称" />
+        <div class="q-gutter-sm">
+          <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="允许公开编辑" />
+          <q-radio v-model="addForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="禁止公开编辑" />
+        </div>
+        <div class="q-gutter-sm">
+          <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
+          <q-radio v-model="addForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
+        </div>
+      </q-card-section>
+      <q-card-actions align="right" class="text-primary">
+        <q-btn class="q-ml-sm" color="primary" flat label="返回" v-close-popup/>
+        <q-btn color="primary" label="提交" v-close-popup @click="onSubmit"/>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog v-model="dialogEdit" persistent>
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6">修改分卷</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <q-input dense v-model="editForm.title" autofocus label="请输入分卷名称" />
+        <div class="q-gutter-sm">
+          <q-radio v-model="editForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="允许公开编辑" />
+          <q-radio v-model="editForm.isEdit" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="禁止公开编辑" />
+        </div>
+        <div class="q-gutter-sm">
+          <q-radio v-model="editForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="2" label="允许公开阅读" />
+          <q-radio v-model="editForm.isPrivate" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="1" label="禁止公开阅读" />
+        </div>
+      </q-card-section>
+      <q-card-actions align="right" class="text-primary">
+        <q-btn class="q-ml-sm" color="primary" flat label="返回" v-close-popup/>
+        <q-btn color="primary" label="提交" v-close-popup @click="onEdit"/>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <style scoped>

@@ -93,10 +93,10 @@ async function onSubmit() {
 <!--        <div class="text-h6">创建章节</div>-->
         <q-input
           v-model="addForm.title"
-          :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入章节名称，长度2-100']"
+          :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入分卷名称，长度2-100']"
           filled
-          hint="输入章节名称"
-          label="章节名称 *"
+          hint="输入分卷名称"
+          label="分卷名称 *"
           lazy-rules
         />
       </q-card-section>
@@ -118,7 +118,7 @@ async function onSubmit() {
       </q-card-actions>
       <q-card-actions >
         <div>
-          <q-btn color="primary" label="提交" type="submit"/>
+          <q-btn color="primary" label="提交" type="submit" />
           <q-btn class="q-ml-sm" color="primary" flat label="返回" type="reset"/>
         </div>
       </q-card-actions>

@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import headComponent from 'components/story/headComponent.vue';
 import { reactive, ref, toRefs } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { api, tansParams } from 'boot/axios';
+import { Dialog } from 'quasar';
 const route = useRoute();
+const router = useRouter();
+
 const sid = ref(route.query.sid);
 const sname = ref(route.query.sname);
 const id = ref(route.query.id);
@@ -53,6 +56,52 @@ async function getValueList() {
   }
 }
 getValueList();
+
+const addData = reactive({
+  editForm: {
+    sid:sid.value,
+    pid:0,
+    level:0,
+    isEdit:1,
+    isPrivate:1,
+    title:"",
+    contentZip:"",
+    isNew:1,
+  }
+});
+const { editForm} = toRefs(addData);
+
+async function onSerialNumber(value) {
+  editForm.value=value;
+  const response = await api.post("/admin/chapter/updateSerialNumber", JSON.stringify(editForm.value), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    Dialog.create({
+      title: '通知',
+      message: '添加成功.',
+      ok: {
+        push: true
+      },
+    }).onOk(async () => {
+      router.go(0)// Redirect to login page
+    }).onCancel(async () => {
+      router.go(0)// Redirect to login page
+    });
+  } else {
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
+
 </script>
 
 <template>
@@ -77,7 +126,7 @@ getValueList();
       </q-toolbar>
     </div>
     <q-list bordered class="rounded-borders" >
-      <q-item-label header>Google Inbox style</q-item-label>
+<!--      <q-item-label header>Google Inbox style</q-item-label>-->
       <div v-for="(value,index) in valueList" :key="index">
         <q-item >
           <q-item-section side>
@@ -99,8 +148,8 @@ getValueList();
 
               <div class="text-weight-bold text-primary"><span class="text-weight-medium">序号：</span>
                 <span class="text-grey-8">{{value.serialNumber}}</span>
-                <q-popup-edit v-model="value.serialNumber" auto-save v-slot="scope">
-                  <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                <q-popup-edit v-model="value.serialNumber" auto-save>
+                  <q-input v-model="value.serialNumber" dense autofocus counter @keyup.enter="onSerialNumber(value)" />
                 </q-popup-edit>
               </div>
             </q-item-label>
