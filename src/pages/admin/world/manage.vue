@@ -5,6 +5,7 @@ import addManageComponent from 'components/world/addManageComponent.vue';
 import { reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import { api, tansParams } from 'boot/axios';
+import { getImageUrl } from 'boot/tools';
 const route = useRoute();
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
@@ -50,9 +51,7 @@ async function getList() {
 }
 getList();
 const dialog=ref(false);
-function imageUrl(url) {
-  return `https://image.51x.uk/blackwhite${url}`;
-}
+
 </script>
 
 <template>
@@ -73,9 +72,10 @@ function imageUrl(url) {
       <q-item v-for="(value,index) in valueList" :key="index">
         <q-item-section avatar top>
           <q-avatar>
-            <img
-              :src="imageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
-            >
+            <q-img
+              :src="getImageUrl(value.imgUrl)"
+              @error.once="() => { $event.target.src = '/empty.jpg'; }"
+            />
           </q-avatar>
         </q-item-section>
 

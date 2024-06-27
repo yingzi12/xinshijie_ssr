@@ -12,9 +12,6 @@ const data = reactive({
 });
 const { addForm } = toRefs(data);
 const circleUrl = Cookies.get("avatar");
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 const props = defineProps({
   did: {
     type: String,

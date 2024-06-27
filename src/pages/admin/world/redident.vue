@@ -48,7 +48,7 @@ const wname = ref(route.query.wname);
       <q-item v-for="index in 10" :key="index">
         <q-item-section avatar top>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            <q-img src="https://cdn.quasar.dev/img/boy-avatar.png"/>
           </q-avatar>
         </q-item-section>
 

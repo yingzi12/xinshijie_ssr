@@ -3,6 +3,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { getImageUrl } from 'boot/tools';
 
 const router = useRouter()
 const $q = useQuasar();
@@ -29,17 +30,14 @@ const tagList=ref([]);
 if(props.value.tags != null){
   tagList.value=props.value.tags.split(";");
 }
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 </script>
 
 <template>
   <q-item  :to="{ path: '/story/detail', query: { wid: value.wid,sid: value.id }}">
     <q-item-section avatar>
-      <img
+      <q-img
         class="small-head-image"
-        :src="imageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+        :src="getImageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
       />
     </q-item-section>
 

@@ -3,6 +3,7 @@ import { defineProps, reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
 import { Dialog } from 'quasar';
 import { useRouter } from 'vue-router';
+import { getImageUrl } from 'boot/tools';
 const router = useRouter();
 
 const props = defineProps({
@@ -38,9 +39,6 @@ async function handValue() {
   }
 }
 handValue();
-function imageUrl(url) {
-  return `https://image.51x.uk/blackwhite${url}`;
-}
 async function onSubmit(){
   addForm.value.userId=value.value.userId;
   const response = await api.post("/admin/manage/add", JSON.stringify(addForm.value), {
@@ -86,9 +84,9 @@ async function onSubmit(){
       <div>
         <q-item-section avatar top>
           <q-avatar>
-            <img
-              :src="imageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
-            >
+            <q-img
+              :src="getImageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+            />
           </q-avatar>
         </q-item-section>
       </div>

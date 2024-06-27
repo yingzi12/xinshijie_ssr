@@ -3,7 +3,7 @@
 import { imageUrl } from 'src/utils/imageUtil';
 import { reactive, ref, toRefs } from 'vue';
 import { Cookies, Dialog, Notify } from 'quasar';
-import { compressIfNeededBatch } from 'boot/tools';
+import { compressIfNeededBatch, getImageUrl } from 'boot/tools';
 import { api } from 'boot/axios';
 
 const circleUrl=Cookies.get("avatar");
@@ -231,9 +231,10 @@ function onRemove(index){
       <q-item-section avatar top>
         <q-avatar>
           <q-img
-            :src="imageUrl(circleUrl)"
+            :src="getImageUrl(circleUrl)"
             @error.once="() => { $event.target.src = '/empty.jpg'; }"
           />
+
         </q-avatar>
       </q-item-section>
       <q-item-section>
@@ -277,14 +278,14 @@ function onRemove(index){
            style="min-width: 130px;min-height: 150px;"
       >
         <q-card style="width: 100%">
-          <q-img  :src="imageUrl(value.imgUrl)" style="min-width: 130px;min-height: 150px;"
+          <q-img  :src="getImageUrl(value.imgUrl)" style="min-width: 130px;min-height: 150px;"
                   @error.once="() => { $event.target.src = '/empty.jpg'; }"
           />
           <q-btn  round   class="absolute" color="primary" icon="close"  size="xs"  style="top: 0; right: 0px; transform: translateY(-0%);" @click="onRemove(index)"/>
 
         </q-card>
         <q-video v-if="value.type== 2 " v-model="value.stauts" @remove="log('Icecream')"
-                 :src="imageUrl(value.imgUrl)"
+                 :src="getImageUrl(value.imgUrl)"
                  @error.once="() => { $event.target.src = '/empty.jpg'; }"
         />
       </div>

@@ -2,7 +2,7 @@
 import {Cookies, useQuasar} from 'quasar'
 import {reactive, ref, toRefs} from "vue";
 import { api } from "boot/axios";
-import {tansParams} from "boot/tools";
+import { getImageUrl, tansParams } from 'boot/tools';
 
 const $q = useQuasar();
 
@@ -62,18 +62,6 @@ getListUser(1);
 
 const tab = ref('mails')
 
-function getImageUrl(imgUrl:string) {
-  if (imgUrl != null && imgUrl != undefined && imgUrl != '') {
-    return `${$q.config.sourceWeb}${imgUrl}`; // Replace with your default image URL
-  }
-  return `/empty.jpg`;
-}
-function getSystemImageUrl(album) {
-  if (album.sourceUrl != null && album.sourceUrl.startsWith('/image')) {
-    return `${$q.config.sourceWeb}${album.sourceUrl}`;
-  }
-  return album.sourceWeb + album.imgUrl;
-}
 
 </script>
 
@@ -112,7 +100,7 @@ function getSystemImageUrl(album) {
                 <div v-for="(collectionSystem,index) in collectionSystemList "  :key="index">
                 <q-item>
                   <q-item-section class="q-ml-none" thumbnail top>
-                    <img :src="getSystemImageUrl(collectionSystem)">
+                    <img :src="getImageUrl(collectionSystem)">
                   </q-item-section>
 
                   <q-item-section>

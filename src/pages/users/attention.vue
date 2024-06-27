@@ -2,7 +2,7 @@
 import {Cookies, useQuasar} from 'quasar'
 import {reactive, ref, toRefs} from "vue";
 import { api } from "boot/axios";
-import {tansParams} from "boot/tools";
+import { getImageUrl, tansParams } from 'boot/tools';
 import { imageUrl } from 'src/utils/imageUtil';
 
 const $q = useQuasar();
@@ -124,7 +124,9 @@ const tab = ref('mails')
                 <div v-for="(collectionSystem,index) in collectionSystemList"  :key="index">
                 <q-item>
                   <q-item-section class="q-ml-none" thumbnail top>
-                    <img :src="imageUrl(collectionSystem.imgUrl)">
+                    <q-img
+                      :src="imageUrl(collectionSystem.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+                    />
                   </q-item-section>
 
                   <q-item-section>
@@ -178,7 +180,9 @@ const tab = ref('mails')
                 <div v-for="(collectionUser,index) in collectionUserList "  :key="index">
                   <q-item>
                     <q-item-section class="q-ml-none" thumbnail top>
-                      <img :src="imageUrl(collectionUser.imgUrl)">
+                      <q-img
+                        :src="getImageUrl(collectionUser.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+                      />
                     </q-item-section>
 
                     <q-item-section>

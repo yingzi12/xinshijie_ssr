@@ -5,7 +5,7 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-avatar avatar @click="router.push('/')">
-          <img src="/logo.ico" alt="首页" />
+          <q-img src="/logo.ico" alt="首页" />
         </q-avatar>
 
 

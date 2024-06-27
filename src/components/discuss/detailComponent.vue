@@ -36,11 +36,11 @@ getDetail();
     <q-breadcrumbs-el label="首页" icon="home" to="/"/>
     <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
     <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-    <q-breadcrumbs-el v-if="value.source == 1 || value.source == 2" :label="value.wname" icon="navigation" :to="{ path: '/discuss/create', query: { wid: value.wid ,wname: value.wname,source: 1 }}" />
+    <q-breadcrumbs-el v-if="value.source == 1 || value.source == 2" :label="value.wname" icon="navigation" :to="{ path: '/world/detail', query: { wid: value.wid ,wname: value.wname,source: 1 }}" />
     <q-breadcrumbs-el v-if="value.source == 2" label="小说列表" icon="navigation" to="/story/order" />
-    <q-breadcrumbs-el v-if="value.source == 2" :label="value.sname" icon="navigation" :to="{ path: '/discuss/create', query: { wid: value.wid ,wname: value.wname,source: 1 }}" />
-
+    <q-breadcrumbs-el v-if="value.source == 2" :label="value.sname" icon="navigation" :to="{ path: '/story/detail', query: { wid: value.wid ,wname: value.wname,source: 1 }}" />
     <q-breadcrumbs-el label="讨论列表" icon="navigation" to="/discuss/index" />
+    <q-breadcrumbs-el label="讨论详细" icon="navigation"/>
   </q-breadcrumbs>
 
   <q-card class="q-ma-md bg-grey-2 ">

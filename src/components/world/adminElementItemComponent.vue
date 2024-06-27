@@ -2,6 +2,7 @@
 
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
+import { getImageUrl } from 'boot/tools';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -34,9 +35,6 @@ interface Element {
 const props = defineProps<{ value: Element }>();
 
 
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 function handleSee(id:number,wid:number,softtype:number){
   router.push("/element/details?eid="+id+"&wid="+wid+"&temType="+softtype);
 }
@@ -45,7 +43,9 @@ function handleSee(id:number,wid:number,softtype:number){
 <template>
   <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
     <q-item-section avatar>
-      <img :src="imageUrl(props.value.imageUrls)" class="small-head-image">
+      <q-img :src="getImageUrl(props.value.imageUrls)"
+             class="small-head-image"
+      />
     </q-item-section>
 
     <q-item-section>

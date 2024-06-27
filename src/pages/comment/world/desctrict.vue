@@ -26,7 +26,7 @@ const { world } = props;
 <template>
   <q-item>
     <q-item-section avatar>
-      <img :src="world.imgUrl" class="small-head-image">
+      <q-img :src="world.imgUrl" class="small-head-image"/>
     </q-item-section>
 
     <q-item-section>

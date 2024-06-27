@@ -117,9 +117,6 @@ async function onAddSumbit(){
   }
 }
 
-function imageUrl(pic:string) {
-  return `https://image.51x.uk/blackwhite${pic}`;
-}
 </script>
 
 <template>

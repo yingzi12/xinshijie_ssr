@@ -28,10 +28,7 @@
             thumbnails
             infinite
           >
-            <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-            <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
-            <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
-            <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+            <q-carousel-slide v-for="(value,index) in homeWorldList" :key="index" :name="value.wid" :img-src="getImageUrl(value.imgUrl)"  />
           </q-carousel>
         </div>
       </div>
@@ -72,7 +69,7 @@
               <img
                 @click="routerWorld(world.wid)"
                 class="small-head-image"
-                :src="imageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+                :src="getImageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
               />
             </q-item-section>
 
@@ -102,7 +99,7 @@
                       <img
                         @click="routerWorld(world.wid)"
                         class="small-head-image content-center"
-                        :src="imageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+                        :src="getImageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
                       />
 <!--                      <img src="/600.webp" class="small-head-image content-center">-->
                       <div class="one-line-clamp">{{world.wname}}</div>
@@ -126,7 +123,7 @@
                 <img
                      @click="routerWorld(world.wid)"
                      class="small-head-image"
-                     :src="imageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+                     :src="getImageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
                 />
               </q-item-section>
 
@@ -160,7 +157,7 @@
                 <img
                   @click="routerWorld(world.wid)"
                   class="small-head-image"
-                  :src="imageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+                  :src="getImageUrl(world.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
                 />
               </q-item-section>
 
@@ -199,7 +196,8 @@ import { useMeta, useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { RecommendEnums } from 'boot/consts';
 import worldTypeItemList from 'components/world/worldTypeItemListComponent.vue';
-import { imageUrl } from 'src/utils/imageUtil'; // 确保路径正确对应你的文件结构
+import { imageUrl } from 'src/utils/imageUtil';
+import { getImageUrl } from 'boot/tools'; // 确保路径正确对应你的文件结构
 
 const $q = useQuasar();
 const router = useRouter()
@@ -236,6 +234,7 @@ const title = ref('')
 //精品推荐
 const premiumWorldList = ref([]);
 
+const homeWorldList = ref([]);
 
 //随机故事
 //随机世界
@@ -299,6 +298,13 @@ async function getWorldList(nowTecType: number) {
     if (response.data.code == 200) {
       // total.value = response.data.total;
       // maxPage.value=  total.value/10+1;
+      //轮播图
+      if(nowTecType==1){
+        homeWorldList.value = response.data.data;
+        if(homeWorldList.value.length>0){
+          slide.value=homeWorldList.value[0].wid;
+        }
+      }
       //编辑推荐
       if(nowTecType==2){
         editorWorldList.value = response.data.data;
@@ -356,7 +362,7 @@ async function getTypeRecommendWorldList() {
     console.error('Error fetching images:', error);
   }
 }
-
+getWorldList(1);
 getWorldList(2);
 getWorldList(4);
 getWorldList(17);

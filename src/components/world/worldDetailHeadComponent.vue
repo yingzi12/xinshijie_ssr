@@ -3,6 +3,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { getImageUrl } from 'boot/tools';
 
 const router = useRouter()
 const $q = useQuasar();
@@ -27,9 +28,6 @@ interface World {
 }
 
 const props = defineProps<{ value: World }>();
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 const scores = ref(0)
 
 </script>
@@ -38,9 +36,9 @@ const scores = ref(0)
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
       <q-card-section class="col-5 flex flex-center" style="width: 200px">
-        <img style="height: 240px;width: 180px"
+        <q-img style="height: 240px;width: 180px"
              class="rounded-borders"
-             :src="imageUrl(props.value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+             :src="getImageUrl(props.value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
         />
       </q-card-section>
       <q-card-section class="q-pt-xs">

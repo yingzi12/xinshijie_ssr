@@ -7,6 +7,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { Dialog } from 'quasar';
 import { api } from 'boot/axios';
 import { imageUrl } from 'src/utils/imageUtil';
+import { getImageUrl } from 'boot/tools';
 const route = useRoute();
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
@@ -134,7 +135,7 @@ async function delCategory(id:number) {
       >
         <template v-slot:default-header="prop">
           <div class="row items-center">
-            <img :src="imageUrl(prop.node.imgUrl)" class="q-mr-sm" style="width:50px;height:50px">
+            <img :src="getImageUrl(prop.node.imgUrl)" class="q-mr-sm" style="width:50px;height:50px">
                <div class="text-weight-bold text-primary">{{prop.node.label}}
             </div>
             <q-icon name="eco" color="orange" size="28px" class="q-mr-sm" />

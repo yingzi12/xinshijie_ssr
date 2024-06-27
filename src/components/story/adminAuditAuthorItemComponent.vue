@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
 import { imageUrl } from 'src/utils/imageUtil';
+import { getImageUrl } from 'boot/tools';
 
 const router = useRouter()
 
@@ -84,7 +85,8 @@ async function onSubmit() {
 <template>
   <q-item :to="{ path: '/element/detail', query: { wid: props.value.wid, eid: props.value.id }}">
     <q-item-section avatar>
-      <img :src="imageUrl(props.value.imageUrls)" class="small-head-image">
+      <q-img :src="getImageUrl(props.value.imageUrls)" class="small-head-image"
+      />
     </q-item-section>
 
     <q-item-section side>

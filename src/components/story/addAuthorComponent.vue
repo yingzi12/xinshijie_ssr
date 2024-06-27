@@ -4,6 +4,7 @@ import { api } from 'boot/axios';
 import { Dialog } from 'quasar';
 import { useRouter } from 'vue-router';
 import { imageUrl } from 'src/utils/imageUtil';
+import { getImageUrl } from 'boot/tools';
 const router = useRouter();
 
 const props = defineProps({
@@ -84,8 +85,8 @@ async function onSubmit(){
       <div>
         <q-item-section avatar top>
           <q-avatar>
-            <img
-              :src="imageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+            <q-img
+              :src="getImageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
             />
           </q-avatar>
         </q-item-section>

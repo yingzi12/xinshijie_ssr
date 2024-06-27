@@ -84,7 +84,7 @@
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="secondary" icon="hotel_class"   :to="{ path:'/world/element', query: { wid: wid,wname: world.name  }}"  size="small">元素列表({{world.countElement}})</q-btn>
           <q-btn color="secondary" icon="photo_album"   :to="{ path: '/world/story', query: { wid: wid ,wname: world.name }}"  size="small">故事列表({{world.countStory}})</q-btn>
-          <q-btn color="secondary" icon="manage_accounts"  :to="{ path: '/world/manage', query: { wid: wid,wname: world.name  }}" label="管理员列表" size="small" />
+<!--          <q-btn color="secondary" icon="manage_accounts"  :to="{ path: '/world/manage', query: { wid: wid,wname: world.name  }}" label="管理员列表" size="small" />-->
         </div>
         <div class="q-gutter-sm q-mb-xs">
           <q-btn color="secondary" icon="add_circle" label="创建元素"  :to="{ path: '/admin/element/create', query: { wid: wid ,wname: world.name }}" size="small" />

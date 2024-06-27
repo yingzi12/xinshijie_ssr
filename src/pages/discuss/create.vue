@@ -130,6 +130,7 @@ async function onSubmit() {
       <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
       <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
+      <q-breadcrumbs-el label="创建讨论" icon="navigation"  />
     </q-breadcrumbs>
 
     <div class="bg-orange text-white">

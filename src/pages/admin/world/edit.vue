@@ -4,7 +4,7 @@ import { api } from "boot/axios";
 import { Cookies } from 'quasar'
 import { useRoute, useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
-import {compressIfNeeded} from "boot/tools";
+import { compressIfNeeded, getImageUrl } from 'boot/tools';
 const token = Cookies.get('token');
 const route = useRoute();
 const wid = ref(route.query.wid);
@@ -37,9 +37,6 @@ async function handWorld() {
     addForm.value=data.data;
     addForm.value.checkList=addForm.value.source.split(";");
   }
-}
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
 }
 handWorld();
 async function onSubmit() {
@@ -208,7 +205,7 @@ function handleSurce(){
             <div class="q-pa-md q-gutter-sm">
               <div>
                 <q-img
-                  :src="imageUrl(addForm.imgUrl)"
+                  :src="getImageUrl(addForm.imgUrl)"
                   spinner-color="white"
                   style="height: 140px; max-width: 150px"
                 />

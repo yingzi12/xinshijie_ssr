@@ -76,7 +76,7 @@
             <q-item v-for="index in 10" :key="index">
               <q-item-section avatar>
               <q-avatar size="100px" font-size="52px" color="teal" text-color="white"  >
-                <img src="/150.webp" class="small-head-image">
+                <q-img src="/150.webp" class="small-head-image"/>
               </q-avatar>
               </q-item-section>
 

@@ -2,10 +2,10 @@
   <q-item  :to="{ path: '/world/detail', query: { wid: props.value.wid }}">
     <q-item-section avatar>
       <!--                <img src="/150.webp" class="small-head-image">-->
-      <img
+      <q-img
         @click="routerWorld(props.value.wid)"
         class="small-head-image"
-        :src="imageUrl(props.value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+        :src="getImageUrl(props.value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
       />
     </q-item-section>
 
@@ -22,6 +22,7 @@
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { imageUrl } from 'src/utils/imageUtil';
+import { getImageUrl } from 'boot/tools';
 
 const router = useRouter()
 const $q = useQuasar();

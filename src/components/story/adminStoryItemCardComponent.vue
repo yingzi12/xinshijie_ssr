@@ -4,6 +4,7 @@ import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { imageUrl } from 'src/utils/imageUtil';
+import { getImageUrl } from 'boot/tools';
 
 const router = useRouter()
 const $q = useQuasar();
@@ -34,9 +35,9 @@ if(props.value.tags != null){
 <template>
   <q-item  :to="{ path: '/admin/story/info', query: { sid: value.id,sname: value.name }}">
     <q-item-section avatar>
-      <img
+      <q-img
         class="small-head-image"
-        :src="imageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+        :src="getImageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
       />
     </q-item-section>
 

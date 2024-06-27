@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import { reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
 import { imageUrl } from 'src/utils/imageUtil';
+import { getImageUrl } from 'boot/tools';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -105,7 +106,7 @@ async function onSubmit() {
     <q-item-section avatar>
       <q-img
         class="small-head-image"
-        :src="imageUrl(props.value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+        :src="getImageUrl(props.value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
       />
     </q-item-section>
 

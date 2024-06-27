@@ -12,7 +12,7 @@
 <!--            <img src="/150.webp" class="small-head-image">-->
             <q-img
               class="small-head-image"
-              :src="imageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+              :src="getImageUrl(value.imgUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
             />
           </q-item-section>
 
@@ -30,6 +30,7 @@
 import { defineProps, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { api, tansParams } from 'boot/axios';
+import { getImageUrl } from 'boot/tools';
 const $q = useQuasar();
 // 定义组件的Props
 const props = defineProps({
@@ -39,9 +40,6 @@ const props = defineProps({
     default: 300
   }
 });
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
 
 const valueList = ref([]);
 

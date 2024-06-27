@@ -139,7 +139,7 @@ const seach=ref("");
       <div v-for="index in 10" :key="index">
         <q-item  to="/admin/chapter/detail">
           <q-item-section avatar>
-            <img src="/150.webp" class="small-head-image">
+            <q-img src="/150.webp" class="small-head-image"/>
           </q-item-section>
 
           <q-item-section>

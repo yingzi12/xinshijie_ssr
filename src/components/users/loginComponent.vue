@@ -170,7 +170,7 @@ onMounted(() => {
               :label="$t('login.code')+' *'"
             />
             <div class="q-mb-md">
-              <img :src="captchaImage" @click="refreshCaptcha">
+              <q-img :src="captchaImage" @click="refreshCaptcha"/>
               <div>{{ $t(`login.refreshCode`) }}</div>
             </div>
 

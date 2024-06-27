@@ -80,7 +80,7 @@ onMounted(() => {
 <!--  <q-header elevated class="bg-purple">-->
     <q-toolbar>
       <q-avatar avatar @click="router.push('/')">
-        <img src="/logo.ico" alt="首页" />
+        <q-img src="/logo.ico" alt="首页" />
       </q-avatar>
 
 

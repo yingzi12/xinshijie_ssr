@@ -38,7 +38,8 @@ const props = defineProps<{ value: Comment }>();
       <q-avatar>
         <q-img
           class="small-head-image"
-          :src="imageUrl(value.circleUrl) || `/empty.jpg`" @error.once="e => { e.target.src = `/empty.jpg` }"
+          :src="getImageUrl(value.circleUrl)"
+          @error.once="() => { $event.target.src = '/empty.jpg'; }"
         />
       </q-avatar>
     </q-item-section>

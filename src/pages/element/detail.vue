@@ -131,7 +131,7 @@ watch(() => route.query.eid, async (newEid, oldEid) => {
     <div class="q-pa-md">
       <q-btn-group spread>
         <q-btn color="purple"  v-if="value.previousId != undefined && value.previousId !=null"  label="上一个" icon="arrow_back"  :to="{ path: '/element/detail', query: { wid: value.wid, eid: value.previousId }}"/>
-        <q-btn color="purple" label="元素列表" icon="reorder" :to="{ path: '/world/element', query: { wid: value.wid }}"/>
+        <q-btn color="purple" label="元素列表" icon="reorder" :to="{ path: '/world/element', query: { wid: wid,wname: value.wname }}"/>
         <q-btn color="purple" v-if="value.nextId != undefined && value.nextId !=null" label="下一个" icon="arrow_forward"  :to="{ path: '/element/detail', query: { wid: value.wid, eid: value.nextId }}"/>
 
       </q-btn-group>

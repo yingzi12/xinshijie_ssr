@@ -80,9 +80,7 @@ async function getList() {
   }finally {
   }
 }
-function imageUrl(imgUrl) {
-  return `${$q.config.sourceWeb}${imgUrl}`;
-}
+
 function onLoad (index, done) {
   if(hasMoreData.value) {
     setTimeout(async () => {

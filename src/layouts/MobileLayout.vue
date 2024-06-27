@@ -7,7 +7,8 @@
 
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+            <q-img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"
+            />
           </q-avatar>
           Title
         </q-toolbar-title>
