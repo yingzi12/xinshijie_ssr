@@ -4,12 +4,12 @@ import adminItemComponent from 'components/world/adminAuditStorytemComponent.vue
 import { api, tansParams } from 'boot/axios';
 import { reactive, ref, toRefs } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { adminStoryStatusSelection, storyStatusSelection } from 'boot/consts';
+
 const route = useRoute();
 const router = useRouter();
-
 const wid = ref(route.query.wid);
 const wname = ref(route.query.wname);
-
 
 const data = reactive({
   queryParams: {
@@ -21,9 +21,6 @@ const data = reactive({
     name:"",
   }
 });
-
-// 弹出框
-const temType = ref(1)
 
 const { queryParams } = toRefs(data);
 const valueList = ref([]);
@@ -69,21 +66,22 @@ function routerAddStory(){
       </q-toolbar>
       <q-toolbar class="col-4 bg-primary text-white">
         <q-space />
-<!--        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
         <q-btn flat round dense icon="add" @click="routerAddStory"/>
       </q-toolbar>
     </div>
     <div class="row" style="background-color: orange">
-
-      <q-chip clickable  color="brown" label="全部" @click="onStatus(-1)" />
-      <q-chip clickable color="brown" label="待审核" @click="onStatus(1)"/>
-      <q-chip clickable color="brown" label="审核成功"  @click="onStatus(2)"/>
-      <q-chip clickable color="brown" label="审核失败"  @click="onStatus(2)"/>
-<!--      <q-btn outline color="brown" label="锁定中"/>-->
-<!--      <q-btn outline color="brown" label="发布成功"/>-->
-<!--      <q-btn outline color="brown" label="拒绝发布"/>-->
-<!--      <q-btn outline color="brown" label="待审核"/>-->
-<!--      <q-btn outline color="brown" label="待发布" />-->
+      <q-tabs
+        v-model="queryParams.status"
+        no-caps
+        align="left"
+        outside-arrows
+        mobile-arrows
+        class="bg-orange text-white shadow-2"
+        @update:modelValue="getList"
+      >
+<!--        <q-tab  outline color="brown" :name="-1" label="全部" />-->
+        <q-tab  v-for="(status,index) in adminStoryStatusSelection" :key="index" outline color="brown" :name="status.id" :label="status.value" />
+      </q-tabs>
     </div>
     <div class="row" style="background-color: orange">
       <q-tabs
@@ -119,9 +117,7 @@ function routerAddStory(){
         <div v-for="(value,index) in valueList" :key="index">
           <admin-item-component :value="value"> </admin-item-component>
         </div>
-
         <q-separator spaced />
-
       </q-list>
       <div class="q-pa-lg flex flex-center">
         <q-pagination
@@ -134,7 +130,6 @@ function routerAddStory(){
         />
       </div>
     </div>
-
   </q-page>
 </template>
 

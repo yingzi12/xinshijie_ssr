@@ -69,7 +69,7 @@ getStoryList();
           class="bg-orange text-white shadow-2"
           @update:modelValue="getStoryList"
         >
-          <q-tab outline color="brown" name="-1" label="全部" co/>
+<!--          <q-tab outline color="brown" name="-1" label="全部" co/>-->
           <q-tab  v-for="(status,index) in storyStatusSelection" :key="index" outline color="brown" :name="status.id" :label="status.value" />
 
         </q-tabs>

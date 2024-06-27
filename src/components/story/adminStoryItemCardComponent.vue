@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 import { getImageUrl } from 'boot/tools';
 import { api } from 'boot/axios';
+import { draftElementStatusMap, storyStatusMap } from 'boot/consts';
 
 const router = useRouter()
 const $q = useQuasar();
@@ -95,6 +96,9 @@ async function handDelist() {
       <q-item-label class="one-line-clamp">{{value.name}} <q-badge outline align="middle" color="teal">
         v.{{value.ranks}}
       </q-badge>
+      </q-item-label>
+      <q-item-label>
+        <q-chip size="sm" color="yellow">{{ storyStatusMap.get(Number(props.value.status)) }}</q-chip>
       </q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{value.createName ==null ? "未知" :value.createName }}</q-item-label>
       <q-item-label class="three-line-clamp" caption>{{value.intro}}</q-item-label>

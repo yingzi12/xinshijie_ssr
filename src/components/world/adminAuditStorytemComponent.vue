@@ -6,6 +6,7 @@ import { reactive, ref, toRefs } from 'vue';
 import { api } from 'boot/axios';
 
 import { getImageUrl } from 'boot/tools';
+import { storyStatusMap } from 'boot/consts';
 
 const $q = useQuasar();
 const router = useRouter()
@@ -112,6 +113,9 @@ async function onAudit() {
 
     <q-item-section side>
       <q-item-label class="one-line-clamp">{{props.value.name}}</q-item-label>
+      <q-item-label>
+        <q-chip size="sm" color="yellow">{{ storyStatusMap.get(Number(props.value.status)) }}</q-chip>
+      </q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">{{props.value.createName}}</q-item-label>
       <q-item-label class="one-line-clamp text-weight-thin text-overline">
         <q-chip
@@ -174,8 +178,6 @@ async function onAudit() {
       </q-card-actions>
     </q-card>
   </q-dialog>
-
-
 </template>
 
 <style scoped>

@@ -95,7 +95,7 @@ export const worldTypes=reactive([
 )
 export const worldSource=reactive([{id:1,name:"原创"},{id:2,name:"电影"},{id:3,name:"小说"},{id:4,name:"游戏"},{id:5,name:"动漫"},{id:5,name:"电视剧"},{id:6,name:"其他"}])
 export const storyStatusMap = new Map([
-  [0, "全部"],
+  [-1, "全部"],
   [1, "草稿"],
   [2, "待审核"],
   [3, "正常"],
@@ -105,12 +105,20 @@ export const storyStatusMap = new Map([
   [7, "锁定"],
 ]);
 export const storyStatusSelection = [
-  {id:0,value: "全部"},
+  {id:-1,value: "全部"},
   {id:1, value:"草稿"},
   {id:2, value:"待审核"},
   {id:3, value:"正常"},
   {id:5, value:"审核不通过"},
   {id:4,value: "删除"},
+  {id:6,value: "隐藏"},
+  {id:7, value:"锁定"}
+];
+export const adminStoryStatusSelection = [
+  {id:-1,value: "全部"},
+  {id:2, value:"待审核"},
+  {id:3, value:"正常"},
+  {id:5, value:"审核不通过"},
   {id:6,value: "隐藏"},
   {id:7, value:"锁定"}
 ];
