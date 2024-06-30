@@ -154,7 +154,7 @@ const simple=[
         <q-pagination
           v-model="current"
           color="purple"
-          :max="10"
+          :max="maxPage"
           :max-pages="6"
           boundary-numbers
         />

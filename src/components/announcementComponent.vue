@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { api, tansParams } from 'boot/axios';
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
 
 const valueList=ref([]);
-
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 4,
+    recType:2,
+  }
+});
+const { queryParams } = toRefs(data);
 async function getValueList() {
   try {
     const response = await api.get('/wiki/announcement/list?pageSize=6');
@@ -22,7 +29,7 @@ getValueList();
 <template>
   <q-list bordered padding class="rounded-borders" style="max-width: 300px">
     <q-item-label header class="h6">公告</q-item-label>
-    <q-item v-for="(value,index) in valueList" :key="index" clickable v-ripple to="/notice/detail">
+    <q-item v-for="(value,index) in valueList" :key="index" clickable v-ripple :to="{ path: '/notice/detail', query: { aname: value.title, aid: value.id }}">
       <q-item-section avatar top>
         <span class="text-orange">【公告】</span>
       </q-item-section>

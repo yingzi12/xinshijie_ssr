@@ -1,7 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import { api, tansParams } from 'boot/axios';
 
-const  current= ref(6);
+const  current= ref(1);
+const  total= ref(1);
+const  maxPage= ref(1);
+
+const valueList=ref([]);
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 20,
+  }
+});
+const { queryParams } = toRefs(data);
+async function getValueList() {
+  try {
+    const response = await api.get('/wiki/announcement/list?'+ tansParams(queryParams.value));
+    if (response.data.code == 200) {
+      total.value = response.data.total;
+      valueList.value = response.data.data;
+      if(total.value % queryParams.value.pageSize == 0){
+        maxPage.value=total.value/queryParams.value.pageSize;
+      }else{
+        maxPage.value=total.value/queryParams.value.pageSize+1;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+}
+getValueList();
 </script>
 
 <template>
@@ -17,24 +46,19 @@ const  current= ref(6);
 
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="公告列表" icon="widgets"  to="/notice/index"/>
-      <q-breadcrumbs-el label="公告" icon="navigation" to="/notice/detail" />
     </q-breadcrumbs>
     <div class="q-pa-md q-gutter-md">
       <q-list bordered padding class="rounded-borders">
-        <div v-for="index in 10" :key="index">
-          <q-item  to="/admin/chapter/detail">
+        <div v-for="(value,index) in valueList" :key="index">
+          <q-item  :to="{ path: '/notice/detail', query: { aname: value.title, aid: value.id }}">
             <q-item-section side>
-              {{(current-1)*10+index}}
+              {{(current-1)*10+index+1}}
             </q-item-section>
             <q-item-section>
-              <q-item-label class="one-line-clamp">【公告类型】这是公告名称</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">我是超级长的操作者，我是超级长的操作者，我是超级长的操作者</q-item-label>
-              <q-item-label class="one-line-clamp text-weight-thin text-overline">2011-11-11 11:11:34</q-item-label>
+              <q-item-label class="one-line-clamp">【公告】{{value.title}}</q-item-label>
+              <q-item-label class="one-line-clamp text-weight-thin text-overline">{{value.intro}}</q-item-label>
+              <q-item-label class="one-line-clamp text-weight-thin text-overline">{{value.createTime}}</q-item-label>
             </q-item-section>
-            <!--          <q-item-section side top>-->
-            <!--            <q-item-label caption>5 min ago</q-item-label>-->
-            <!--            <q-icon name="star" color="yellow" />-->
-            <!--          </q-item-section>-->
           </q-item>
           <q-separator spaced />
         </div>
@@ -45,7 +69,7 @@ const  current= ref(6);
         <q-pagination
           v-model="current"
           color="purple"
-          :max="10"
+          :max="maxPage"
           :max-pages="6"
           boundary-numbers
         />

@@ -1,7 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { api } from 'boot/axios';
+const route = useRoute();
+const router = useRouter();
 
-const alert=ref(false);
+const aid = ref(route.query.aid);
+const title = ref(route.query.title);
+const scores = ref(0)
+
+const value=ref({});
+/** 查询世界详细 */
+async function getDetail() {
+  const response = await api.get(`/wiki/announcement/getInfo/${aid.value}`);
+  const data=response.data;
+  if (data.code == 200) {
+    value.value=data.data;
+  }
+}
+getDetail();
+
+// 添加watch来监听wid的变化
+watch(() => route.query.aid, async (newAid, oldAid) => {
+  if (newAid !== oldAid) {
+    // 当wid变化时，重新加载数据
+    aid.value = newAid;
+    await getDetail(); // 重新获取世界详细信息
+    // await getAllWorldComment(); // 重新获取评论列表
+  }
+}, { immediate: true }); // immediate: true 确保在初始渲染时也触发watcher
+
 </script>
 
 <template>
@@ -17,43 +45,25 @@ const alert=ref(false);
 
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="公告列表" icon="widgets"  to="/notice/index"/>
-      <q-breadcrumbs-el label="公告" icon="navigation" to="/notice/detail" />
+      <q-breadcrumbs-el label="公告" icon="navigation"  />
     </q-breadcrumbs>
     <div class="q-ma-md">
-      <div class="text-h6 text-center">这是公告名称<q-chip size="xs" icon="bookmark">
-        编辑
-      </q-chip></div>
+      <div class="text-h6 text-center">{{value.title}}</div>
       <div class="text-subtitle1 text-center">
         <div class="q-pa-md q-gutter-sm">
-          <span class="text-overline">创建者:我是创建人</span>
-          <span class="text-overline">创建:2022-11-11 11:23:34</span>
+          <span class="text-overline">创建:{{value.createTime}}</span>
         </div>
       </div>
       <div>
-
-            <pre>
-        这里是小说内容
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-        QLayout允许您将视图配置为3x3矩阵，包含可选的左侧和/或右侧侧滑菜单。 如果尚未安装，请先阅读QLayout文档页面。
-
-        QDrawer是QLayout的侧边栏部分。
-      </pre>
+       <div v-html="value.content"></div>
       </div>
 
     </div>
     <div class="q-pa-md">
       <q-btn-group spread>
-        <q-btn color="purple" label="上一章" icon="timeline" />
-        <q-btn color="purple" label="目录" icon="visibility" @click="alert = true" to="/notice/index"/>
-        <q-btn color="purple" label="下一章" icon="visibility" />
+        <q-btn  v-if="value.previous != undefined && value.previous !=null"  color="purple" label="上一个"  icon="arrow_back"  :to="{ path: '/notice/detail', query: { aname: value.previous.title, aid: value.previous.id }}" />
+        <q-btn color="purple" label="目录" icon="visibility" to="/notice/index"/>
+        <q-btn  v-if="value.next != undefined && value.next !=null" color="purple" label="下一个" icon="arrow_forward"  :to="{ path: '/notice/detail', query: { aname: value.previous.title, aid: value.next.id }}"/>
 
       </q-btn-group>
     </div>

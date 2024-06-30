@@ -17,6 +17,7 @@ const data = reactive({
   addForm: {
     title:"",
     tags:"",
+    intro:"",
     content:"",
     kind:1,
   },
@@ -125,6 +126,14 @@ getValueList();
           label="标签 *"
           lazy-rules
         />
+        <q-input
+          v-model="addForm.intro"
+          :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入简介，长度2-300']"
+          filled
+          hint="简介"
+          label="简介 *"
+          lazy-rules
+        />
         <editor-text-component :content="addForm.content" @editor="args => addForm.content=args"></editor-text-component>
       </q-card-section>
 
@@ -162,6 +171,7 @@ getValueList();
         <q-item v-for="(value,index) in valueList" :key="index" to="/admin/story/info">
           <q-item-section>
             <q-item-label class="one-line-clamp">{{value.title}}({{value.id}})</q-item-label>
+            <q-item-label class="three-line-clamp">{{value.intro}}</q-item-label>
             <q-item-label class="one-line-clamp text-weight-thin text-overline">{{value.createTime}}</q-item-label>
           </q-item-section>
         </q-item>
