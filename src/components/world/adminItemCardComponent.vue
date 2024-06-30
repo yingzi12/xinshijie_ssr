@@ -109,6 +109,7 @@ async function handDelist() {
     <q-item-section side top>
       <q-item-label caption><q-btn icon="edit" label="修改" size="xs" :to="{ path:'/admin/world/edit', query: { wid: value.id,wname: value.name  }}"></q-btn></q-item-label>
       <q-item-label   v-if="value.status == 1"  caption><q-btn icon="delete" label="删除" size="xs"></q-btn></q-item-label>
+      <q-item-label caption><q-btn icon="list" label="元素" size="xs" :to="{ path:'/admin/world/element', query: { wid: value.id,wname: value.name  }}"></q-btn></q-item-label>
       <q-item-label  v-if="value.status == 1"   caption><q-btn icon="publish" label="发布" size="xs" @click="handIssue"></q-btn></q-item-label>
       <q-item-label  v-if="value.status == 5"  caption><q-btn icon="unpublished" label="下架" size="xs" @click="handDelist"></q-btn></q-item-label>
     </q-item-section>

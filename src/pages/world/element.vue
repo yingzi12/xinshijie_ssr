@@ -114,7 +114,7 @@
 
 </template>
 <script lang="ts" setup>
-import {  reactive, ref, toRefs} from 'vue'
+import { reactive, ref, toRefs, watch } from 'vue';
 import { useRoute, useRouter} from "vue-router";
 import elementItemComponent from 'components/world/elementItemComponent.vue';
 import chooseCategoryComponent from 'components/category/chooseCategoryComponent.vue';
@@ -122,9 +122,6 @@ import { api, tansParams } from 'boot/axios';
 
 const splitterModel= ref(200); // start at 150px
 const alert=ref(false);
-
-
-
 // 接收url里的参数
 const route = useRoute();
 const router = useRouter()
@@ -180,6 +177,7 @@ function onType(id:string){
   console.log(cid);
   cid.value=id;
 }
+
 </script>
 
 

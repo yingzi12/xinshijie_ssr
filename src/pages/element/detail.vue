@@ -12,6 +12,7 @@ const cidTagList=ref([]);
 
 const value=ref({});
 async function getDetail() {
+  cidTagList.value=[];
   const response = await api.get(`/wiki/element/getInfo?eid=${eid.value}&wid=${wid.value}`);
   const data=response.data;
   if (data.code == 200) {
