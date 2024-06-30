@@ -274,6 +274,8 @@ const routes: RouteRecordRaw[] = [
           { path: 'notification', component: () => import('pages/users/notification.vue') },
           { path: 'edit', component: () => import('pages/users/userEdit.vue') },
           { path: 'addService', component: () => import('pages/users/addService.vue') },
+          { path: 'private', component: () => import('pages/users/chat/private.vue') },
+
         ]
       },
     ],

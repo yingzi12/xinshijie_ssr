@@ -92,7 +92,7 @@
 
 <script setup>
 import { defineProps, reactive, ref, toRefs } from 'vue';
-import { Cookies, useQuasar } from 'quasar';
+import { Cookies, Dialog, useQuasar } from 'quasar';
 import { api, tansParams } from 'boot/axios';
 import loginComponent from 'components/users/loginComponent.vue';
 import { getImageUrl } from 'boot/tools'; // 确保路径正确对应你的文件结构
@@ -193,6 +193,16 @@ async function onSubmit(){
   const data=response.data;
   if (data.code == 200) {
     getCommentList();
+    commentText.value="";
+  }else {
+    Dialog.create({
+      title: '提示',
+      message: data.msg,
+      ok: {
+        label: '确认',
+        color: 'primary',
+      },
+    })
   }
 }
 

@@ -78,7 +78,7 @@
           <q-btn color="red" icon="comment" :to="{ path: '/story/discuss', query: {wid: story.wid ,wname: story.wname, sid: sid ,sname: story.name,source: 2 }}"   size="small" >讨论({{story.countDiscuss}})</q-btn>
         </div>
         <div class="q-gutter-sm q-mb-xs">
-          <q-btn color="primary" icon="book" label="阅读" />
+          <q-btn color="primary" icon="book" label="阅读"  :to="{ path: '/story/chapter', query: { wid: story.wid ,wname: story.wname,sid: sid,sname:sname,cid:story.firstId,id:4}}"/>
 <!--          <q-btn color="secondary" icon="add" label="新增章节"  :to="{ path: '/admin/chapter/add', query: { sid: sid,rid:rid,sname:sname,rname:rname,id:4}}"/>-->
           <q-btn color="secondary" icon="add" label="申请作者"  @click="prompt=true"/>
         </div>
@@ -116,7 +116,7 @@
 
         </q-card>
 
-        <commont-list-component :wid="story.wid" :sid="sid" :source="2"></commont-list-component>
+        <commont-list-component :wid="story.wid" :sid="sid" :source="2" ></commont-list-component>
 
       </div>
       <div class="col">

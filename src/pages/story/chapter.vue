@@ -139,7 +139,7 @@ watch(() => route.query.cid, async (newCid, oldCid) => {
 
       <q-card-section style="max-height: 50vh" class="scroll">
         <div>
-        <chapter-component :sname="sname" :sid="sid"></chapter-component>
+        <chapter-component :sname="sname" :sid="sid" :wid="wid" :wname="wname" :cid="cid"></chapter-component>
         </div>
       </q-card-section>
 
