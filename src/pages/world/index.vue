@@ -34,20 +34,9 @@
       </div>
       <div class="col div-center" style="min-width: 250px">
         <div class="q-pa-md q-gutter-md  div-center-child">
-        <q-list bordered padding class="rounded-borders" style="max-width: 300px">
-          <q-item-label header class="h6">广告</q-item-label>
-          <q-item v-for="index in 6" :key="index" clickable v-ripple to="/notice/detail">
-            <q-item-section avatar top>
-              <span class="text-orange">【公告】</span>
-            </q-item-section>
+          <announcement-component></announcement-component>
 
-            <q-item-section>
-              <q-item-label lines="1">关于世纪呃呃呃是的方式地方史蒂夫</q-item-label>
-              <q-item-label caption>February 22nd, 2019</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </div>
+        </div>
       </div>
     </div>
     <q-toolbar >
@@ -197,7 +186,8 @@ import { useRouter } from 'vue-router';
 import { RecommendEnums } from 'boot/consts';
 import worldTypeItemList from 'components/world/worldTypeItemListComponent.vue';
 
-import { getImageUrl } from 'boot/tools'; // 确保路径正确对应你的文件结构
+import { getImageUrl } from 'boot/tools';
+import AnnouncementComponent from 'components/announcementComponent.vue'; // 确保路径正确对应你的文件结构
 
 const $q = useQuasar();
 const router = useRouter()

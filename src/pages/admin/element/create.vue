@@ -154,17 +154,38 @@ const handleCidList = (selectedIds) => {
   // 在这里您可以根据需要处理这些ID，比如更新父组件的状态、发起新的API请求等
   cidTagList.value=selectedIds;
 };
-const world=ref({});
-/** 查询世界详细 */
-async function handWorld() {
-  const response = await api.get(`/admin/world/getInfo/${wid.value}`);
+// const world=ref({});
+// /** 查询世界详细 */
+// async function handWorld() {
+//   const response = await api.get(`/admin/world/getInfo/${wid.value}`);
+//   const data=response.data;
+//   if (data.code == 200) {
+//     world.value=data.data;
+//   }
+// }
+// handWorld();
+
+
+const world=ref({})
+async function handValue() {
+  const response = await api.get(`/wiki/world/getInfoByName/${addForm.value.wname}`);
   const data=response.data;
   if (data.code == 200) {
     world.value=data.data;
+    addForm.value.wid=world.value.id;
+  }else{
+    addForm.value.wname=wname.value;
+    addForm.value.wid=wid.value;
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
   }
 }
-handWorld();
-
+handValue();
 </script>
 
 <template>

@@ -185,7 +185,26 @@ function handleSurce(){
     }
   }
 }
-
+const world=ref({})
+async function handValue() {
+  const response = await api.get(`/wiki/world/getInfoByName/${addForm.value.wname}`);
+  const data=response.data;
+  if (data.code == 200) {
+    world.value=data.data;
+    addForm.value.wid=world.value.id;
+  }else{
+    addForm.value.wname=wname.value;
+    addForm.value.wid=wid.value;
+    Dialog.create({
+      title: '错误',
+      message: data.msg,
+      ok: {
+        push: true
+      },
+    })
+  }
+}
+handValue();
 </script>
 
 <template>
@@ -235,6 +254,9 @@ function handleSurce(){
                   <div  >
                     <q-input
                       v-model="addForm.wname"
+                      autofocus
+                      dense
+                      @blur="handValue"
                       :rules="[ val => val && val.length >= 2 && val.length <= 100 || '请输入世界名称，长度2-100']"
                       filled
                       hint="输入世界名称"
@@ -243,9 +265,7 @@ function handleSurce(){
                     />
                   </div>
                   <div>
-                    <p class="text-body1 q-ma-md">这是世界简介，这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介这是世界简介
-                      这是世界简介这是世界简介这是世界简介这是世界简介</p>
-
+                    <div v-html="world.intro"></div>
                   </div>
                 </div>
               </q-card-actions>

@@ -133,7 +133,8 @@ const routes: RouteRecordRaw[] = [
       { path: '', component: () => import('pages/manager/index.vue') },
       { path: 'hearWorldModule', component: () => import('pages/manager/hearWorldModule.vue') },
       { path: 'hearStoryModule', component: () => import('pages/manager/hearStoryModule.vue') },
-
+      { path: 'announcement', component: () => import('pages/manager/announcement.vue') },
+      { path: 'classify', component: () => import('pages/manager/classify.vue') },
     ],
   },
   {
