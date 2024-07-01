@@ -3,8 +3,10 @@ import { api } from 'boot/axios';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getImageUrl } from 'boot/tools';
+import { Cookies } from 'quasar';
 const route = useRoute();
 const router = useRouter();
+const uid = Cookies.get('userId');
 
 const userId = ref(route.query.userId);
 
@@ -37,7 +39,7 @@ function onRouterPrivate() {
             {{ user.nickName==null?"用户还没有昵称哦！": user.nickName}}
           </q-item-label>
         <q-item-label>
-          <q-btn flat icon="chat" size="xs" @click="onRouterPrivate"></q-btn>
+          <q-btn v-if="userId != uid" label="私信" flat icon="chat" size="xs" @click="onRouterPrivate"></q-btn>
         </q-item-label>
       </q-item-section>
 
