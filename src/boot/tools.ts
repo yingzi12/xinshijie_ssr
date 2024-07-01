@@ -109,3 +109,35 @@ export function getImageUrl(imgUrl) {
   // If imgUrl is not provided or is falsy, return the default empty image path directly
   return '/empty.jpg';
 }
+
+export function timeDifference(dateString) {
+  const datePattern = /(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})/;
+  const match = dateString.match(datePattern);
+
+  if (!match) {
+    return 'Invalid date format';
+  }
+
+  const date = new Date(match[1], match[2] - 1, match[3], match[4], match[5], match[6]);
+  const now = new Date();
+
+  const difference = now.getTime() - date.getTime();
+
+  const minutes = Math.floor(difference / (1000 * 60));
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const months = Math.floor(days / 30);
+
+  if (months > 0) {
+    return dateString;
+  } else if (days > 0) {
+    return days + ' day(s)';
+  } else if (hours > 0) {
+    const remainingMinutes = minutes % 60;
+    return hours + ' hour(s) ' + remainingMinutes + ' minute(s)';
+  } else {
+    return minutes + ' minute(s)';
+  }
+}
+
+console.log(timeDifference('2022-03-01 12:00:00'));

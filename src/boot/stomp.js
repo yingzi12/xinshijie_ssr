@@ -51,17 +51,19 @@ class StompClient {
       console.warn('-----2----sendMessage----------------');
       this.client.publish({ destination: destination, body: JSON.stringify(message), headers: headers });
       console.log(`Message sent to ${destination}:`, message);
+      return true;
     }else {
       console.warn('Client is not connected.');
       //提示服务器连接中
-      Dialog.create({
-        title: '服务器连接中',
-        message: '请稍等...',
-        ok: {
-          label: '确定',
-          color: 'primary'
-        }
-      })
+      // Dialog.create({
+      //   title: '服务器连接中',
+      //   message: '请稍等...',
+      //   ok: {
+      //     label: '确定',
+      //     color: 'primary'
+      //   }
+      // })
+      return false;
     }
   }
 
