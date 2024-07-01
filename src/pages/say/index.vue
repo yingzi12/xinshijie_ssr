@@ -24,7 +24,6 @@ const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 20,
-
     auditStatus:0,
     title:"",
     current:1,
@@ -115,19 +114,7 @@ const addDialog=ref(false);
           </q-toolbar-title>
         </q-toolbar>
       </div>
-      <div class="row no-wrap shadow-1">
-        <!--      <q-toolbar class="col-8 bg-grey-3">-->
-        <!--        <q-btn flat round dense icon="menu" />-->
-        <!--        <q-toolbar-title>{{ wname }} </q-toolbar-title>-->
-        <!--        <q-input rounded outlined v-model="seach" label="搜索..." />-->
-        <!--        <q-btn flat round dense icon="search" />-->
-        <!--      </q-toolbar>-->
-        <!--      <q-toolbar class="col-4 bg-primary text-white">-->
-        <!--        <q-space />-->
-        <!--&lt;!&ndash;        <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />&ndash;&gt;-->
-        <!--        <q-btn flat round dense icon="add" label="新增讨论"  :to="{ path: '/discuss/create', query: { wid: wid ,wname: wname,source: 1 }}"/>-->
-        <!--      </q-toolbar>-->
-      </div>
+
     </div>
     <div class="q-pa-md q-gutter-md">
       <q-list bordered padding class="rounded-borders">

@@ -85,7 +85,10 @@ async function onSubmit() {
     })
     return;
   }
-
+  if(addForm.value.wid == undefined && addForm.value.sid == undefined){
+    addForm.value.source=3;
+    addForm.value.fcid=1;
+  }
   const response = await api.post("/admin/discuss/add", JSON.stringify(addForm.value));
   const data = response.data;
   if (data.code == 200) {

@@ -40,7 +40,9 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/say/index.vue') },
-      { path: 'index', component: () => import('pages/say/index.vue') }
+      { path: 'index', component: () => import('pages/say/index.vue') },
+      { path: 'detail', component: () => import('pages/say/detail.vue') }
+
     ],
   },
   {
