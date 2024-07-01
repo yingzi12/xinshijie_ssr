@@ -40,7 +40,7 @@ getDetail();
     <q-breadcrumbs-el v-if="value.source == 2" label="小说列表" icon="navigation" to="/story/order" />
     <q-breadcrumbs-el v-if="value.source == 2" :label="value.sname" icon="navigation" :to="{ path: '/discuss/create', query: { wid: value.wid ,wname: value.wname,source: 1 }}" />
 
-    <q-breadcrumbs-el label="讨论列表" icon="navigation" to="/discuss/index" />
+    <q-breadcrumbs-el label="说说列表" icon="navigation" to="/discuss/index" />
   </q-breadcrumbs>
 
   <q-card class="q-ma-md bg-grey-2 ">

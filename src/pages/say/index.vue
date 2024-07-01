@@ -86,7 +86,7 @@ const addDialog=ref(false);
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
       <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
-      <q-breadcrumbs-el label="讨论列表" icon="navigation" to="/discuss/index" />
+      <q-breadcrumbs-el label="说说列表" icon="navigation" to="/discuss/index" />
     </q-breadcrumbs>
     <div class="q-pa-md">
       <q-toolbar class="bg-purple text-white">
