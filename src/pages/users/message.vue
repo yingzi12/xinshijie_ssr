@@ -4,9 +4,7 @@ import { api } from 'boot/axios';
 import { getImageUrl } from 'boot/tools';
 import ChatComponent from 'components/chat/chatComponent.vue';
 
-
-const friend = ref({userId:0,userName:"",userAvatar:""});
-
+const friend = ref({receiverUserId:0,receiverUserName:"",receiverAvatar:""});
 const valueList = ref([]);
 async  function getList(){
   const response =await api.get("/admin/userChatPartner/list");
@@ -76,7 +74,7 @@ const tab = ref('mails');
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label>{{ value.nickname }}</q-item-label>
+                  <q-item-label>{{ value.receiverUserName }}</q-item-label>
                   <q-item-label caption lines="1">{{ value.lastTime }}</q-item-label>
                 </q-item-section>
 
@@ -91,7 +89,7 @@ const tab = ref('mails');
 
         <template v-slot:after>
           <div class="row no-wrap shadow-1">
-            <chat-component :key="friend?.userId" :recipient-user-id="friend.userId"></chat-component>
+            <chat-component :key="friend.receiverUserId" :receiver-user-id="friend.receiverUserId"></chat-component>
           </div>
 
         </template>

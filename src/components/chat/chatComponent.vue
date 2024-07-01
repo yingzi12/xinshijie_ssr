@@ -8,6 +8,7 @@ import UploadImage from 'components/uploadImage.vue';
 const props = defineProps({
   receiverUserId:  String,
 });
+console.log(props.receiverUserId);
 const token = Cookies.get('token');
 const userId = Cookies.get('userId');
 const avatar = Cookies.get('avatar');
