@@ -6,7 +6,7 @@ import { getImageUrl } from 'boot/tools';
 const $q = useQuasar();
 
 const props = defineProps({
-  did: {
+  usid: {
     type: String,
     default: '世界类型'
   }
@@ -14,7 +14,7 @@ const props = defineProps({
 const value = ref({});
 async function getDetail() {
   try {
-    const response = await api.get(`/wiki/discuss/getInfo?did=${props.did}`);
+    const response = await api.get(`/user/say/getInfo?usid=${props.usid}`);
     const data = response.data;
     if (data.code === 200) {
       value.value = data.data;
@@ -55,17 +55,13 @@ getDetail();
           </q-avatar>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ value.nickname }}</q-item-label>
+          <q-item-label>{{ value.userNickname }}</q-item-label>
           <q-item-label caption>{{ value.createTime }}</q-item-label>
         </q-item-section>
       </q-item>
     </q-item-section>
     <q-card-section>
-      <div class="text-h6">{{ value.title }}</div>
-    </q-card-section>
-
-    <q-card-section>
-      <div v-html="value.commentZip"></div>
+      <div v-html="value.content"></div>
 
 <!--      <q-item-label class="five-line-clamp" caption>{{ value.commentZip }}</q-item-label>-->
     </q-card-section>
@@ -73,8 +69,8 @@ getDetail();
     <q-separator dark />
 
     <q-card-actions>
-      <q-chip icon="assistant_navigation">赞同 {{ value.countLike || 0 }}</q-chip>
-      <q-chip icon="arrow_drop_down_circle">反对 {{ value.countDisagree || 0 }}</q-chip>
+      <q-chip icon="assistant_navigation">点赞 {{ value.countLike || 0 }}</q-chip>
+<!--      <q-chip icon="arrow_drop_down_circle">反对 {{ value.countDisagree || 0 }}</q-chip>-->
       <q-chip icon="textsms" >{{ value.countReply || 0 }}条评论</q-chip>
       <q-chip icon="grade">收藏</q-chip>
     </q-card-actions>

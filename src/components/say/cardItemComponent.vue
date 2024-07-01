@@ -6,29 +6,20 @@ import { getImageUrl } from 'boot/tools';
 const $q = useQuasar();
 const router = useRouter()
 
-interface Discuss {
-  wid: string;
+interface Say {
   id: string;
-  sid: string;
-  wname: string;
-  sname: string;
-  did: string;
-  eid: string;
+  content: string;
   countLike: number;
-  countReply: number;
-  reply: string;
-  comment: string;
-  title: string;
-  circleUrl:string;
-  createName:string;
-  createTime:string;
-  nickname:string;
-  source:number;
-  commentZip:string;
-  countDisagree:number;
+  createTime: string;
+  updateTime: string;
+  urls: string;
+  userId:string;
+  userName:string;
+  userNickname:string;
+  countReply:number;
 }
 
-const props = defineProps<{ value: Discuss }>();
+const props = defineProps<{ value: Say }>();
 
 const dialogComm=ref(false);
 const dialogReplay=ref(false);
@@ -47,54 +38,23 @@ function onLoad (index, done) {
 }
 
 function routerDetail() {
-  if (props.value.source == 1) {
-  router.push(`/discuss/detail?did=${props.value.id}&wid=${props.value.wid}&wname=${props.value.wname}&source=${props.value.source}`)
-}else{
-    router.push(`/discuss/detail?did=${props.value.id}&wid=${props.value.wid}&sid=${props.value.sid}&wname=${props.value.wname}&sid=${props.value.sname}&source=${props.value.source}`)
-  }
+    router.push(`/say/detail?usid=${props.value.id}`);
 }
 </script>
 
 <template>
   <q-item-section >
     <q-card class="my-card bg-secondary text-white">
-        <q-item-section >
-          <q-item clickable v-ripple>
-            <q-item-section side>
-              <q-avatar rounded size="48px">
-                <q-img
-                  :src="getImageUrl(value.circleUrl)"
-                  @error.once="() => { $event.target.src = '/empty.jpg'; }"
-                />
-              </q-avatar>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ props.value.nickname }}</q-item-label>
-<!--              <q-item-label caption>2 new messages</q-item-label>-->
-            </q-item-section>
-            <q-item-section side>
-              {{props.value.createTime}}
-            </q-item-section>
-          </q-item>
-        </q-item-section>
       <q-card-section @click="routerDetail()">
-        <q-item-label class="five-line-clamp text-h6" >{{props.value.title}}</q-item-label>
-        <q-item-label class="five-line-clamp" lines="5" caption><div v-html="props.value.commentZip"></div></q-item-label>
+        <q-item-label class="five-line-clamp" lines="5" caption><div v-html="props.value.content"></div></q-item-label>
+        <q-item-label class="five-line-clamp text-h6" >        {{props.value.createTime}}</q-item-label>
       </q-card-section>
-<!--      <q-card-section>-->
-<!--        <div>-->
-<!--          -->
-<!--        </div>-->
-<!--      </q-card-section>-->
-
       <q-separator dark />
 
       <q-card-actions>
-        <q-chip flat icon="assistant_navigation">赞同 {{props.value.countLike}}</q-chip>
-        <q-chip flat icon="arrow_drop_down_circle">反对 {{props.value.countDisagree}}</q-chip>
+        <q-chip flat icon="assistant_navigation">点赞 {{props.value.countLike}}</q-chip>
         <q-chip flat icon="textsms" @click="dialogComm = true">{{props.value.countReply}}条评论</q-chip>
         <q-chip flat icon="grade">收藏</q-chip>
-
       </q-card-actions>
     </q-card>
   </q-item-section>

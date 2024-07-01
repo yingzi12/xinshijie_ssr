@@ -6,7 +6,7 @@ import { getImageUrl } from 'boot/tools';
 const $q = useQuasar();
 const data = reactive({
   addForm: {
-    did: "",
+    usid: "",
     upid: "",
     comment: ""
   }
@@ -15,7 +15,7 @@ const { addForm } = toRefs(data);
 const circleUrl = Cookies.get("avatar");
 
 const props = defineProps({
-  did: String,
+  usid: String,
   upid:  String,
 });
 async function onSubmit() {
@@ -37,9 +37,9 @@ async function onSubmit() {
     });
     return;
   }
-  addForm.value.did = props.did;
+  addForm.value.usid = props.usid;
   addForm.value.upid = props.upid;
-  const response = await api.post('/admin/discussComment/reply', JSON.stringify(addForm.value), {
+  const response = await api.post('/user/sayComment/reply', JSON.stringify(addForm.value), {
     headers: { 'Content-Type': 'application/json' },
   });
   const data = response.data;

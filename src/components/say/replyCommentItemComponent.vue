@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import addReplyCommonComponent from 'components/discuss/addReplyCommentComponent.vue';
+import addReplyCommonComponent from 'components/say/addReplyCommentComponent.vue';
 import { getImageUrl } from 'boot/tools';
 
 
 interface Comment {
-  did: string;
+  usid: string;
   id: string;
-  wid: string;
-  wname: string;
   title: string;
   pid: string;
   comment: string;
@@ -58,15 +56,15 @@ const commentHide = ref(false);
             <q-item-label class="float-left q-ma-xs" caption>{{props.value.createTime}}
               <q-chip clickable class="q-ma-xs" color="blue" size="xs" icon="chat" label="回复" @click="commentHide? commentHide =false :commentHide=true"/>
             </q-item-label>
-            <q-chip class="float-right" flat icon="assistant_navigation" size="xs">赞同 {{props.value.countLike}}</q-chip>
-            <q-chip class="float-right"  flat icon="arrow_drop_down_circle" size="xs">反对 {{props.value.countDisagree}}</q-chip>
+            <q-chip class="float-right" flat icon="assistant_navigation" size="xs">点赞 {{props.value.countLike}}</q-chip>
+<!--            <q-chip class="float-right"  flat icon="arrow_drop_down_circle" size="xs">反对 {{props.value.countDisagree}}</q-chip>-->
           </div>
         </div>
       </div>
       </q-item-label>
       <q-item-label>
       <div v-if="commentHide == true">
-        <add-reply-common-component :did="props.value.did" :upid="props.value.id"></add-reply-common-component>
+        <add-reply-common-component :usid="props.value.usid" :upid="props.value.id"></add-reply-common-component>
       </div>
       </q-item-label>
     </q-item-section>

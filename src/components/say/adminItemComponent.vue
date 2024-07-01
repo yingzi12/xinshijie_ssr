@@ -59,10 +59,10 @@ const props = defineProps<{ value: Discuss }>();
         <span class="text-weight-medium">点赞：</span>
         <span class="text-grey-8">{{value.countLike}}</span>
       </q-item-label>
-      <q-item-label lines="1">
-        <span class="text-weight-medium">反对：</span>
-        <span class="text-grey-8">{{value.countDisagree}}</span>
-      </q-item-label>
+<!--      <q-item-label lines="1">-->
+<!--        <span class="text-weight-medium">反对：</span>-->
+<!--        <span class="text-grey-8">{{value.countDisagree}}</span>-->
+<!--      </q-item-label>-->
     </q-item-section>
 
     <q-item-section top side >

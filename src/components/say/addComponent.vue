@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-
 import { reactive, ref, toRefs } from 'vue';
 import { Cookies, Dialog, Notify } from 'quasar';
 import { compressIfNeededBatch, getImageUrl } from 'boot/tools';
@@ -13,7 +11,6 @@ const data = reactive({
     types:2,
     content:"",
     urls:"",
-
   }
 });
 const { addForm } = toRefs(data);

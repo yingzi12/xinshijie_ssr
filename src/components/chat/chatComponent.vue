@@ -127,7 +127,7 @@ function onHandMessage(){
 
   <q-card style="width: 100%">
     <q-card-section class="bg-primary text-white">
-      <div class="text-h6">Our Changing Planet</div>
+      <div class="text-h6">{{ receiverUser.nickName }}</div>
     </q-card-section>
 
     <q-separator />

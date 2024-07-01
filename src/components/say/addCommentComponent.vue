@@ -6,16 +6,16 @@ import { getImageUrl } from 'boot/tools';
 const $q = useQuasar();
 const data = reactive({
   addForm: {
-    did: "",
+    usid: "",
     comment: ""
   }
 });
 const { addForm } = toRefs(data);
 const circleUrl = Cookies.get("avatar");
 const props = defineProps({
-  did: {
+  usid: {
     type: String,
-    default: '世界类型'
+    default: ''
   }
 });
 async function onSubmit() {
@@ -37,8 +37,8 @@ async function onSubmit() {
     });
     return;
   }
-  addForm.value.did = props.did;
-  const response = await api.post('/admin/discussComment/add', JSON.stringify(addForm.value), {
+  addForm.value.usid = props.usid;
+  const response = await api.post('/user/sayComment/add', JSON.stringify(addForm.value), {
     headers: { 'Content-Type': 'application/json' },
   });
   const data = response.data;

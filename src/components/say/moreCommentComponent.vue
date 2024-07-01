@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { defineProps, reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
-import commonItemComponent from 'components/discuss/commentItemComponent.vue';
+import commonItemComponent from 'components/say/commentItemComponent.vue';
 
 
 const props = defineProps({
-  did: {
+  usid: {
     type: String,
     default: ''
   },
@@ -20,7 +20,7 @@ const data = reactive({
   queryParams: {
     pageNum: 0, // 初始化 pageNum 为 1
     pageSize: 6,
-    did: props.did,
+    usid: props.usid,
     pid: props.pid
   }
 });
@@ -31,7 +31,7 @@ const hasMoreData=ref(true);
 
 async function getList() {
   try {
-    const response = await api.get('/wiki/discussComment/listReply?' + tansParams(queryParams.value));
+    const response = await api.get('/user/sayComment/listReply?' + tansParams(queryParams.value));
     const data = response.data;
     if (data.code === 200) {
       const valueList = data.data;
