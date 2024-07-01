@@ -30,7 +30,6 @@ const data = reactive({
 const { addForm } = toRefs(data);
 
 const value=ref({});
-/** 查询世界详细 */
 async function handValue() {
   const response = await api.get(`/wiki/user/getIntroInfo?username=${addForm.value.userName}`);
   const data=response.data;

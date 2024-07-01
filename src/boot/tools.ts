@@ -140,4 +140,19 @@ export function timeDifference(dateString) {
   }
 }
 
+export function formattedNowDateTime() {
+  const now = new Date();
+
+  // 获取年、月、日、时、分、秒，并补零
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+
+  // 拼接成目标格式
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 console.log(timeDifference('2022-03-01 12:00:00'));

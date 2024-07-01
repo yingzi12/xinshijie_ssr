@@ -55,6 +55,7 @@ async function onSubmit() {
       $q.cookies.set('token',data.token,{path:"/"});
       $q.cookies.set('userId',data.userId,{path:"/"});
       $q.cookies.set('avatar',data.avatar,{path:"/"});
+      $q.cookies.set('nickName',data.avatar,{path:"/"});
       $q.cookies.set('userInfo',data.user,{path:"/"});
       router.push('/users/'); // 或者其他页面
     } else {

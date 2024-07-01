@@ -16,8 +16,8 @@ declare module '@vue/runtime-core' {
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  baseURL: 'https://admin.aiavr.com'
-  // baseURL: "http://127.0.0.1:8098"
+  // baseURL: 'https://admin.aiavr.com'
+  baseURL: "http://127.0.0.1:8098"
 });
 
 // 添加请求拦截器
@@ -59,7 +59,6 @@ api.interceptors.response.use(function (response) {
     // 如果code等于401，重定向到登录页面
     window.location.href = '/login';
   }
-  console.log(response.data)
   // 检查返回的响应数据格式
   if (response.data && response.data.code) {
     if (response.data.code === 401) {

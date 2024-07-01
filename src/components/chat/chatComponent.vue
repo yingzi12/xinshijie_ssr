@@ -1,24 +1,31 @@
 <script setup lang="ts">
 import { Cookies } from 'quasar';
 import StompClient from 'boot/stomp';
-import { defineProps, reactive, ref, toRefs } from 'vue';
+import { defineProps, nextTick, onMounted, reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
-import { timeDifference } from 'boot/tools';
+import { formattedNowDateTime, getImageUrl, timeDifference } from 'boot/tools';
+import UploadImage from 'components/uploadImage.vue';
 const props = defineProps({
   receiverUserId:  String,
 });
 const token = Cookies.get('token');
 const userId = Cookies.get('userId');
+const avatar = Cookies.get('avatar');
+const nickName = Cookies.get('nickName');
 
 const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 10,
     receiverUserId:props.receiverUserId,
+  },
+  addForm: {
+    content:"",
+    kind:1,
+    recipientId: props.receiverUserId,
   }
 });
-
-const { queryParams } = toRefs(data);
+const { queryParams,addForm } = toRefs(data);
 const chatList = ref([]);
 //总数
 const  total= ref(0);
@@ -46,6 +53,15 @@ async  function getChatList(){
   }
 }
 getChatList();
+const receiverUser=ref({});
+async function handUser() {
+  const response = await api.get(`/wiki/user/getUserIntro?userId=${props.receiverUserId}`);
+  const data=response.data;
+  if (data.code == 200) {
+    receiverUser.value=data.data;
+  }
+}
+handUser();
 const brokerURL = 'ws://127.0.0.1:8099/ws';
 const stompClient = new StompClient(brokerURL);
 // 连接并等待成功后再发送消息
@@ -62,20 +78,18 @@ stompClient.connect().then(() => {
 });
 const content=ref("");
 
-function sendMessage(){
-  console.log(content.value);
-  const ok=stompClient.sendMessage('/app/chat', {
-    content: content.value,
-    kind:1,
-    recipientId: props.receiverUserId,
-  }, { 'content-type': 'application/json'  ,'Authorization': `Bearer ${token}`});
+function sendMessage(mess:string,kind:number){
+  addForm.value.content=mess;
+  addForm.value.kind=kind;
+  const ok=stompClient.sendMessage('/app/chat', addForm.value, { 'content-type': 'application/json'  ,'Authorization': `Bearer ${token}`});
   if(ok){
-    chatList.value.push({content:content.value,kind:1,sendUserId:userId,receiverUserId:props.receiverUserId,createTime:new Date()});
+    chatList.value.push({content:mess,kind:kind,sendUserId:userId,receiverUserId:props.receiverUserId,createTime:formattedNowDateTime()});
   }else {
-    chatList.value.push({content:content.value,kind:1,sendUserId:userId,receiverUserId:props.receiverUserId,createTime:new Date()});
+    chatList.value.push({content:mess,kind:kind,sendUserId:userId,receiverUserId:props.receiverUserId,createTime:formattedNowDateTime()});
   }
+  //将聊天框最底部
+  // scrollChatToBottom();
 }
-const items = ref([ {}, {}, {}, {}, {}, {}, {}, {}, {} ]);
 function refresh (done) {
   setTimeout(() => {
     console.log(`=------------------refresh---------${queryParams.value.pageNum}----------`)
@@ -84,6 +98,29 @@ function refresh (done) {
     done()
   }, 1000)
 }
+//发送图片
+function onHandImageUrl(imgUrl:string){
+  sendMessage(imgUrl,2);
+}
+//发送聊天详细
+function onHandMessage(){
+  sendMessage(content.value,1);
+  content.value="";
+}
+// 定义滚动到底部的方法
+// const scrollChatToBottom = () => {
+//   nextTick(() => {
+//     const chatContainer = document.querySelector('.q-pull-to-refresh__content');
+//     if (chatContainer) {
+//       chatContainer.scrollTop = chatContainer.scrollHeight;
+//     }
+//   });
+// };
+//
+// // 在组件挂载后立即滚动到底部
+// onMounted(() => {
+//   scrollChatToBottom();
+// });
 </script>
 
 <template>
@@ -97,51 +134,24 @@ function refresh (done) {
 
     <q-card-actions class="scroll">
       <div class="q-pa-md row justify-center" style="width: 100%;height: 400px">
-        <q-pull-to-refresh @refresh="refresh" style="width:100%">
+        <q-pull-to-refresh @refresh="refresh" style="width:100%" class="pull-to-refresh">
           <div style="width: 100%;">
-<!--            <q-chat-message-->
-<!--              label="Sunday, 19th"-->
-<!--            />-->
-<!--            <q-chat-message-->
-<!--              name="me"-->
-<!--              avatar="https://cdn.quasar.dev/img/avatar3.jpg"-->
-<!--              stamp="7 minutes ago"-->
-<!--              sent-->
-<!--              text-color="white"-->
-<!--              bg-color="primary"-->
-<!--            >-->
-<!--              <div>-->
-<!--                Hey there!-->
-<!--              </div>-->
-
-<!--              <div>-->
-<!--                Have you seen Quasar?-->
-<!--                <img src="https://cdn.quasar.dev/img/discord-omq.png" class="my-emoticon">-->
-<!--              </div>-->
-<!--            </q-chat-message>-->
-
-<!--            <q-chat-message-->
-<!--              name="Jane"-->
-<!--              avatar="https://cdn.quasar.dev/img/avatar5.jpg"-->
-<!--              bg-color="amber"-->
-<!--            >-->
-<!--              <q-spinner-dots size="2rem" />-->
-<!--            </q-chat-message>-->
-
             <div v-for="(chat, index) in chatList" :key="index">
               <div v-if="chat.sendUserId == userId">
                 <q-chat-message
                   v-if="chat.kind == 1"
+                  name="me"
                   sent
-                  avatar="https://cdn.quasar.dev/img/avatar4.jpg"
+                  :avatar="getImageUrl(avatar)"
                   :text="[`${chat.content}`]"
                   :stamp="`${timeDifference(chat.createTime)}`"
                   bg-color="grey-2"
                 />
                             <q-chat-message
                               sent
+                              v-if="chat.kind == 2"
                               name="me"
-                              avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+                              :avatar="getImageUrl(avatar)"
                               :stamp="`${timeDifference(chat.createTime)}`"
                               text-color="white"
                               bg-color="primary"
@@ -151,7 +161,7 @@ function refresh (done) {
 <!--                              </div>-->
 
                               <div>
-                                <img src="https://cdn.quasar.dev/img/discord-omq.png" class="chat-image">
+                                <img :src="getImageUrl(chat.content)" class="chat-image">
                               </div>
                             </q-chat-message>
 
@@ -159,14 +169,16 @@ function refresh (done) {
               <div v-if="chat.sendUserId == props.receiverUserId">
                 <q-chat-message
                   v-if="chat.kind == 1"
-                  avatar="https://cdn.quasar.dev/img/avatar4.jpg"
+                  :name="receiverUser.nickname"
+                  :avatar="getImageUrl(receiverUser.avatar)"
                   :text="[`${chat.content}`]"
                   :stamp="`${timeDifference(chat.createTime)}`"
                   bg-color="amber-7"
                 />
                             <q-chat-message
-                              name="me"
-                              avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+                              v-if="chat.kind == 2"
+                              :name="receiverUser.nickname"
+                              :avatar="getImageUrl(receiverUser.avatar)"
                               :stamp="`${timeDifference(chat.createTime)}`"
                               text-color="white"
                               bg-color="amber-7"
@@ -174,9 +186,8 @@ function refresh (done) {
 <!--                              <div>-->
 <!--                                Hey there!-->
 <!--                              </div>-->
-
                               <div>
-                                <img src="https://cdn.quasar.dev/img/discord-omq.png" class="chat-image">
+                                <img :src="getImageUrl(chat.content)" class="chat-image">
                               </div>
                             </q-chat-message>
 
@@ -186,8 +197,6 @@ function refresh (done) {
 
         </q-pull-to-refresh>
       </div>
-
-
     </q-card-actions>
     <q-separator />
     <q-card-actions >
@@ -202,7 +211,17 @@ function refresh (done) {
     <q-separator />
 
     <q-card-actions align="right">
-      <q-btn flat round color="red" icon="send" @click="sendMessage"/>
+      <upload-image @img-url="onHandImageUrl"></upload-image>
+      <q-btn
+        dark-percentage
+        unelevated
+        color="orange"
+        text-color="grey-9"
+        icon="send"
+        style="width: 100px"
+        @click="onHandMessage"
+      />
+<!--      <q-btn flat round color="red" icon="send" @click="sendMessage"/>-->
     </q-card-actions>
   </q-card>
 

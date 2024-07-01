@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { api, tansParams } from 'boot/axios';
 import  cardItemComponent  from 'components/say/cardItemComponent.vue';
-import  addComponents  from 'components/say/addComponents.vue';
+import  addComponents  from 'components/say/addComponent.vue';
 
 const route = useRoute();
 
@@ -92,9 +92,9 @@ const addDialog=ref(false);
     <div class="q-pa-md">
       <q-toolbar class="bg-purple text-white">
         <q-toolbar-title>
-          讨论列表
+          说说列表
         </q-toolbar-title>
-        <q-btn flat round dense icon="add" label="新增讨论"  @click="addDialog=true"/>
+        <q-btn flat round dense icon="add" label="新增说说"  @click="addDialog=true"/>
         <!--      <q-btn flat round dense icon="apps" class="q-mr-xs" />-->
         <!--      <q-btn flat round dense icon="more_vert" />-->
       </q-toolbar>
