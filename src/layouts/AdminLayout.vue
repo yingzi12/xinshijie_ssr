@@ -35,21 +35,9 @@
     >
       <q-scroll-area style="height: calc(100% - 150px);  border-right: 1px solid #ddd">
         <div class="bg-grey-2 text-center q-ma-md">
-            <q-avatar  class="q-mb-sm" size="56px">
-              <q-img
-                :src="getImageUrl(circleUrl)"
-                @error.once="() => { $event.target.src = '/empty.jpg'; }"
-              />
-            </q-avatar>
-            <div class="text-weight-bold">'待登录' </div>
-            <div>
-              xun3357234@24.com
-              <q-icon  name="warning" style="color: red"/>
-            </div>
-            <div >
-              (发送验证邮件)
-            </div>
-            <div>
+          <user-head-component></user-head-component>
+
+          <div>
               <q-btn to="/users/index">个人信息</q-btn>
             </div>
         </div>
@@ -216,10 +204,10 @@ import { onMounted, ref } from 'vue';
 import {useRouter} from "vue-router";
 const router = useRouter(); // 使用 Vue Router 的 useRouter 函数
 const $q = useQuasar();
-const circleUrl=Cookies.get("avatar");
 
 import { useI18n } from 'vue-i18n';
 import { getImageUrl } from 'boot/tools';
+import UserHeadComponent from 'components/users/userHeadComponent.vue';
 const metaData = {
   // sets document title
   title: '心世界网',

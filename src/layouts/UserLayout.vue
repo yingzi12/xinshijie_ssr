@@ -33,20 +33,7 @@
     >
       <q-scroll-area style="height: calc(100%);  border-right: 1px solid #ddd">
         <div class="bg-grey-2 text-center  q-ma-md">
-          <q-avatar  class="q-mb-sm" size="56px">
-            <q-img
-              :src="getImageUrl(circleUrl)"
-              @error.once="() => { $event.target.src = '/empty.jpg'; }"
-            />
-          </q-avatar>
-          <div class="text-weight-bold">'待登录' </div>
-          <div>
-            xun3357234@24.com
-            <q-icon  name="warning" style="color: red"/>
-          </div>
-          <div >
-            (发送验证邮件)
-          </div>
+          <user-head-component></user-head-component>
           <div>
             <q-btn to="/admin/index">管理中心</q-btn>
           </div>
@@ -262,7 +249,10 @@ import { onMounted, ref } from 'vue';
 import {useRouter} from "vue-router";
 import { useI18n } from 'vue-i18n';
 import { getImageUrl } from 'boot/tools';
-const circleUrl=Cookies.get("avatar");
+import UserHeadComponent from 'components/users/userHeadComponent.vue';
+const avatar=Cookies.get("avatar");
+const userId = Cookies.get('userId');
+const nickName = Cookies.get('nickName');
 
 const metaData = {
   // sets document title

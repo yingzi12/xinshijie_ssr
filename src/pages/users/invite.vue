@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import {ref} from "vue";
-import { Cookies } from 'quasar'
-const inviteUrl = ref(`https://user.aiavr.uk/index?invite=234234`);
+import { Cookies } from 'quasar';
+const userInfo = Cookies.get('userInfo');
+const inviteUrl = ref(`https://www.aiavr.com/index?invite=${userInfo.inviteCode}`);
 const textToCopy = ref(null);
 
 const copyToClipboard = async () => {
