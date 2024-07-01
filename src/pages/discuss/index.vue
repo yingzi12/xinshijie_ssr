@@ -131,10 +131,24 @@ function onChange(type) {
         <q-toolbar-title>
           讨论列表
         </q-toolbar-title>
+<!--        <q-input rounded outlined v-model="queryParams.title" label="搜索..." />-->
         <q-btn flat round dense icon="add" label="新增讨论"  to="/discuss/create"/>
         <!--      <q-btn flat round dense icon="apps" class="q-mr-xs" />-->
         <!--      <q-btn flat round dense icon="more_vert" />-->
       </q-toolbar>
+<!--      <div class="row no-wrap shadow-1">-->
+<!--        <q-toolbar class="col-8 bg-grey-3">-->
+<!--          <q-btn flat round dense icon="menu" />-->
+<!--          <q-toolbar-title>人气 </q-toolbar-title>-->
+<!--          <q-input rounded outlined v-model="queryParams.title" label="搜索..." />-->
+<!--          <q-btn flat round dense icon="search" />-->
+<!--        </q-toolbar>-->
+<!--        <q-toolbar class="col-4 bg-primary text-white">-->
+<!--          <q-space />-->
+<!--          <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />-->
+<!--          <q-btn flat round dense icon="more_vert" />-->
+<!--        </q-toolbar>-->
+<!--      </div>-->
       <div>
         <q-tabs
           v-model="queryParams.types"

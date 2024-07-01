@@ -21,6 +21,7 @@ interface Discuss {
   title: string;
   circleUrl:string;
   createName:string;
+  createId:string;
   createTime:string;
   nickname:string;
   source:number;
@@ -53,6 +54,9 @@ function routerDetail() {
     router.push(`/discuss/detail?did=${props.value.id}&wid=${props.value.wid}&sid=${props.value.sid}&wname=${props.value.wname}&sid=${props.value.sname}&source=${props.value.source}`)
   }
 }
+function onRouterDetail() {
+  router.push("/say/user?userId="+ props.value.createId);
+}
 </script>
 
 <template>
@@ -69,7 +73,7 @@ function routerDetail() {
               </q-avatar>
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{ props.value.nickname }}</q-item-label>
+              <q-item-label @click="onRouterDetail()">{{ props.value.nickname }}</q-item-label>
 <!--              <q-item-label caption>2 new messages</q-item-label>-->
             </q-item-section>
             <q-item-section side>

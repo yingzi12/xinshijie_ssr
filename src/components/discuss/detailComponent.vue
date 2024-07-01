@@ -3,7 +3,9 @@ import { api } from 'boot/axios';
 import { defineProps, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { getImageUrl } from 'boot/tools';
+import { useRouter } from 'vue-router';
 const $q = useQuasar();
+const router = useRouter()
 
 const props = defineProps({
   did: {
@@ -24,7 +26,9 @@ async function getDetail() {
   }
 }
 getDetail();
-
+function onRouterDetail() {
+  router.push("/say/user?userId="+ value.value.createId);
+}
 </script>
 
 <template>
@@ -55,7 +59,7 @@ getDetail();
           </q-avatar>
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ value.nickname }}</q-item-label>
+          <q-item-label @click="onRouterDetail">{{ value.nickname }}</q-item-label>
           <q-item-label caption>{{ value.createTime }}</q-item-label>
         </q-item-section>
       </q-item>
