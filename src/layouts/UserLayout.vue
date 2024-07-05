@@ -55,7 +55,21 @@
               {{ $t(`user.personalInfo`) }}
             </q-item-section>
           </q-item>
+          <q-item v-ripple
+                  :active="link === 'say'"
+                  active-class="my-menu-link"
+                  clickable
+                  to="/users/say"
+                  @click="link = 'say'"
+          >
+            <q-item-section avatar>
+              <q-icon name="favorite_border"/>
+            </q-item-section>
 
+            <q-item-section>
+              {{ $t(`user.mySay`) }}
+            </q-item-section>
+          </q-item>
           <q-item v-ripple
                   :active="link === 'attention'"
                   active-class="my-menu-link"

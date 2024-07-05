@@ -3,8 +3,6 @@ import {Cookies, useQuasar} from 'quasar'
 import {reactive, ref, toRefs} from "vue";
 import { api } from "boot/axios";
 import { getImageUrl, tansParams } from 'boot/tools';
-
-
 const $q = useQuasar();
 
 const token = Cookies.get('token');

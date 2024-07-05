@@ -150,4 +150,5 @@ getDetail();
 .my-card
   width: 100%
   max-width: 350px
+  height: 100%
 </style>

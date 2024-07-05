@@ -3,6 +3,8 @@ import { reactive, ref, toRefs } from 'vue';
 import { Cookies, Dialog, Notify } from 'quasar';
 import { compressIfNeededBatch, getImageUrl } from 'boot/tools';
 import { api } from 'boot/axios';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const circleUrl=Cookies.get("avatar");
 
@@ -10,15 +12,14 @@ const data = reactive({
   addForm: {
     types:2,
     content:"",
-    urls:"",
+    urls:"[]",
+    avatar:"",
+    userNickname:"",
   }
 });
 const { addForm } = toRefs(data);
 const fileList=ref([]);
 
-function  log (desert) {
-  // console.log(`${desert} has been removed`)
-}
 const fileInput = ref(null);
 
 async function uploadIt() {
@@ -107,7 +108,8 @@ async function simulateUploadImage(files: FileList) {
   }
   const response = await api.put( '/admin/image/uploadBatch',  formData,{
     headers: {
-      'Content-Type': 'multipart/form-data' // 实际上通常不需要手动设置，这里仅作示例
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${Cookies.get("token")}`
     }
   });
   const data = await response.data; // 确保使用 await 等待 json 解析完成
@@ -144,7 +146,8 @@ async function simulateUploadVideo(files: FileList) {
   }
   const response = await api.put( '/admin/file/uploadBatch',  formData,{
     headers: {
-      'Content-Type': 'multipart/form-data' // 实际上通常不需要手动设置，这里仅作示例
+      'Content-Type': 'multipart/form-data' ,
+      'Authorization': `Bearer ${Cookies.get("token")}`
     }
   });
   const data = await response.data; // 确保使用 await 等待 json 解析完成
@@ -191,10 +194,14 @@ async function onSubmit() {
   }
   addForm.value.urls=JSON.stringify(fileList.value);
   const response = await api.post('/user/say/add', JSON.stringify(addForm.value), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json'  ,
+      'Authorization': `Bearer ${Cookies.get("token")}`
+    },
   });
   const data = response.data;
   if (data.code === 200) {
+    router.go(0);
     Dialog.create({
       title: '提示',
       message: '说说成功',
@@ -268,25 +275,23 @@ function onRemove(index){
 
   </q-card-section>
   <q-card-section>
-    <div class="q-col-gutter-md row items-start">
-      <div class="col-4"
-        v-for="(value,index) in fileList"
-        :key="index"
-           style="min-width: 130px;min-height: 150px;"
-      >
-        <q-card style="width: 100%">
-          <q-img  :src="getImageUrl(value.imgUrl)" style="min-width: 130px;min-height: 150px;"
-                  @error.once="() => { $event.target.src = '/empty.jpg'; }"
-          />
-          <q-btn  round   class="absolute" color="primary" icon="close"  size="xs"  style="top: 0; right: 0px; transform: translateY(-0%);" @click="onRemove(index)"/>
+        <div class="row" >
+          <div  class="col-4 q-pa-xs" v-for="(value,index) in fileList" :key="index">
+            <q-card style="width: 100%">
+              <q-img  v-if="value.type != 2 " :src="getImageUrl(value.imgUrl)"
+                      fit="contain"
+                      style="min-width: 130px;min-height: 150px;"
+                      @error.once="() => { $event.target.src = '/empty.jpg'; }"
+              />
+              <q-video v-if="value.type== 2 "
+                       :src="getImageUrl(value.imgUrl)"
+              />
+              <q-btn  round   class="absolute" color="primary" icon="close"  size="xs"  style="top: 0; right: 0px; transform: translateY(-0%);" @click="onRemove(index)"/>
 
-        </q-card>
-        <q-video v-if="value.type== 2 " v-model="value.stauts" @remove="log('Icecream')"
-                 :src="getImageUrl(value.imgUrl)"
-                 @error.once="() => { $event.target.src = '/empty.jpg'; }"
-        />
-      </div>
-    </div>
+            </q-card>
+
+          </div>
+        </div>
   </q-card-section>
 </q-card>
 </template>

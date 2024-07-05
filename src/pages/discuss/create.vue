@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, toRefs } from 'vue';
-import { Dialog, Notify, useQuasar } from 'quasar';
+import { Dialog, useQuasar } from 'quasar';
 import { api } from 'boot/axios';
 import editorTextComponent from 'components/common/editorTextComponent.vue';
 import { useRoute, useRouter } from 'vue-router';
