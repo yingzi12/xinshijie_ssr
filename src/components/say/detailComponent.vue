@@ -24,7 +24,14 @@ async function getDetail() {
   }
 }
 getDetail();
-
+function getUrls() {
+  if(value.value != undefined && value.value.urls!=undefined){
+  //转成json数组
+  return JSON.parse(value.value.urls);
+  }else{
+    return [];
+  }
+}
 </script>
 
 <template>
@@ -62,8 +69,21 @@ getDetail();
     </q-item-section>
     <q-card-section>
       <div v-html="value.content"></div>
-
-<!--      <q-item-label class="five-line-clamp" caption>{{ value.commentZip }}</q-item-label>-->
+    </q-card-section>
+    <q-card-section >
+      <div class="row" >
+        <div  class="col q-pa-xs" v-for="(url,index) in getUrls()" :key="index">
+          <q-img          fit="contain"
+                          v-if="url.type != 2 "
+                          :src="getImageUrl(url.imgUrl)"
+                          @error.once="() => { $event.target.src = '/empty.jpg'; }"
+                          style="height: 250px"
+          />
+          <q-video v-if="url.type== 2 "
+                   :src="getImageUrl(url.imgUrl)"
+          />
+        </div>
+      </div>
     </q-card-section>
 
     <q-separator dark />

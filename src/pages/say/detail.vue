@@ -14,7 +14,7 @@
     </div>
     <div class="q-pa-md">
       <q-infinite-scroll @load="onLoad" :offset="250">
-        <q-list bordered >
+        <q-list>
         <q-card class="bg-grey-2 q-pa-sm" v-for="(value,index) in commentList" :key="index">
           <common-item-component :value="value"></common-item-component>
         </q-card>

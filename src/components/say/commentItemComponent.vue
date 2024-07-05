@@ -4,8 +4,6 @@ import addReplyCommonComponent from 'components/say/addReplyCommentComponent.vue
 import replyCommonItemComponent from 'components/say/replyCommentItemComponent.vue';
 import moreCommentComponent from 'components/say/moreCommentComponent.vue';
 import { getImageUrl } from 'boot/tools';
-
-
 interface Comment {
   usid: string;
   id: string;
@@ -61,9 +59,7 @@ function onMore(){
 </script>
 
 <template>
-  <q-item
-    v-ripple
-  >
+  <q-item>
     <q-item-section avatar top>
       <q-avatar rounded size="48px">
         <q-img

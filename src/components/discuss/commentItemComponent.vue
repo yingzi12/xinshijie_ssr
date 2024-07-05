@@ -65,9 +65,7 @@ function onMore(){
 </script>
 
 <template>
-  <q-item
-    v-ripple
-  >
+  <q-item>
     <q-item-section avatar top>
       <q-avatar rounded size="48px">
         <q-img

@@ -33,10 +33,7 @@ const commentHide = ref(false);
 </script>
 
 <template>
-  <q-item
-    clickable
-    v-ripple
-  >
+  <q-item>
     <q-item-section avatar top>
       <q-avatar rounded size="48px">
         <q-img
