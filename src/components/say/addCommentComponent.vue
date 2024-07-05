@@ -3,7 +3,10 @@ import { Cookies, Dialog, useQuasar } from 'quasar';
 import { defineProps, reactive, toRefs } from 'vue';
 import { api } from 'boot/axios';
 import { getImageUrl } from 'boot/tools';
+import { useRouter } from 'vue-router';
 const $q = useQuasar();
+const router = useRouter();
+
 const data = reactive({
   addForm: {
     usid: "",
@@ -43,6 +46,8 @@ async function onSubmit() {
   });
   const data = response.data;
   if (data.code === 200) {
+    router.go(0);
+
     Dialog.create({
       title: '提示',
       message: '评论成功',
