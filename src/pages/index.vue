@@ -449,7 +449,7 @@ async function getWorldList(nowTecType: number) {
   if(nowTecType != -1){
     queryParams.value.recType = nowTecType;
   }else{
-    queryParams.value.recType = null;
+    queryParams.value.recType = "";
   }
   queryParams.value.pageSize=RecommendEnums[nowTecType].max;
   try {
@@ -457,8 +457,11 @@ async function getWorldList(nowTecType: number) {
     if (response.data.code == 200) {
       // total.value = response.data.total;
       // maxPage.value=  total.value/10+1;
-      if(nowTecType==1){
+      if(nowTecType == 1){
         homeWorldList.value = response.data.data;
+        if(homeWorldList.value.length>0){
+          slide.value=homeWorldList.value[0].id;
+        }
       }
       //编辑推荐
       if(nowTecType==2){
