@@ -145,10 +145,10 @@
             </q-toolbar>
             <q-item v-for="(story,index) in excellentStoryList" :key="index" :to="{ path: '/story/detail', query: { sid: story.sid }}">
               <q-item-section avatar>
-                <img
+                <q-img
                   @click="routerStory(story.wid)"
                   class="small-head-image"
-                  :src="getImageUrl(world.imgUrl)" @error.once="e => { e.target.src = `/empty.jpg` }"
+                  :src="getImageUrl(story.imgUrl)" @error.once="e => { e.target.src = `/empty.jpg` }"
                 />
               </q-item-section>
 
