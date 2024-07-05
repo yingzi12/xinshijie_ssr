@@ -63,7 +63,7 @@ async function handUser() {
   }
 }
 handUser();
-const brokerURL = 'ws://127.0.0.1:8099/ws';
+const brokerURL = 'ws://socket.aiavr.com/ws';
 const stompClient = new StompClient(brokerURL);
 // 连接并等待成功后再发送消息
 stompClient.connect().then(() => {
