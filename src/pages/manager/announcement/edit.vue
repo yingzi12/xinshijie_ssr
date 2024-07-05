@@ -3,6 +3,11 @@ import { api, tansParams } from 'boot/axios';
 import { reactive, ref, toRefs } from 'vue';
 import { Dialog } from 'quasar';
 import editorTextComponent from 'components/common/editorTextComponent.vue';
+import { useRoute, useRouter } from 'vue-router';
+const route = useRoute();
+const router = useRouter();
+
+const id = ref(route.query.id);
 
 const charge=ref(1);
 const chargeList = [
@@ -15,6 +20,7 @@ const chargeList = [
 ]
 const data = reactive({
   addForm: {
+    id:0,
     title:"",
     tags:"",
     intro:"",
@@ -30,7 +36,7 @@ const data = reactive({
 const total = ref(0);
 const { addForm,queryParams } = toRefs(data);
 async function onAddValue() {
-  const response = await api.post("/wiki/announcement/add", JSON.stringify(addForm.value),{
+  const response = await api.post("/wiki/announcement/edit", JSON.stringify(addForm.value),{
     headers: {
       'Content-Type': 'application/json',},
   });
@@ -49,23 +55,20 @@ async function onAddValue() {
     });
   }
 }
-function updateCharge(charge: number) {
-  // recType.value=charge;
-}
-const valueList=ref([]);
-async function getValueList() {
-  try {
-    const response = await api.get('/wiki/announcement/list?' + tansParams(queryParams.value));
-    if (response.data.code == 200) {
-      // total.value = response.data.total;
-      // maxPage.value=  total.value/10+1;
-      valueList.value = response.data.data;
-    }
-  } catch (error) {
-    console.error('Error fetching images:', error);
+
+
+async function onDetail() {
+  const response = await api.get(`/wiki/announcement/getInfo/${id.value}`,{
+    headers: {
+      'Content-Type': 'application/json',},
+  });
+  const data = response.data;
+  if (data.code == 200) {
+    addForm.value=data.data;
+    console.log(addForm.value.content)
   }
 }
-getValueList();
+onDetail();
 </script>
 
 <template>
@@ -134,7 +137,7 @@ getValueList();
           label="简介 *"
           lazy-rules
         />
-        <editor-text-component :content="addForm.content" @editor="args => addForm.content=args"></editor-text-component>
+        <editor-text-component :key="addForm.id" :content="addForm.content" @editor="args => addForm.content=args"></editor-text-component>
       </q-card-section>
 
       <q-separator />
@@ -145,40 +148,6 @@ getValueList();
         </div>
       </q-card-actions>
     </q-card>
-  </div>
-  <div class="q-pa-md">
-    <div class="q-pa-md">
-      <div class="row no-wrap shadow-1">
-        <q-toolbar class="col-8 bg-grey-3">
-          <q-btn flat round dense icon="menu" />
-          <q-toolbar-title>人气 </q-toolbar-title>
-          <q-select v-model="charge" :options="chargeList" emit-value hint="分类" label="分类"
-                    map-options
-                    outlined
-                    @update:modelValue="updateCharge"/>
-<!--          <q-input rounded outlined v-model="seach" label="搜索..." />-->
-          <q-btn flat round dense icon="search" />
-        </q-toolbar>
-        <q-toolbar class="col-4 bg-primary text-white">
-          <q-space />
-          <q-btn flat round dense icon="bluetooth" class="q-mr-sm" />
-          <q-btn flat round dense icon="more_vert" />
-        </q-toolbar>
-      </div>
-    </div>
-    <div class="q-pa-md q-gutter-md">
-      <q-list bordered padding class="rounded-borders">
-        <q-item v-for="(value,index) in valueList" :key="index" to="/admin/story/info">
-          <q-item-section>
-            <q-item-label class="one-line-clamp">{{value.title}}({{value.id}})</q-item-label>
-            <q-item-label class="three-line-clamp">{{value.intro}}</q-item-label>
-            <q-item-label class="one-line-clamp text-weight-thin text-overline">{{value.createTime}}</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-separator spaced />
-
-      </q-list>
-    </div>
   </div>
 </template>
 

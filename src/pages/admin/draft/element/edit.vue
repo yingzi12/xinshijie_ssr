@@ -344,7 +344,7 @@ const handleCidList = (selectedIds) => {
                   </div>
                 </q-card-section>
                 <q-card-actions>
-                  <editor-text-component      v-if="isContentLoaded"  :content="content.contentZip" @editor="args => content.contentZip=args"></editor-text-component>
+                  <editor-text-component      v-if="isContentLoaded"  :key="content.id" :content="content.contentZip" @editor="args => content.contentZip=args"></editor-text-component>
                 </q-card-actions>
               </q-card>
             </q-card-actions>

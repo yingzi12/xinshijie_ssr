@@ -338,7 +338,7 @@ handValue();
                   </div>
                 </q-card-section>
                 <q-card-actions>
-                  <editor-text-component :content="content.contentZip" @editor="args => content.contentZip=args"></editor-text-component>
+                  <editor-text-component :key="content.id" :content="content.contentZip" @editor="args => content.contentZip=args"></editor-text-component>
                 </q-card-actions>
               </q-card>
             </q-card-actions>

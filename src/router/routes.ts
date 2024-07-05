@@ -132,10 +132,11 @@ const routes: RouteRecordRaw[] = [
     path: '/manager',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/manager/index.vue') },
+      { path: '', component: () => import('pages/manager/announcement/index.vue') },
       { path: 'hearWorldModule', component: () => import('pages/manager/hearWorldModule.vue') },
       { path: 'hearStoryModule', component: () => import('pages/manager/hearStoryModule.vue') },
-      { path: 'announcement', component: () => import('pages/manager/announcement.vue') },
+      { path: 'announcement', component: () => import('pages/manager/announcement/index.vue') },
+      { path: 'editAnnouncement', component: () => import('pages/manager/announcement/edit.vue') },
       { path: 'classify', component: () => import('pages/manager/classify.vue') },
     ],
   },
