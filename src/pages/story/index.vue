@@ -1,8 +1,9 @@
 <template>
   <q-page  >
-<!--    <q-tabs v-model="seach" shrink stretch>-->
-<!--      <q-input name="title" label="搜索" v-model="title" style="width: 600px"  @keyup.enter="getList(1)"/>          <q-icon name="search" @click="getList(1)"/>-->
-<!--    </q-tabs>-->
+    <q-tabs shrink stretch>
+      <q-input v-model="title" :label="$t('search') " name="title" style="width: 600px" @keyup.enter="search()"/>
+      <q-icon name="search" @click="search()"/>
+    </q-tabs>
     <div class="row" >
       <div  class="col div-center" style="min-width: 250px">
         <div class="q-pa-md q-gutter-md  div-center-child">
@@ -368,7 +369,9 @@ getTypeRecommendStoryList();
 function routerStory(sid){
   router.push("/story/detail?sid="+sid);
 }
-
+function search(){
+  router.push(`/story/order?title=${title.value}`)
+}
 </script>
 <style lang="sass" scoped>
 .custom-caption

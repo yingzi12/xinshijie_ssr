@@ -94,7 +94,7 @@
             <q-toolbar class="col-8 bg-grey-3">
               <!--              <q-btn flat round dense icon="menu" />-->
               <q-toolbar-title>统计（{{total}}） </q-toolbar-title>
-              <q-input rounded outlined v-model="seach" label="搜索..." />
+              <q-input rounded outlined v-model="title" label="搜索..." />
               <q-btn flat round dense icon="search" />
             </q-toolbar>
             <q-toolbar class="col-4 bg-primary text-white">
@@ -132,14 +132,16 @@
 import { reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
 import { useQuasar } from 'quasar';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import storyListDetailComponent from 'components/story/storyListDetailComponent.vue';
-
-const $q = useQuasar();
+const route = useRoute()
 const router = useRouter()
 
+const title = ref(route.query.title);
+
+const $q = useQuasar();
+
 const splitterModel= ref(200); // start at 150px
-const seach=ref("");
 const order=ref(-1);
 const types=ref(-1);
 
@@ -148,7 +150,7 @@ const data = reactive({
     pageNum: 1,
     pageSize: 20,
     types:-1,
-    name:null,
+    name:"",
     orderBy:-1,
   }
 });
@@ -162,9 +164,7 @@ const  total= ref(0);
 //有多少页
 const  maxPage=ref(0);
 async function getStoryList() {
-  if(seach.value != null && seach.value != '' ){
-    queryParams.value.name = seach.value;
-  }
+  queryParams.value.name = title.value;
   queryParams.value.pageNum=current.value
   queryParams.value.orderBy=order.value;
   queryParams.value.types=types.value;

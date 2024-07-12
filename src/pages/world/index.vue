@@ -1,5 +1,9 @@
 <template>
   <q-page  >
+    <q-tabs shrink stretch>
+      <q-input v-model="title" :label="$t('search') " name="title" style="width: 600px" @keyup.enter="search()"/>
+      <q-icon name="search" @click="search()"/>
+    </q-tabs>
     <div class="row" >
       <div  class="col div-center" style="min-width: 250px">
         <div class="q-pa-md q-gutter-md  div-center-child">
@@ -363,7 +367,9 @@ getTypeRecommendWorldList();
 function routerWorld(wid){
   router.push("/world/detail?wid="+wid);
 }
-
+function search(){
+  router.push(`/world/order?title=${title.value}`)
+}
 </script>
 <style lang="sass" scoped>
 .custom-caption
