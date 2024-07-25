@@ -93,9 +93,11 @@
           <div class="text-h6">简介</div>
           <q-separator   />
           <div>
-          <pre style="white-space: pre-wrap; word-break: break-word; width: 100%;">
-          {{story.descriptionZip}}
-          </pre>
+<!--          <pre style="white-space: pre-wrap; word-break: break-word; width: 100%;">-->
+<!--          {{story.descriptionZip}}-->
+<!--          </pre>-->
+            <div v-html="story.descriptionZip"></div>
+
           </div>
         </div>
         <q-card flat bordered style="width: 100%" >

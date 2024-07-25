@@ -116,9 +116,9 @@
         <div class="text-h6">简介</div>
         <q-separator   />
         <div>
-          <pre style="white-space: pre-wrap; word-break: break-word; width: 100%;">
-          {{world.descriptionZip}}
-          </pre>
+<!--          <pre style="white-space: pre-wrap; word-break: break-word; width: 100%;">-->
+            <div v-html="world.descriptionZip"></div>
+<!--          </pre>-->
         </div>
       </div>
       <commont-list-component :wid="wid" :source="1"></commont-list-component>
