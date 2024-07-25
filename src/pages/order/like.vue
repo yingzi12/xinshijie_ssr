@@ -182,8 +182,20 @@ function onStoryTypes(or:number){
     </q-tabs>
     <q-toolbar class="bg-blue text-white">
       <q-toolbar-title>
-      <q-input v-if="types == 'story'" v-model="storyQueryParams.name" label="搜索" @click="getStoryList"></q-input>
-      <q-input v-if="types == 'world'" v-model="worldQueryParams.name"  label="搜索" @click="worldQueryParams"></q-input>
+        <q-input v-if="types == 'story'"  filled bottom-slots v-model="storyQueryParams.name" label="查询" counter @keyup.enter="getStoryList" >
+          <template v-slot:append>
+            <q-icon v-if="storyQueryParams.name !== ''" name="close" @click="storyQueryParams.name = ''" class="cursor-pointer" />
+            <q-icon name="search"         @click="getStoryList" />
+          </template>
+        </q-input>
+        <q-input v-if="types == 'world'" filled bottom-slots v-model="worldQueryParams.name" label="查询" counter @keyup.enter="worldQueryParams" >
+          <template v-slot:append>
+            <q-icon v-if="worldQueryParams.name !== ''" name="close" @click="worldQueryParams.name = ''" class="cursor-pointer" />
+            <q-icon name="search"         @click="getStoryList" />
+          </template>
+        </q-input>
+<!--      <q-input v-if="types == 'story'" v-model="storyQueryParams.name" label="搜索" @click="getStoryList"></q-input>-->
+<!--      <q-input v-if="types == 'world'" v-model="worldQueryParams.name"  label="搜索" @click="worldQueryParams"></q-input>-->
       </q-toolbar-title>
     </q-toolbar>
     </div>

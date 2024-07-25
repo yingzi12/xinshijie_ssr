@@ -94,8 +94,14 @@
             <q-toolbar class="col-8 bg-grey-3">
 <!--              <q-btn flat round dense icon="menu" />-->
               <q-toolbar-title>统计（{{total}}） </q-toolbar-title>
-              <q-input rounded outlined v-model="title" label="搜索..." />
-              <q-btn flat round dense icon="search" />
+<!--              <q-input rounded outlined v-model="title" label="搜索..." />-->
+              <q-input filled bottom-slots v-model="title" label="查询" counter @keyup.enter="getWorldList" >
+                <template v-slot:append>
+                  <q-icon v-if="title !== ''" name="close" @click="title = ''" class="cursor-pointer" />
+                  <q-icon name="search"         @click="getWorldList" />
+                </template>
+              </q-input>
+              <q-btn flat round dense icon="search"  @click="getWorldList" />
             </q-toolbar>
             <q-toolbar class="col-4 bg-primary text-white">
               <q-space />
