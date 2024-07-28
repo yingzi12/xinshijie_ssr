@@ -7,17 +7,8 @@ import HeadTableComponent from 'components/HeadTableComponent.vue';
 import HeadComponent from 'components/HeadComponent.vue';
 import { storyOrdermenuList, storyTypes, worldOrdermenuList, worldTypes } from 'boot/consts';
 const drawer= ref(false);
-const order=ref(-1);
-const  types= ref(-1);
-
 const  classical= ref('world');
-
 const  dateType= ref('week');
-const  orderBy= ref(-1);
-
-const  worldType= ref(-1);
-const  storyType= ref(-1);
-
 const storyCurrent = ref(0);
 
 const storyTotal = ref(0);
@@ -87,7 +78,6 @@ async function getWorldList() {
 }
 getWorldList();
 function onOrder(or:number) {
-  orderBy.value=or;
   if (classical.value == "world") {
     worldQueryParams.value.orderBy=or;
     getWorldList();
@@ -97,19 +87,15 @@ function onOrder(or:number) {
   }
 }
 function onWorldTypes(or:number){
-  worldType.value=or;
   getWorldList();
 }
 function onStoryTypes(or:number){
-  storyType.value=or;
   getStoryList();
 }
 function onWorldOrder(or:number){
-  worldType.value=or;
   getWorldList();
 }
 function onStoryOrder(or:number){
-  storyType.value=or;
   getStoryList();
 }
 </script>
@@ -184,7 +170,7 @@ function onStoryOrder(or:number){
             mobile-arrows
             class="bg-orange text-white shadow-2"
           >
-            <q-tab outline color="brown" name="-1" label="分类" />
+            <q-tab outline color="brown" :name="-1" label="分类" />
             <q-tab outline color="brown" v-for="(worldType, index) in worldTypes" :key="index" :name="worldType.id" :label="worldType.name" @click="onWorldTypes(worldType.id)"/>
 
           </q-tabs>
@@ -197,7 +183,7 @@ function onStoryOrder(or:number){
             mobile-arrows
             class="bg-orange text-white shadow-2"
           >
-            <q-tab outline color="brown" name="-1" label="分类" />
+            <q-tab outline color="brown" :name="-1" label="分类" />
             <q-tab outline color="brown" v-for="(storyType, index) in storyTypes" :key="index" :name="storyType.id" :label="storyType.name" @click="onStoryTypes(storyType.id)"/>
 
           </q-tabs>
