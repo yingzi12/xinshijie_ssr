@@ -52,29 +52,8 @@
           <q-chip clickable size="xs"  :color="types == -1 ? 'orange':'grey'" @click="onTypes(-1)">
             全部
           </q-chip>
-          <q-chip clickable size="xs"  :color="types == 1 ? 'orange':'grey'" @click="onTypes(1)">
-            武侠
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 2 ? 'orange':'grey'" @click="onTypes(2)">
-            仙侠
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 3 ? 'orange':'grey'" @click="onTypes(3)">
-            魔幻
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 4 ? 'orange':'grey'" @click="onTypes(4)">
-            神话
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 5 ? 'orange':'grey'" @click="onTypes(5)">
-            灵异
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 6 ? 'orange':'grey'" @click="onTypes(6)">
-            科技
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 7 ? 'orange':'grey'" @click="onTypes(7)">
-            超能力/异能
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 8 ? 'orange':'grey'" @click="onTypes(8)">
-            其他
+          <q-chip clickable size="xs" v-for="(worldType, index) in worldTypes" :key="index" :color="worldType.id == 1 ? 'orange':'grey'" @click="onTypes(worldType.id)">
+            {{worldType.name}}
           </q-chip>
         </div>
         <q-separator spaced />
@@ -139,6 +118,7 @@ import { reactive, ref, toRefs } from 'vue';
 import { api, tansParams } from 'boot/axios';
 import { useRoute, useRouter } from 'vue-router';
 import worldListDetailComponent from 'components/world/worldListDetailComponent.vue';
+import { storyTypes, worldTypes } from 'boot/consts';
 
 const router = useRouter();
 const route = useRoute()

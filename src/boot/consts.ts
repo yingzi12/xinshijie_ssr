@@ -536,3 +536,93 @@ export const worldTypeMap = [
     value: 5
   }
 ]
+export const worldOrdermenuList = [
+  {
+    icon: 'brightness_4',
+    label: '等级',
+    order: 1,
+    separator: true
+  },
+  {
+    icon: 'adjust',
+    label: '评分',
+    order: 2,
+    separator: true
+  },
+  {
+    icon: 'adjust',
+    label: '点击',
+    order: 3,
+    separator: true
+  },
+  {
+    icon: 'delete',
+    label: '关注',
+    order: 4,
+    separator: false
+  },
+  {
+    icon: 'favorite',
+    label: '喜欢',
+    order: 5,
+    separator: false
+  },
+  {
+    icon: 'remove_red_eye',
+    label: '观看',
+    order: 6,
+    separator: false
+  },
+
+  {
+    icon: 'thumb_up',
+    label: '点赞',
+    order: 7,
+    separator: true
+  }
+]
+export const storyOrdermenuList = [
+  {
+    icon: 'brightness_4',
+    label: '等级',
+    order: 1,
+    separator: true
+  },
+  {
+    icon: 'adjust',
+    label: '评分',
+    order: 2,
+    separator: true
+  },
+  {
+    icon: 'adjust',
+    label: '点击',
+    order: 3,
+    separator: true
+  },
+  {
+    icon: 'delete',
+    label: '关注',
+    order: 4,
+    separator: false
+  },
+  {
+    icon: 'favorite',
+    label: '喜欢',
+    order: 5,
+    separator: false
+  },
+  {
+    icon: 'remove_red_eye',
+    label: '观看',
+    order: 6,
+    separator: false
+  },
+
+  {
+    icon: 'thumb_up',
+    label: '点赞',
+    order: 7,
+    separator: true
+  }
+]

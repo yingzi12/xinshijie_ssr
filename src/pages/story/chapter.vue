@@ -79,7 +79,8 @@ watch(() => route.query.cid, async (newCid, oldCid) => {
       <q-breadcrumbs-el :label="wname" icon="navigation"  :to="{ path: '/world/detail', query: { wid: wid ,wname: wname,source: 1 }}" />
       <q-breadcrumbs-el label="世界小说" icon="navigation" :to="{ path: '/world/story', query: { wid: wid ,wname: wname,source: 1 }}"/>
       <q-breadcrumbs-el label="小说列表" icon="navigation" :to="{ path: '/story/order'}" />
-      <q-breadcrumbs-el :label="sname" icon="navigation" :to="{ path: '/world/story', query: { wid: wid ,wname: wname,sid: sid ,sname: sname,source: 2 }}"/>
+      <q-breadcrumbs-el label="小说详细" icon="navigation" :to="{ path: '/story/detail', query: { wid: wid ,wname: wname,sid: sid ,sname: sname,source: 2 }}" />
+      <q-breadcrumbs-el :label="sname" icon="navigation" :to="{ path: '/story/detail', query: { wid: wid ,wname: wname,sid: sid ,sname: sname,source: 2 }}"/>
     </q-breadcrumbs>
     <!-- 添加加载提示 -->
     <div v-if="loading" class="full-screen-loader">

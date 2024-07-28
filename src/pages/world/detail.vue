@@ -12,7 +12,7 @@
     <q-breadcrumbs-el label="首页" icon="home" to="/"/>
     <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
     <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-    <q-breadcrumbs-el label="我的世界" icon="description"  to="/world/detail"/>
+    <q-breadcrumbs-el label="我的世界" icon="description"/>
 
   </q-breadcrumbs>
   <q-card class="my-card" flat bordered>

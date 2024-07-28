@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 文件选择处理
 import { Dialog, Notify, useQuasar } from 'quasar';
-import { defineEmits, defineProps, PropType, ref, watch } from 'vue';
+import { defineEmits, defineProps, ref } from 'vue';
 import { api } from 'boot/axios';
 import { compressIfNeededBatch } from 'boot/tools';
 

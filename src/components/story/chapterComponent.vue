@@ -27,7 +27,7 @@ const props = defineProps({
 const data = reactive({
   queryParams: {
     pageNum: 1,
-    pageSize: 100,
+    pageSize: 500,
     title: "",
     types: -1,
     pid:0,

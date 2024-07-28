@@ -34,9 +34,10 @@ const chargeList = [
       <q-breadcrumbs-el label="小说首页" icon="widgets"  to="/story/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
       <q-breadcrumbs-el label="小说列表" icon="navigation" to="/story/order" />
-      <q-breadcrumbs-el label="这个是世界名称" icon="navigation"  to="/world/detail"/>
-      <q-breadcrumbs-el label="世界小说" icon="navigation"  to="/world/story"/>
-      <q-breadcrumbs-el label="这个是小说名称" icon="navigation"  to="/story/detail"/>
+      <q-breadcrumbs-el :label="wname" icon="navigation" :to="{ path: '/world/detail', query: { wid: wid ,wname: wname,source: 1 }}" />
+      <q-breadcrumbs-el label="世界小说" icon="navigation" :to="{ path: '/world/story', query: { wid: wid ,wname: wname,source: 1 }}" />
+      <q-breadcrumbs-el :label="sname" icon="navigation" :to="{ path: '/story/detail', query: { wid: wid ,wname: wname,sid: sid ,wname: sname,source: 1 }}" />
+
       <q-breadcrumbs-el label="章节名称" icon="navigation"  to="/story/chapter"/>
     </q-breadcrumbs>
 

@@ -108,7 +108,7 @@
           </q-card-section>
           <q-separator inset />
 
-          <q-card-section style="max-height: 50vh" class="scroll">
+          <q-card-section  class="scroll">
             <div>
               <chapter-component :sname="story.name" :sid="sid" :wid="story.wid" :wname="story.wname"></chapter-component>
             </div>

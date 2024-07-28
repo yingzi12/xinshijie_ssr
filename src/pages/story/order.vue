@@ -40,10 +40,10 @@
             喜欢
           </q-chip>
           <q-chip clickable size="xs"  :color="order == 6 ? 'orange':'grey'" @click="onOrder(6)">
-            元素
+            观看
           </q-chip>
           <q-chip clickable size="xs"  :color="order == 7 ? 'orange':'grey'" @click="onOrder(7)">
-            故事
+            点赞
           </q-chip>
         </div>
         <q-separator spaced />
@@ -52,29 +52,8 @@
           <q-chip clickable size="xs"  :color="types == -1 ? 'orange':'grey'" @click="onTypes(-1)">
             全部
           </q-chip>
-          <q-chip clickable size="xs"  :color="types == 1 ? 'orange':'grey'" @click="onTypes(1)">
-            武侠
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 2 ? 'orange':'grey'" @click="onTypes(2)">
-            仙侠
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 3 ? 'orange':'grey'" @click="onTypes(3)">
-            魔幻
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 4 ? 'orange':'grey'" @click="onTypes(4)">
-            神话
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 5 ? 'orange':'grey'" @click="onTypes(5)">
-            灵异
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 6 ? 'orange':'grey'" @click="onTypes(6)">
-            科技
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 7 ? 'orange':'grey'" @click="onTypes(7)">
-            超能力/异能
-          </q-chip>
-          <q-chip clickable size="xs"  :color="types == 8 ? 'orange':'grey'" @click="onTypes(8)">
-            其他
+          <q-chip clickable size="xs" v-for="(storyType, index) in storyTypes" :key="index" :color="storyType.id == 1 ? 'orange':'grey'" @click="onTypes(storyType.id)">
+            {{storyType.name}}
           </q-chip>
         </div>
         <q-separator spaced />
@@ -140,6 +119,7 @@ import { api, tansParams } from 'boot/axios';
 import { useQuasar } from 'quasar';
 import { useRoute, useRouter } from 'vue-router';
 import storyListDetailComponent from 'components/story/storyListDetailComponent.vue';
+import { storyTypes, worldTypes } from 'boot/consts';
 const route = useRoute()
 const router = useRouter()
 

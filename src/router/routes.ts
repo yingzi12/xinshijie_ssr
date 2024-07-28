@@ -21,9 +21,10 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/order',
-    component: () => import('layouts/OrderLayout.vue'),
+    // component: () => import('layouts/OrderLayout.vue'),
     children: [
       { path: '', component: () => import('pages/order/index.vue') },
+      { path: 'index', component: () => import('pages/order/index.vue') },
       { path: 'like', component: () => import('pages/order/like.vue') }
     ],
   },

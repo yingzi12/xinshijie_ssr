@@ -12,9 +12,8 @@
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="世界详细" icon="navigation" to="/world/detail" />
-      <q-breadcrumbs-el label="故事列表" icon="navigation" to="/world/story" />
-
+      <q-breadcrumbs-el :label="wname" icon="navigation"  :to="{ path: '/world/detail', query: { wid: wid ,wname: wname,source: 1 }}" />
+      <q-breadcrumbs-el label="故事列表" icon="navigation" :to="{ path: '/world/story', query: { wid: wid ,wname: wname,source: 1 }}" />
     </q-breadcrumbs>
     <q-splitter
       v-model="splitterModel"

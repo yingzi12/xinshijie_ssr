@@ -189,7 +189,8 @@ handValue();
       <q-breadcrumbs-el label="首页" icon="home" to="/"/>
       <q-breadcrumbs-el label="世界首页" icon="widgets"  to="/world/index"/>
       <q-breadcrumbs-el label="世界列表" icon="navigation" to="/world/order" />
-      <q-breadcrumbs-el label="这是世界名称" icon="navigation" to="/world/detail" />
+      <q-breadcrumbs-el :label="wname" icon="navigation" :to="{ path: '/world/detail', query: { wid: wid ,wname: wname,source: 1 }}" />
+
       <q-breadcrumbs-el label="创建元素" icon="navigation" to="/story/create" />
     </q-breadcrumbs>
     <q-card class="my-card">
